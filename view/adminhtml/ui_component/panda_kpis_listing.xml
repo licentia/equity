@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ~ Copyright (C) 2020 Licentia, Unipessoal LDA
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  ~ @title      Licentia Panda - Magento® Sales Automation Extension
+  ~ @package    Licentia
+  ~ @author     Bento Vilas Boas <bento@licentia.pt>
+  ~ @copyright  Copyright (c) Licentia - https://licentia.pt
+  ~ @license    GNU General Public License V3
+  ~ @modified   29/01/20, 15:22 GMT
+  ~
+  -->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">panda_kpis_listing.panda_kpis_listing_data_source</item>
+            <item name="deps" xsi:type="string">panda_kpis_listing.panda_kpis_listing_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">panda_kpis_columns</item>
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">add</item>
+                <item name="label" xsi:type="string" translate="true">Formulas</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/formulas</item>
+            </item>
+        </item>
+    </argument>
+    <dataSource name="panda_kpis_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">pandakpisGridDataProvider</argument>
+            <argument name="name" xsi:type="string">panda_kpis_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">kpi_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">kpi_id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="sticky" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <exportButton name="export_button"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="panda_kpis_columns">
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">0</item>
+                    <item name="indexField" xsi:type="string">kpi_id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+        <column name="kpi_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                </item>
+            </argument>
+        </column>
+        <column name="customer_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Customer ID</item>
+                </item>
+            </argument>
+        </column>
+        <column name="email_meta">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Email</item>
+                </item>
+            </argument>
+        </column>
+        <column name="meta_store_id" class="Magento\Store\Ui\Component\Listing\Column\Store">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Store View</item>
+                </item>
+            </argument>
+        </column>
+        <column name="gender">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="array">
+                    <item name="male" xsi:type="array">
+                        <item name="value" xsi:type="string">male</item>
+                        <item name="label" xsi:type="string" translate="true">Male</item>
+                    </item>
+                    <item name="female" xsi:type="array">
+                        <item name="value" xsi:type="string">female</item>
+                        <item name="label" xsi:type="string" translate="true">Female</item>
+                    </item>
+                    <item name="none" xsi:type="array">
+                        <item name="value" xsi:type="string">3</item>
+                        <item name="label" xsi:type="string" translate="true">Not Specified</item>
+                    </item>
+                </item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="visibility" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Gender</item>
+                </item>
+            </argument>
+        </column>
+        <column name="abandoned" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Days Abandoned Cart</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="cart_totals" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Abandoned Cart Totals</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="cart_number" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Abandoned Cart Number Days</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="cart_products" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Abandoned Cart N. Products</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="anniversary" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Days until Anniversary</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="age" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Age</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="dob" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Date of Birth</label>
+                <sorting>desc</sorting>
+                <timezone>false</timezone>
+                <dateFormat>MMM dd, YYYY</dateFormat>
+                <fieldClass>
+                    <class name="column_120">true</class>
+                    <class name="right">true</class>
+                </fieldClass>
+            </settings>
+        </column>
+        <column name="pending_payment" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Days Order with Pending Payment</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="pending_payment_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Pending Payment Date</label>
+                <sorting>desc</sorting>
+                <timezone>false</timezone>
+                <dateFormat>MMM dd, YYYY</dateFormat>
+                <fieldClass>
+                    <class name="column_120">true</class>
+                    <class name="right">true</class>
+                </fieldClass>
+            </settings>
+        </column>
+        <column name="last_order" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Days since Last Order</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="last_order_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Last Order Date</label>
+                <sorting>desc</sorting>
+                <timezone>false</timezone>
+                <dateFormat>MMM dd, YYYY</dateFormat>
+                <fieldClass>
+                    <class name="column_120">true</class>
+                    <class name="right">true</class>
+                </fieldClass>
+            </settings>
+        </column>
+        <column name="first_order" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Days since First Order</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="first_order_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">First Order Date</label>
+                <sorting>desc</sorting>
+                <timezone>false</timezone>
+                <dateFormat>MMM dd, YYYY</dateFormat>
+                <fieldClass>
+                    <class name="column_120">true</class>
+                    <class name="right">true</class>
+                </fieldClass>
+            </settings>
+        </column>
+        <column name="number_reviews" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Number of Reviews</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="last_review" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Days since Last Review</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="last_review_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">First Review Date</label>
+                <sorting>desc</sorting>
+                <timezone>false</timezone>
+                <dateFormat>MMM dd, YYYY</dateFormat>
+                <fieldClass>
+                    <class name="column_120">true</class>
+                    <class name="right">true</class>
+                </fieldClass>
+            </settings>
+        </column>
+        <column name="account" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Days since Registration</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="account_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Account Registration Date</label>
+                <sorting>desc</sorting>
+                <timezone>false</timezone>
+                <dateFormat>MMM dd, YYYY</dateFormat>
+                <fieldClass>
+                    <class name="column_120">true</class>
+                    <class name="right">true</class>
+                </fieldClass>
+            </settings>
+        </column>
+        <column name="last_activity">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Days Since Last Activity</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="last_activity_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Last Activity</label>
+                <sorting>desc</sorting>
+                <timezone>false</timezone>
+                <dateFormat>MMM dd, YYYY</dateFormat>
+                <fieldClass>
+                    <class name="column_120">true</class>
+                    <class name="right">true</class>
+                </fieldClass>
+            </settings>
+        </column>
+        <column name="number_orders" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">N. Orders</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="number_completed_orders" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">N. Completed Orders</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="percentage_complete_orders" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">% Compl. Orders</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="order_amount" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Total Orders Amount</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="subtotal" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Base Subtotal Orders</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="shipping" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Base Total Shipping</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="discount" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Base Total Discount</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="number_orders_with_discount" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">N. Orders W/ Discount</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="profit" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Base Profit</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="cost" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Base Cost</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="taxes" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Base Total Taxes</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="order_average" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Orders Average</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="percentage_order_amount" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">% Orders Amount</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="order_average_1year" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Orders Average (Last Y)</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="order_amount_1year" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">% Orders Amount (Last Y)</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="order_average_older" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Orders Average (previous Y)</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="order_amount_older" class="Magento\Sales\Ui\Component\Listing\Column\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">% Orders Amount (previous Y)</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="order_average_days" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Avg. Days Between Orders</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="percentage_orders_with_discount" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">% Orders W/ Discount</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="number_visits" class="Licentia\Equity\Ui\Component\Listing\Column\Number">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Number Visits</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="formula_1" class="Licentia\Equity\Ui\Component\Listing\Column\Formulas">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Formula</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="formula_2" class="Licentia\Equity\Ui\Component\Listing\Column\Formulas">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Formula</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="formula_3" class="Licentia\Equity\Ui\Component\Listing\Column\Formulas">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Formula</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="formula_4" class="Licentia\Equity\Ui\Component\Listing\Column\Formulas">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Formula</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="formula_5" class="Licentia\Equity\Ui\Component\Listing\Column\Formulas">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Formula</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="formula_6" class="Licentia\Equity\Ui\Component\Listing\Column\Formulas">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Formula</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="formula_7" class="Licentia\Equity\Ui\Component\Listing\Column\Formulas">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Formula</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="formula_8" class="Licentia\Equity\Ui\Component\Listing\Column\Formulas">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Formula</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="formula_9" class="Licentia\Equity\Ui\Component\Listing\Column\Formulas">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Formula</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="formula_10" class="Licentia\Equity\Ui\Component\Listing\Column\Formulas">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Formula</item>
+                    <item name="fieldClass" xsi:type="string">right</item>
+                </item>
+            </argument>
+        </column>
+        <column name="loyal" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Loayl Costumer</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Licentia\Equity\Ui\Component\Listing\Column\KpisActions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </actionsColumn>
+    </columns>
+</listing>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (C) 2020 Licentia, Unipessoal LDA
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  ~ @title      Licentia Panda - Magento® Sales Automation Extension
+  ~ @package    Licentia
+  ~ @author     Bento Vilas Boas <bento@licentia.pt>
+  ~ @copyright  Copyright (c) Licentia - https://licentia.pt
+  ~ @license    GNU General Public License V3
+  ~ @modified   29/01/20, 15:22 GMT
+  ~
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+
+        <add id="Licentia_Equity::extra_costs" title="Sales Extra Costs" module="Licentia_Equity" sortOrder="95" parent="Magento_Sales::sales_operation" action="pandae/extraCosts" resource="Licentia_Equity::extra_costs"/>
+
+        <add id="Licentia_Equity::segments" title="Customer Segments" module="Licentia_Equity" sortOrder="51" parent="Magento_Customer::customer" action="pandae/segments" resource="Licentia_Equity::segments"/>
+        <add id="Licentia_Equity::kpis" title="Customer KPIs" module="Licentia_Equity" sortOrder="52" parent="Magento_Customer::customer" action="pandae/kpis" resource="Licentia_Equity::segments"/>
+        <!--<add id="Licentia_Equity::access" title="Segments Access" module="Licentia_Equity" sortOrder="53" parent="Magento_Customer::customer" action="pandae/access" resource="Licentia_Equity::access"/>-->
+
+        <add id="Licentia_Equity::twofactor" title="Two Factor Auth" module="Licentia_Equity" sortOrder="54" parent="Magento_Reports::report_customers" action="pandae/twofactor" resource="Licentia_Equity::twofactor"/>
+
+        </menu>
+</config>

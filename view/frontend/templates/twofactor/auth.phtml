@@ -1,0 +1,145 @@
+<?php
+/**
+ * Copyright (C) 2020 Licentia, Unipessoal LDA
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * @title      Licentia Panda - Magento® Sales Automation Extension
+ * @package    Licentia
+ * @author     Bento Vilas Boas <bento@licentia.pt>
+ * @copyright  Copyright (c) Licentia - https://licentia.pt
+ * @license    GNU General Public License V3
+ * @modified   29/01/20, 15:22 GMT
+ *
+ */
+
+/** @var \Licentia\Equity\Block\TwoFactor $block */
+
+?>
+<style type="text/css">
+    .container {
+        width: 450px;
+        height: 35vh;
+        margin: 20px auto;
+    }
+
+    img {
+        padding: 50px 0;
+    }
+</style>
+
+<div class="container">
+    <img src="<?= $block->escapeHtmlAttr($block->getLogoSrc()) ?>"
+         alt="<?= $block->escapeHtmlAttr($block->getLogoAlt()) ?>"/>
+    <?php if ($block->hasCellphone()) : ?>
+        <form class=" form form-twofactor-manage" data-mage-init='{"validation":{}}'
+              action="<?= /* @noEscape */
+              $block->getUrl('pandae/twofactor/save') ?>" method="post"
+              id="form-validate">
+            <fieldset class="fieldset">
+                <?= $block->getBlockHtml('formkey') ?>
+                <legend class="legend"><span><?= /* @noEscape */
+                        __('Two Factor Authentication Required') ?></span>
+                </legend>
+                <br>
+
+                <div class="field choice">
+                    <input type="text" name="sms_code" data-validate="{required:true}" id="sms_code">
+                    <label for="subscription" class="label"> <span><?= /* @noEscape */
+                            __(
+                                'Please insert the SMS code you received'
+                            ) ?></span>
+                    </label>
+                </div>
+
+            </fieldset>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="submit" title="<?= $block->escapeHtmlAttr(__('Continue')) ?>"
+                            class="action save primary">
+                        <span><?= /* @noEscape */
+                            __('Continue') ?></span>
+                    </button>
+                </div>
+                <?php if ($block->canGenerateCode()): ?>
+                    <div class="secondary">
+                        <a href="<?= /* @noEscape */
+                        $block->getUrl('pandae/twofactor/auth', ['resend' => 1]) ?>"
+                           title="<?= $block->escapeHtmlAttr(__('Resend SMS')) ?>" class="action  secondary">
+                            <span><?= /* @noEscape */
+                                __('Resend SMS') ?></span>
+                        </a>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="actions-toolbar">
+                <div class="secondary" style="float: right;">
+                    <a href="<?= /* @noEscape */
+                    $block->getUrl('customer/account/logout', []) ?>"
+                       title="<?= $block->escapeHtmlAttr(__('Logout')) ?>" class="action  secondary">
+                        <span><?= /* @noEscape */
+                            __('Logout') ?></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    <?php endif; ?>
+    <?php if (!$block->hasCellphone()): ?>
+        <form class="form form-twofactor-manage" data-mage-init='{"validation":{}}'
+              action="<?= /* @noEscape */
+              $block->getUrl('pandae/twofactor/save') ?>" method="post"
+              id="form-validate">
+            <fieldset class="fieldset">
+                <?= /* @noEscape */
+                $block->getBlockHtml('formkey') ?>
+                <legend class="legend"><span><?= /* @noEscape */
+                        __('Two Factor Authentication Required') ?></span>
+                </legend>
+                <div class="field choice">
+                    <label for="subscription" class="label"> <span><?= /* @noEscape */
+                            __(
+                                'Please insert your cellphone number. This number will only be used to send Auth Codes'
+                            ) ?></span>
+                    </label>
+                    <input type="text" name="cellphone" data-validate="{required:true}" id="cellphone">
+                    <small><em><?= /* @noEscape */
+                            __(
+                                'Please use the following format: CountryCode-CellPhoneNumber. <br>Ex: 351-989647542'
+                            ) ?></em></small>
+                </div>
+            </fieldset>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="submit" title="<?= /* @noEscape */
+                    __('Update Cellphone') ?>"
+                            class="action save primary">
+                        <span><?= /* @noEscape */
+                            __('Update Cellphone') ?></span>
+                    </button>
+                </div>
+            </div>
+            <div class="actions-toolbar">
+                <div class="secondary" style="float: right;">
+                    <a href="<?= /* @noEscape */
+                    $block->getUrl('customer/account/logout', []) ?>"
+                       title="<?= /* @noEscape */
+                       __('Logout') ?>" class="action secondary">
+                    <span><?= /* @noEscape */
+                        __('Logout') ?></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    <?php endif; ?>
+</div>

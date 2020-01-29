@@ -1,0 +1,609 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (C) 2020 Licentia, Unipessoal LDA
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  ~ @title      Licentia Panda - Magento® Sales Automation Extension
+  ~ @package    Licentia
+  ~ @author     Bento Vilas Boas <bento@licentia.pt>
+  ~ @copyright  Copyright (c) Licentia - https://licentia.pt
+  ~ @license    GNU General Public License V3
+  ~ @modified   29/01/20, 15:22 GMT
+  ~
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="licentia" translate="label" sortOrder="1200">
+            <label>Green Flying Panda</label>
+        </tab>
+        <section id="panda_customer" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Customer Two Factor Authentication</label>
+            <tab>licentia</tab>
+            <resource>Licentia_Equity::config_magna</resource>
+            <group id="twofactor" showInWebsite="1" showInStore="1" showInDefault="1" sortOrder="10">
+                <label>General</label>
+                <field id="enable" sortOrder="10" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Two Factor Authentication</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    <comment>Enable two factor authentication for customers</comment>
+                </field>
+                <field id="sender" sortOrder="15" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>SMS Sender</label>
+                    <source_model>Licentia\Panda\Model\Source\SmsSenders</source_model>
+                    <comment>Select the SMS sender for the SMS</comment>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="customer_groups" sortOrder="20" showInDefault="1" type="multiselect" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Customer Groups</label>
+                    <source_model>Magento\Customer\Model\Config\Source\Group</source_model>
+                    <comment>Enable Only for customers in the selected customer groups</comment>
+                </field>
+               <field id="segments" sortOrder="30" showInDefault="1" type="multiselect" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Customer Segments</label>
+                    <source_model>Licentia\Equity\Model\Source\Segments</source_model>
+                    <comment>Enable Only for customers in selected segments</comment>
+                </field>
+                <field id="length" sortOrder="40" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Code Length</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-4-20</validate>
+                    <comment>Between 4 and 20</comment>
+                </field>
+                <field id="max_resends" sortOrder="50" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>New SMS code (30 mins)</label>
+                    <comment>Max Times the Customer can ask for a new Message for 30mins</comment>
+                    <validate>required-entry validate-digits</validate>
+                </field>
+                <field id="max_resends_day" sortOrder="60" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>New SMS code (day)</label>
+                    <comment>Max Times the Customer can ask for a new Message in a day</comment>
+                    <validate>required-entry validate-digits</validate>
+                </field>
+                <field id="message" sortOrder="70" showInDefault="1" type="textarea" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>SMS Message</label>
+                    <validate>required-entry</validate>
+                    <comment>Variable {code} will be replaced with the actual code</comment>
+                </field>
+            </group>
+        </section>
+
+        <section id="panda_magna" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+            <class>separator-top</class>
+            <label>Customer Segments</label>
+            <tab>licentia</tab>
+            <resource>Licentia_Equity::config_magna</resource>
+            <group id="segments" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="10">
+                <label>General</label>
+                <field id="acl" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Access Control</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    <comment>Enable ACL on Products, Categories, CMS Pages and CMS Blocks</comment>
+                </field>
+                <field id="percentage" sortOrder="20" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label">
+                    <label>Frequency percentage</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-10-100</validate>
+                    <comment>When building segments using the condition containing Frequent, what's the percentage of views it must have to be considered frequent</comment>
+                </field>
+                <field id="recent" sortOrder="30" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label">
+                    <label>Recent</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-1-30</validate>
+                    <comment>When building segments using the condition containing Recent, how many days back should we go</comment>
+                </field>
+                <field id="process" sortOrder="40" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Process Number</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-100-100000</validate>
+                    <comment>How many customers should the system process per cron (min: 100 / max: 100000)? Only applies when you rebuild the customers metadata</comment>
+                </field>
+                <field id="attributes" sortOrder="50" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Log Attributes</label>
+                    <source_model>Licentia\Equity\Model\Source\AttributesSegments</source_model>
+                    <comment>Log customer activity information related with these attributes</comment>
+                </field>
+            </group>
+            <group id="kpis" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
+                <label>Show KPI's description Customer Page</label>
+                <field id="email_meta" sortOrder="10" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Customer Email</label>
+                </field>
+                <field id="abandoned" sortOrder="20" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Number of days with an abandoned cart</label>
+                </field>
+                <field id="abandoned_date" sortOrder="130" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Abandoned Cart Date</label>
+                </field>
+                <field id="cart_totals" sortOrder="40" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Abandoned Cart Total</label>
+                </field>
+                <field id="cart_number" sortOrder="50" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Abandoned Cart Qty Products</label>
+                </field>
+                <field id="cart_products" sortOrder="60" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Abandoned Cart N. Products</label>
+                </field>
+                <field id="anniversary" sortOrder="70" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Days until Anniversary</label>
+                </field>
+                <field id="age" sortOrder="80" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Age</label>
+                </field>
+                <field id="dob" sortOrder="90" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Date of Birth</label>
+                </field>
+                <field id="gender" sortOrder="10" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Gender</label>
+                </field>
+                <field id="pending_payment" sortOrder="110" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Days With Pending Payment for Order</label>
+                </field>
+                <field id="pending_payment_date" sortOrder="120" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Order Date with Pending Payment</label>
+                </field>
+                <field id="last_order" sortOrder="130" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Days since Last Order</label>
+                </field>
+                <field id="last_order_date" sortOrder="140" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Last Order Date</label>
+                </field>
+                <field id="first_order" sortOrder="150" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Days Since First Order</label>
+                </field>
+                <field id="first_order_date" sortOrder="160" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>First Order Date</label>
+                </field>
+                <field id="last_review" sortOrder="170" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Days Since Last Review</label>
+                </field>
+                <field id="last_review_date" sortOrder="180" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Last Review Date</label>
+                </field>
+                <field id="account" sortOrder="190" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Days since Registration</label>
+                </field>
+                <field id="account_date" sortOrder="200" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Account Registration Date</label>
+                </field>
+                <field id="number_reviews" sortOrder="210" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Number of Reviews</label>
+                </field>
+                <field id="number_orders" sortOrder="220" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Number of Orders</label>
+                </field>
+                <field id="number_completed_orders" sortOrder="230" showInDefault="1" type="text" showInStore="1" showInWebsite="0" translate="label comment">
+                    <label>Number of Completed Orders</label>
+                </field>
+                <field id="percentage_complete_orders" sortOrder="240" showInDefault="1" type="text" showInStore="1" showInWebsite="0" translate="label comment">
+                    <label>Percentage of Completed Orders</label>
+                </field>
+                <field id="order_amount" sortOrder="250" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Total Orders Amount</label>
+                </field>
+                <field id="order_average" sortOrder="260" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Orders Average</label>
+                </field>
+                <field id="percentage_order_amount" sortOrder="270" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Percentage Orders Amount</label>
+                </field>
+                <field id="order_average_1year" sortOrder="280" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Orders Average Last year</label>
+                </field>
+                <field id="order_amount_1year" sortOrder="290" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Orders Amount Last Year</label>
+                </field>
+                <field id="order_average_older" sortOrder="300" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Orders Average before Last Year</label>
+                </field>
+                <field id="order_amount_older" sortOrder="310" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Orders Amount before Last Year</label>
+                </field>
+                <field id="order_average_days" sortOrder="320" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Average Days between Orders</label>
+                </field>
+                <field id="number_orders_with_discount" sortOrder="330" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Number of Orders with Discount</label>
+                </field>
+                <field id="shipping" sortOrder="340" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Total Amount Shipping</label>
+                </field>
+                <field id="taxes" sortOrder="350" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Total Amount Taxes</label>
+                </field>
+                <field id="subtotal" sortOrder="360" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Total Amount Subtotal</label>
+                </field>
+                <field id="discount" sortOrder="370" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Total Amount Discount</label>
+                </field>
+                <field id="cost" sortOrder="380" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Total Amount Cost</label>
+                </field>
+                <field id="profit" sortOrder="390" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Total Amount Profit</label>
+                </field>
+                <field id="refunded" sortOrder="400" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Total Amount Refunded</label>
+                </field>
+                <field id="last_activity_date" sortOrder="410" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label> Last Activity Date</label>
+                </field>
+                <field id="last_activity" sortOrder="420" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Days Since Last Activity</label>
+                </field>
+                <field id="formula_1" sortOrder="430" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Formula 1 Result</label>
+                </field>
+                <field id="formula_2" sortOrder="440" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Formula 2 Result</label>
+                </field>
+                <field id="formula_3" sortOrder="450" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Formula 3 Result</label>
+                </field>
+                <field id="formula_4" sortOrder="460" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Formula  Result</label>
+                </field>
+                <field id="formula_5" sortOrder="470" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Formula 5 Result</label>
+                </field>
+                <field id="formula_6" sortOrder="480" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Formula 6 Result</label>
+                </field>
+                <field id="formula_7" sortOrder="490" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Formula 7 Result</label>
+                </field>
+                <field id="formula_8" sortOrder="500" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Formula 8 Result</label>
+                </field>
+                <field id="formula_9" sortOrder="520" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Formula 9 Result</label>
+                </field>
+                <field id="formula_10" sortOrder="530" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Formula 10 Result</label>
+                </field>
+            </group>
+            <group id="customer" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
+                <label>Customer Admin Page</label>
+                <field id="enabled" sortOrder="110" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Show Customer Segments</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Show customer segment when editing the customer in the admin?</comment>
+                </field>
+            </group>
+            <group id="prices" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
+                <label>Pricing</label>
+                <field id="enabled" sortOrder="110" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Enable Product Prices</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="percentage" sortOrder="110" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Prices in percentage?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>When inserting segments prices in products, if the value inserted is the segment final price, or a percentage of the product's price</comment>
+                </field>
+            </group>
+            <group id="info" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="100">
+                <label>Status Info</label>
+                <field id="status" sortOrder="70" showInDefault="1" type="label" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label/>
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Process</frontend_model>
+                </field>
+                <field id="rebuild" sortOrder="80" showInDefault="1" type="label" showInStore="0" showInWebsite="1">
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Rebuild</frontend_model>
+                    <comment>This process will erase ALL meta data (not actual customers/subscribers or any other Magento data) and rebuild it.</comment>
+                </field>
+            </group>
+            <group id="maintenance" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="80">
+                <label>Maintenance</label>
+                <field id="clear_prices" sortOrder="10" showInDefault="1" type="label" showInStore="0" showInWebsite="1">
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Prices</frontend_model>
+                    <comment>Clear ALL defined Segment Prices</comment>
+                </field>
+            </group>
+        </section>
+        <section id="panda_equity" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+            <class>separator-top</class>
+            <label>Customer Equity</label>
+            <tab>licentia</tab>
+            <resource>Licentia_Equity::config_equity</resource>
+            <group id="kpis" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="10">
+                <label>Show Kpis in Customer Page</label>
+                <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Show Customer KPI's</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Show customer KPI's when editing the customer in the admin?</comment>
+                </field>
+                <field id="list" sortOrder="20" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="1" translate="label">
+                    <label>KPI's to Show</label>
+                    <source_model>Licentia\Equity\Model\Kpis</source_model>
+                    <comment>Only show selected KPI's</comment>
+                </field>
+            </group>
+            <group id="equity" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="10" translate="label">
+                <label>Customer Equity Variables</label>
+                <field id="rate" sortOrder="10" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Rate of Discount</label>
+                    <validate>required-entry</validate>
+                    <comment>Usually between 8 and 15</comment>
+                </field>
+                <field id="lifespan" sortOrder="20" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Average Customer Lifespan</label>
+                    <validate>required-entry</validate>
+                    <comment>For how long someone remains a customer</comment>
+                </field>
+                <field id="period" sortOrder="30" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Period Evaluation</label>
+                    <validate>required-entry</validate>
+                    <source_model>Licentia\Equity\Model\Source\Period</source_model>
+                </field>
+            </group>
+            <group id="products" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="10" translate="label">
+                <label>Products</label>
+                <field id="cost" sortOrder="20" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label">
+                    <label>Product Cost (%)</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-1-100</validate>
+                    <comment>If no cost is defined in the product, how much should we consider the cost is based on a percentage of the product base price</comment>
+                </field>
+            </group>
+            <group id="reports" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="10" translate="label">
+                <label>Reports</label>
+                <field id="attributes" sortOrder="50" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Build Report Attributes</label>
+                    <source_model>Licentia\Equity\Model\Source\AttributesSelect</source_model>
+                </field>
+                <field id="types" sortOrder="50" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Types of Reports to Build</label>
+                    <source_model>Licentia\Reports\Model\Source\ReportTypes</source_model>
+                    <comment>Ignored if Country type not selected above</comment>
+                </field>
+                <field id="country" sortOrder="60" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Build Country Reports only for the selected countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                </field>
+                <field id="region" sortOrder="70" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Build Region Reports only for the selected regions</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Allregion</source_model>
+                    <comment>Ignored if Region type not selected above</comment>
+                </field>
+                <field id="search" sortOrder="80" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="0" translate="label comment">
+                    <label>Minimum number of search results for Search Performance</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-50-100000</validate>
+                    <comment>Do not build reports for terms searched less than X times. Having a lower number will increase the indexing time for search perforamnce reports</comment>
+                </field>
+            </group>
+        </section>
+        <section id="panda_prices" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+            <class>separator-top</class>
+            <label>Pricing</label>
+            <tab>licentia</tab>
+            <resource>Licentia_Equity::config_prices</resource>
+            <group id="test" translate="label comment" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="1">
+                <label>Test Formulas</label>
+                <field id="formulas" sortOrder="10" showInDefault="1" type="label" showInStore="0" showInWebsite="1" translate="label comment">
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Formulas</frontend_model>
+                </field>
+            </group>
+            <group id="products" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="20">
+                <label>Products</label>
+                <comment>Please check the manual for more information on how to setup product pricing</comment>
+                <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    <comment>Enable Product Prices per Customer</comment>
+                </field>
+                <field id="min_price" sortOrder="40" showInDefault="1" type="textarea" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Global Min Price</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                    <comment>Independently of the Product Price Formula result, the product price can never be lower than the result of this formula</comment>
+                </field>
+                <field id="max_price" sortOrder="50" showInDefault="1" type="textarea" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Global Max Price</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <comment>Independently of the Product Price Formula result, the product price can never be higher than the result of this formula</comment>
+                </field>
+                <field id="price" sortOrder="60" showInDefault="1" type="textarea" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Product Price Formula</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <comment>How should we calculate the product price</comment>
+                </field>
+                <field id="round_up_99" sortOrder="70" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Round Values to xx.99</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If we should round product prices to .99 if the decimal values are above the value defined in the field "Round Upper Values to xx.99"</comment>
+                </field>
+                <field id="round_up_99_decimals" sortOrder="80" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Round Upper Values to xx.99</label>
+                    <comment>The value that will make the price to round to xx.99. Eg: if inserted 50 and the product that costs 1.55 will see it's price
+                        rounded to 1.99
+                    </comment>
+                    <depends>
+                        <field id="round_up_99">1</field>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="round_up_99_min" sortOrder="90" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Min Price to Round Up</label>
+                    <validate>required-entry</validate>
+                    <comment>Do not round up product prices to xx.99 if the product price is lower than this amount</comment>
+                    <depends>
+                        <field id="round_up_99">1</field>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="round_down_99" sortOrder="120" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Round down to .99 on non-decimal prices</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If the product price is something like 80.00, lower it to 79.99</comment>
+                </field>
+                <field id="round_up_49" sortOrder="100" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Round Values to xx.49</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If we should round product prices to .49 if the decimal values are above the value defined in the field "Round Upper Values to xx.49"</comment>
+                </field>
+                <field id="round_up_49_decimals" sortOrder="110" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Round Upper Values to xx.49</label>
+                    <comment>The value that will make the price to round to xx.49. Eg: if inserted 50 and the product that costs 1.35 will see it's price rounded to 1.49</comment>
+                    <depends>
+                        <field id="round_up_49">1</field>
+                    </depends>
+                </field>
+                <field id="round_up_49_min" sortOrder="120" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Min Price to Round Up</label>
+                    <validate>required-entry</validate>
+                    <comment>Do not round up product prices to xx.49 if the product price is lower than this amount</comment>
+                    <depends>
+                        <field id="round_up_49">1</field>
+                    </depends>
+                </field>
+                <field id="customer_groups" sortOrder="130" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Customer Groups</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <source_model>Magento\Customer\Model\Config\Source\Group</source_model>
+                    <comment>Only apply prices if the customer is in the selected customer groups</comment>
+                </field>
+            </group>
+            <group id="customers" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="20">
+                <label>Customers</label>
+                <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    <comment>Enable Product Prices per Customer</comment>
+                </field>
+                <!--
+                <field id="customer_attribute" sortOrder="20" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Customer Attribute</label>
+                    <source_model>Licentia\Panda\Model\Source\Cellphone</source_model>
+                    <comment>Select the customer attribute that holds the option to disable product prices to a specific customer</comment>
+                </field>
+                <field id="product_attribute" sortOrder="30" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Product Attribute</label>
+                    <source_model>Licentia\Panda\Model\Source\Attributes</source_model>
+                    <comment>Select the product attribute that hold the option to disable product prices to a specific product</comment>
+                </field>-->
+                <field id="min_price" sortOrder="40" showInDefault="1" type="textarea" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Global Min Price</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                    <comment>Independently of the Product Price Formula result is, the product price can never be lower than the result of this formula</comment>
+                </field>
+                <field id="max_price" sortOrder="50" showInDefault="1" type="textarea" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Global Max Price</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                    <comment>Independently of the Product Price Formula result is, the product price can never be higher than the result of this formula</comment>
+                </field>
+                <field id="price" sortOrder="60" showInDefault="1" type="textarea" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Product Price Formula</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                    <comment>How should we calculate the product price</comment>
+                </field>
+                <field id="round_up_99" sortOrder="70" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Round Values to xx.99</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If we should round product prices to .99 if the decimal values are above the value defined in the field "Round Upper Values to xx.99"</comment>
+                </field>
+                <field id="round_up_99_decimals" sortOrder="80" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Round Upper Values to xx.99</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="round_up_99">1</field>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <comment>The value that will make the price to round to xx.99. Ie: if inserted 50 and the product that costs 1.55 will see it's price rounded to 1.99</comment>
+                </field>
+                <field id="round_up_99_min" sortOrder="90" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Min Price to Round Up</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="round_up_99">1</field>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <comment>Do not round up product prices to xx.99 if the product price is lower than this amount</comment>
+                </field>
+                <field id="round_down_99" sortOrder="120" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Round down to .99 on non-decimal prices</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <comment>ie. if the product price is 80.00, lower it to 79.99</comment>
+                </field>
+                <field id="round_up_49" sortOrder="100" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Round Values to xx.49</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If we should round product prices to .49 if the decimal values are above the value defined in the field "Round Upper Values to xx.49"</comment>
+                </field>
+                <field id="round_up_49_decimals" sortOrder="110" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Round Upper Values to xx.49</label>
+                    <validate>required-entry</validate>
+                    <comment>The value that will make the price to round to xx.49. Eg: if inserted 50 and the product that costs 1.35 will see it's price rounded to 1.49</comment>
+                    <depends>
+                        <field id="round_up_49">1</field>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="round_up_49_min" sortOrder="120" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Min Price to Round Up</label>
+                    <validate>required-entry</validate>
+                    <comment>Do not round up product prices to xx.49 if the product price is lower than this amount</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="round_up_49">1</field>
+                    </depends>
+                </field>
+                <field id="customer_groups" sortOrder="130" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Customer Groups</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <source_model>Magento\Customer\Model\Config\Source\Group</source_model>
+                    <comment>Only apply prices if the customer is in the selected customer groups</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

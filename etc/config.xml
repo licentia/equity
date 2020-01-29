@@ -1,0 +1,59 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (C) 2020 Licentia, Unipessoal LDA
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  ~ @title      Licentia Panda - Magento® Sales Automation Extension
+  ~ @package    Licentia
+  ~ @author     Bento Vilas Boas <bento@licentia.pt>
+  ~ @copyright  Copyright (c) Licentia - https://licentia.pt
+  ~ @license    GNU General Public License V3
+  ~ @modified   29/01/20, 15:22 GMT
+  ~
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <panda_equity>
+            <kpis>
+                <enabled>1</enabled>
+            </kpis>
+            <reports>
+                <types>global,age,region,gender,attribute,country</types>
+                <search>100</search>
+            </reports>
+        </panda_equity>
+        <panda_magna>
+            <customer>
+                <enabled>1</enabled>
+            </customer>
+            <segments>
+                <acl>0</acl>
+                <refresh>1</refresh>
+                <percentage>15</percentage>
+                <recent>7</recent>
+                <process>1000</process>
+            </segments>
+        </panda_magna>
+        <panda_prices>
+            <segment_prices>
+                <percentage>0</percentage>
+            </segment_prices>
+            <prices>
+                <enabled>0</enabled>
+                <customer_attribute>panda_product_prices</customer_attribute>
+                <product_attribute>panda_product_prices</product_attribute>
+            </prices>
+        </panda_prices>
+    </default>
+</config>

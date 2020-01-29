@@ -1,0 +1,88 @@
+<?xml version="1.0" ?><!--
+  ~ Copyright (C) 2020 Licentia, Unipessoal LDA
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  ~ @title      Licentia Panda - Magento® Sales Automation Extension
+  ~ @package    Licentia
+  ~ @author     Bento Vilas Boas <bento@licentia.pt>
+  ~ @copyright  Copyright (c) Licentia - https://licentia.pt
+  ~ @license    GNU General Public License V3
+  ~ @modified   29/01/20, 15:22 GMT
+  ~
+  -->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+
+    <route method="GET" url="/V1/panda/kpis">
+        <service class="Licentia\Equity\Api\KpisRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Licentia_Equity::kpis"/>
+        </resources>
+    </route>
+
+
+    <route method="GET" url="/V1/panda/formulas/search">
+        <service class="Licentia\Equity\Api\FormulasRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Licentia_Equity::formulas"/>
+        </resources>
+    </route>
+    <route method="GET" url="/V1/panda/formulas/:formulasId">
+        <service class="Licentia\Equity\Api\FormulasRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Licentia_Equity::formulas"/>
+        </resources>
+    </route>
+
+
+    <route method="POST" url="/V1/panda/segments">
+        <service class="Licentia\Equity\Api\SegmentsRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Licentia_Equity::segments"/>
+        </resources>
+    </route>
+    <route method="GET" url="/V1/panda/segments/search">
+        <service class="Licentia\Equity\Api\SegmentsRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Licentia_Equity::segments"/>
+        </resources>
+    </route>
+    <route method="GET" url="/V1/panda/segments/:segmentsId">
+        <service class="Licentia\Equity\Api\SegmentsRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Licentia_Equity::segments"/>
+        </resources>
+    </route>
+    <route method="PUT" url="/V1/panda/segments/:segmentsId">
+        <service class="Licentia\Equity\Api\SegmentsRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Licentia_Equity::segments"/>
+        </resources>
+    </route>
+    <route method="DELETE" url="/V1/panda/segments/:segmentsId">
+        <service class="Licentia\Equity\Api\SegmentsRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Licentia_Equity::segments"/>
+        </resources>
+    </route>
+    <route method="GET" url="/V1/panda/segments/records">
+        <service class="Licentia\Equity\Api\RecordsRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Licentia_Equity::segments"/>
+        </resources>
+    </route>
+
+</routes>

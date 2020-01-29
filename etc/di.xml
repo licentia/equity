@@ -1,0 +1,224 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (C) 2020 Licentia, Unipessoal LDA
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  ~ @title      Licentia Panda - Magento® Sales Automation Extension
+  ~ @package    Licentia
+  ~ @author     Bento Vilas Boas <bento@licentia.pt>
+  ~ @copyright  Copyright (c) Licentia - https://licentia.pt
+  ~ @license    GNU General Public License V3
+  ~ @modified   29/01/20, 15:22 GMT
+  ~
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+
+    <preference for="Licentia\Equity\Api\KpisRepositoryInterface" type="Licentia\Equity\Model\KpisRepository"/>
+    <preference for="Licentia\Equity\Api\Data\KpisInterface" type="Licentia\Equity\Model\Kpis"/>
+    <preference for="Licentia\Equity\Api\Data\KpisSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+
+    <preference for="Licentia\Equity\Api\RecordsRepositoryInterface" type="Licentia\Equity\Model\RecordsRepository"/>
+    <preference for="Licentia\Equity\Api\Data\RecordsInterface" type="Licentia\Equity\Model\Records"/>
+    <preference for="Licentia\Equity\Api\Data\RecordsSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+
+    <preference for="Licentia\Equity\Api\FormulasRepositoryInterface" type="Licentia\Equity\Model\FormulasRepository"/>
+    <preference for="Licentia\Equity\Api\Data\FormulasInterface" type="Licentia\Equity\Model\Formulas"/>
+    <preference for="Licentia\Equity\Api\Data\FormulasSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+
+    <!--
+    <type name="Magento\Framework\App\Http\Context">
+      <plugin name="panda_segments_page_cache" type="Licentia\Equity\Block\Plugin\HttpContext" sortOrder="1000"/>
+    </type>
+    -->
+
+    <type name="Magento\Framework\App\Action\AbstractAction">
+      <plugin name="panda_segments_page_cache" type="Licentia\Equity\Block\Plugin\PricesHttpContext" sortOrder="1000"/>
+    </type>
+
+    <type name="Magento\Cms\Model\Page">
+      <plugin name="panda_change_cms_page_content" type="Licentia\Equity\Block\Plugin\PageIdentities" sortOrder="100"/>
+    </type>
+
+    <type name="Magento\Catalog\Model\Product">
+      <plugin name="catalog_price_final_segment" type="Licentia\Equity\Block\Plugin\FinalPrice" sortOrder="1000"/>
+    </type>
+
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="panda_equity" xsi:type="object">Licentia\Equity\Console\Command\Equity</item>
+                <item name="panda_segments" xsi:type="object">Licentia\Equity\Console\Command\Segments</item>
+            </argument>
+        </arguments>
+    </type>
+
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="panda_extra_costs_listing_data_source" xsi:type="string">Licentia\Equity\Model\ResourceModel\Sales\ExtraCosts\Grid\Collection</item>
+                <item name="panda_segments_listing_data_source" xsi:type="string">Licentia\Equity\Model\ResourceModel\Segments\Grid\Collection</item>
+                <item name="panda_kpis_listing_data_source" xsi:type="string">Licentia\Equity\Model\ResourceModel\Kpis\Grid\Collection</item>
+                <item name="panda_formulas_listing_data_source" xsi:type="string">Licentia\Equity\Model\ResourceModel\Formulas\Grid\Collection</item>
+                <item name="panda_access_listing_data_source" xsi:type="string">Licentia\Equity\Model\ResourceModel\Access\Grid\Collection</item>
+                <item name="panda_two_factor_listing_data_source" xsi:type="string">Licentia\Equity\Model\ResourceModel\TwoFactor\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+
+    <type name="Licentia\Equity\Model\ResourceModel\Segments\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">panda_segments</argument>
+            <argument name="eventPrefix" xsi:type="string">panda_segments_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">panda_segments_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Licentia\Equity\Model\ResourceModel\Segments</argument>
+        </arguments>
+    </type>
+    <virtualType name="pandaSegmentsGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="pandaSegmentsGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Licentia\Equity\Model\ResourceModel\Segments\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">pandaSegmentsGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Licentia\Equity\Model\ResourceModel\Kpis\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">panda_customers_kpis</argument>
+            <argument name="eventPrefix" xsi:type="string">panda_kpis_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">panda_kpis_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Licentia\Equity\Model\ResourceModel\Kpis</argument>
+        </arguments>
+    </type>
+    <virtualType name="pandaKpisGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="pandakpisGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Licentia\Equity\Model\ResourceModel\Kpis\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">pandaKpiGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Licentia\Equity\Model\ResourceModel\Formulas\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">panda_formulas</argument>
+            <argument name="eventPrefix" xsi:type="string">panda_formulas_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">panda_formulas_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Licentia\Equity\Model\ResourceModel\Formulas</argument>
+        </arguments>
+    </type>
+    <virtualType name="pandaFormulasGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="pandaFormulasGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Licentia\Equity\Model\ResourceModel\Formulas\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">pandaFormulasGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+
+
+    <type name="Licentia\Equity\Model\ResourceModel\TwoFactor\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">panda_two_factor_auth</argument>
+            <argument name="eventPrefix" xsi:type="string">panda_two_factor_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">panda_two_factor_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Licentia\Equity\Model\ResourceModel\TwoFactor</argument>
+        </arguments>
+    </type>
+    <virtualType name="pandaTwoFactorGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="pandaTwoFactorGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Licentia\Equity\Model\ResourceModel\TwoFactor\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">pandaTwoFactorGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+
+    <type name="Licentia\Equity\Model\ResourceModel\Access\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">panda_segments_access</argument>
+            <argument name="eventPrefix" xsi:type="string">panda_access_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">panda_access_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Licentia\Equity\Model\ResourceModel\Access</argument>
+        </arguments>
+    </type>
+    <virtualType name="pandaAccessGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="pandaAccessGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Licentia\Equity\Model\ResourceModel\Access\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">pandaAccessGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Licentia\Equity\Model\ResourceModel\Sales\ExtraCosts\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">panda_sales_extra_costs</argument>
+            <argument name="eventPrefix" xsi:type="string">panda_sales_extra_costs_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">panda_sales_extra_costs_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Licentia\Equity\Model\ResourceModel\Sales\ExtraCosts</argument>
+        </arguments>
+    </type>
+    <virtualType name="pandaExtraCostsGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="pandaExtraCostsGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Licentia\Equity\Model\ResourceModel\Sales\ExtraCosts\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">pandaSalesExtraCostsGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+</config>
