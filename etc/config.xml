@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   29/01/20, 15:22 GMT
+  ~ @modified   30/01/20, 13:20 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
@@ -46,6 +46,9 @@
             </segments>
         </panda_magna>
         <panda_prices>
+            <display>
+                <prices>price</prices>
+            </display>
             <segment_prices>
                 <percentage>0</percentage>
             </segment_prices>

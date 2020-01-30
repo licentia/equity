@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   30/01/20, 13:19 GMT
  *
  */
 
@@ -104,9 +104,9 @@ class FinalPrice
      * @param \Magento\Catalog\Model\Product $product
      * @param                                $result
      *
-     * @return bool
+     * @return bool|float|mixed|string|null
      */
-    public function afterGetPrice(\Magento\Catalog\Model\Product $product, $result)
+    protected function getProductPrice(\Magento\Catalog\Model\Product $product, $result)
     {
 
         \Magento\Framework\Profiler::start('PANDA GET PRODUCT PRICE: ' . $product->getSku());
@@ -114,8 +114,6 @@ class FinalPrice
         $minPrice = null;
         $maxPrice = null;
         $price = null;
-        #$customerId = isset($_SESSION['customer_base']['customer_id']) ? $_SESSION['customer_base']['customer_id'] : null;
-        #$customerGroupId = isset($_SESSION['customer_base']['customer_group_id']) ? $_SESSION['customer_base']['customer_group_id'] : null;
 
         $customerId = $this->customerSession->getId();
         $customerGroupId = $this->customerSession->getCustomerGroupId();
@@ -199,5 +197,37 @@ class FinalPrice
         \Magento\Framework\Profiler::stop();
 
         return (float) $result;
+    }
+
+    /**
+     * @param \Magento\Catalog\Model\Product $product
+     * @param                                $result
+     *
+     * @return bool
+     */
+    public function afterGetSpecialPrice(\Magento\Catalog\Model\Product $product, $result)
+    {
+
+        if ($this->scope->getValue('panda_prices/display/prices') == 'special_price') {
+            return $this->getProductPrice($product, $result);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param \Magento\Catalog\Model\Product $product
+     * @param                                $result
+     *
+     * @return bool
+     */
+    public function afterGetPrice(\Magento\Catalog\Model\Product $product, $result)
+    {
+
+        if ($this->scope->getValue('panda_prices/display/prices') == 'price') {
+            return $this->getProductPrice($product, $result);
+        }
+
+        return $result;
     }
 }
