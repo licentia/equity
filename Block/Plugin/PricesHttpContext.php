@@ -20,22 +20,18 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   17/02/20, 16:56 GMT
  *
  */
 
 namespace Licentia\Equity\Block\Plugin;
 
-use Magento\Framework\App\Action\AbstractAction;
-use Magento\Framework\App\RequestInterface;
-use Magento\Framework\App\Http\Context as HttpContext;
-
 /**
- * Class PricesHttpContext
+ * Class HttpContext
  *
- * @package Licentia\Equity\Block\Plugin
+ * @package Licentia\Panda\Block\Plugin
  */
-class PricesHttpContext
+class HttpContext
 {
 
     /**
@@ -54,38 +50,29 @@ class PricesHttpContext
     protected $segments;
 
     /**
-     * @var HttpContext
-     */
-    protected $httpContext;
-
-    /**
-     * PricesHttpContext constructor.
+     * PageCache constructor.
      *
      * @param Segments                                           $segments
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface
      * @param \Magento\Customer\Model\Session                    $customerSession
-     * @param HttpContext                                        $httpContext
      */
     public function __construct(
         \Licentia\Equity\Block\Plugin\Segments $segments,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface,
-        \Magento\Customer\Model\Session $customerSession,
-        HttpContext $httpContext
+        \Magento\Customer\Model\Session $customerSession
     ) {
 
-        $this->httpContext = $httpContext;
         $this->customerSession = $customerSession;
         $this->scope = $scopeConfigInterface;
         $this->segments = $segments;
     }
 
     /**
-     * @param AbstractAction   $subject
-     * @param RequestInterface $request
+     * @param \Magento\Framework\App\Http\Context $subject
      *
      * @return bool
      */
-    public function beforeDispatch(AbstractAction $subject, RequestInterface $request)
+    public function beforeGetVaryString(\Magento\Framework\App\Http\Context $subject)
     {
 
         $customerId = $this->customerSession->getId();
@@ -94,7 +81,7 @@ class PricesHttpContext
         if ((!$this->scope->isSetFlag('panda_magna/prices/enabled') &&
              !$this->scope->isSetFlag('panda_magna/segments/acl')) ||
             !$customerId) {
-            return;
+            return true;
         }
 
         $cacheKey = [];
@@ -111,7 +98,8 @@ class PricesHttpContext
 
         $result = implode(',', $cacheKey);
 
-        $this->httpContext->setValue('CONTEXT_PANDA', $result, 0);
+        $subject->setValue('CONTEXT_PANDA', $result, '');
 
+        return true;
     }
 }
