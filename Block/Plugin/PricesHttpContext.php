@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   17/02/20, 16:56 GMT
+ * @modified   25/02/20, 02:19 GMT
  *
  */
 
@@ -31,7 +31,7 @@ namespace Licentia\Equity\Block\Plugin;
  *
  * @package Licentia\Panda\Block\Plugin
  */
-class HttpContext
+class PricesHttpContext
 {
 
     /**
