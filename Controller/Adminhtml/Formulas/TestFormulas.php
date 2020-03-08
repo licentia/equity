@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   06/03/20, 15:01 GMT
  *
  */
 
@@ -161,10 +161,14 @@ class TestFormulas extends \Licentia\Equity\Controller\Adminhtml\Formulas
                     );
                 } catch (\Exception $e) {
 
-                    $form['error'] = __('There is an error in your formula. Please make sure you only use variables and mathematical symbols');
+                    $form['error'] = __('There is an error in your formula. Please make sure you only use variables and mathematical symbols: + - * / ( )');
                 }
 
-                if ($result) {
+                if (null === $result) {
+                    $form['error'] = __('Your formula is returning a null. Perhaps using stats that are empty');
+                }
+
+                if (isset($result) && !$result !== null) {
                     $form['result'] = $result['result'];
 
                     if (isset($result['kpis'])) {

@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   06/03/20, 14:59 GMT
  *
  */
 
@@ -107,9 +107,9 @@ class Math extends \Magento\Framework\App\Helper\AbstractHelper
 
         $select = $connection->select()
                              ->from(
-                                 $resource->getTable('sales_order_item'),
+                                 $resource->getTable('sales_invoice_item'),
                                  [
-                                     'qty_invoiced' => new \Zend_Db_Expr('SUM(qty_invoiced)'),
+                                     'qty_invoiced' => new \Zend_Db_Expr('SUM(total_qty)'),
                                      'min_price'    => new \Zend_Db_Expr('MIN(base_price * base_to_global_rate )'),
                                      'avg_price'    => new \Zend_Db_Expr('AVG(base_price * base_to_global_rate )'),
                                      'max_price'    => new \Zend_Db_Expr('MAX(base_price * base_to_global_rate )'),
@@ -117,14 +117,14 @@ class Math extends \Magento\Framework\App\Helper\AbstractHelper
                              )
                              ->join(
                                  $resource->getTable('sales_invoice'),
-                                 $resource->getTable('sales_invoice') . 'entity_id=' . $resource->getTable(
-                                     'sales_order_item'
-                                 ) . 'parent_id',
+                                 $resource->getTable('sales_invoice') . '.entity_id=' . $resource->getTable(
+                                     'sales_invoice_item'
+                                 ) . '.parent_id',
                                  []
                              )
                              ->where('sku=?', $sku)
                              ->where(
-                                 "DATE_FORMAT(created_at , '$format') = ?",
+                                 "DATE_FORMAT({$resource->getTable('sales_invoice')}.created_at , '$format') = ?",
                                  $this->dateFactory->create()->gmtDate()
                              )
                              ->limit(1);
