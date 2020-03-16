@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   06/03/20, 15:04 GMT
+  ~ @modified   16/03/20, 19:43 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -401,7 +401,7 @@
             </group>
             <group id="products" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="20">
                 <label>Products</label>
-                <comment>Please check the manual for more information on how to setup product pricing</comment>
+                <comment>ATTENTION: Custom prices are only available to logged-in customers.Please check the manual for more information on how to setup product pricing</comment>
                 <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
@@ -501,6 +501,7 @@
             </group>
             <group id="customers" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="20">
                 <label>Customers</label>
+                <comment>ATTENTION: Custom prices are only available to logged-in customers.Please check the manual for more information on how to setup product pricing</comment>
                 <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>

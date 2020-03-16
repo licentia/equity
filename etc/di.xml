@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   29/01/20, 15:22 GMT
+  ~ @modified   16/03/20, 19:35 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
@@ -43,7 +43,7 @@
     </type>
     -->
 
-    <type name="Magento\Framework\App\Action\AbstractAction">
+    <type name="Magento\Framework\App\Http\Context">
       <plugin name="panda_segments_page_cache" type="Licentia\Equity\Block\Plugin\PricesHttpContext" sortOrder="1000"/>
     </type>
 

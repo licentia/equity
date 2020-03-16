@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   06/03/20, 15:01 GMT
+ * @modified   16/03/20, 19:24 GMT
  *
  */
 
@@ -151,6 +151,7 @@ class TestFormulas extends \Licentia\Equity\Controller\Adminhtml\Formulas
                 }
             }
 
+            $result = false;
             if (!isset($form['error'])) {
 
                 try {

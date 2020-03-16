@@ -19,9 +19,9 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   12/03/20, 17:01 GMT
+  ~ @modified   16/03/20, 19:45 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Licentia_Equity" setup_version="1.0.58"/>
+    <module name="Licentia_Equity" setup_version="1.0.59"/>
 </config>
