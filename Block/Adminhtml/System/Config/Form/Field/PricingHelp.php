@@ -20,18 +20,18 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   18/03/20, 05:48 GMT
+ * @modified   18/03/20, 05:31 GMT
  *
  */
 
 namespace Licentia\Equity\Block\Adminhtml\System\Config\Form\Field;
 
 /**
- * Class Formulas
+ * Class PricingHelp
  *
- * @package Licentia\Panda\Block\Adminhtml\System\Config\Form\Field
+ * @package Licentia\Equity\Block\Adminhtml\System\Config\Form\Field
  */
-class Formulas extends \Magento\Config\Block\System\Config\Form\Field
+class PricingHelp extends \Magento\Config\Block\System\Config\Form\Field
 {
 
     /**
@@ -59,10 +59,10 @@ class Formulas extends \Magento\Config\Block\System\Config\Form\Field
         newWindow.focus();
     }
 }</script>';
-        $url = $this->getUrl('pandae/formulas/testFormulas');
+        $url = $this->getUrl('pandae/formulas/help');
 
-        return $js . '<style type="text/css">#row_panda_prices_products_help > td.label, #row_panda_prices_customers_help > td.label > label {visibility:hidden} #row_panda_prices_test_formulas td.label label{display:none;}</style>
-           <br><br><span><span><span> <button  onclick="PopupCenter(\'' . $url . '\',\'Panda\',\'820\',\'850\')" class="scalable" type="button" >
-            ' . __('Open Product Pricing Formula Tester') . '</button></span></span></span><br><br><br><br>';
+        return $js . '<style type="text/css">#row_panda_prices_test_formulas td.label label{display:none;}</style>
+           <span><span><span> <button  onclick="PopupCenter(\'' . $url . '\',\'Panda\',\'820\',\'850\')" class="scalable" type="button" >
+            ' . __('Open Pricing Helper') . '</button></span></span></span>';
     }
 }

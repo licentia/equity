@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   16/03/20, 19:24 GMT
+ * @modified   18/03/20, 05:29 GMT
  *
  */
 
@@ -197,6 +197,12 @@ class TestFormulas extends \Licentia\Equity\Controller\Adminhtml\Formulas
                        ->createBlock('\Magento\Framework\View\Element\Template')
                        ->setTemplate('Licentia_Equity::formulas/test.phtml')
                        ->setData('form', $form)
+        );
+
+        $resultPage->addContent(
+            $resultPage->getLayout()
+                       ->createBlock('\Magento\Framework\View\Element\Template')
+                       ->setTemplate('Licentia_Equity::help/pricing.phtml')
         );
 
         return $resultPage;

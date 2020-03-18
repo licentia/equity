@@ -1,0 +1,139 @@
+<style>
+    .page-wrapper {
+        width: 100%;
+        margin: 0 !important;
+    }
+
+    header, footer {
+        display: none;
+    }
+
+    body {
+        padding: 10px;
+        min-width: 800px;
+    }
+
+    .menu-wrapper {
+        display: none;
+    }
+
+    div.content {
+        padding: 10px;
+        display: grid;
+    }
+
+    div.kpis em {
+        font-style: normal;
+
+    }
+
+    .page-content {
+        padding: 1rem;
+    }
+
+    .notices-wrapper {
+        display: none;
+    }
+
+    div.kpis span {
+        display: block;
+        float: left;
+        margin: 2px;
+        border: 1px solid #dedede;
+        padding: 2px;
+        background-color: #fff;
+    }
+</style>
+
+<hr>
+<div class="content panda_autocomplete">
+    <h1><?= /* @noEscape */
+        __('Pricing Variables') ?></h1>
+    <table class="data-grid" style="width: 100%; ">
+        <thead>
+        <tr class="headings">
+            <th class="data-grid-th "><?= __('Variable') ?></th>
+            <th class="data-grid-th "><?= __('Info') ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{p.ATTRIBUTE_CODE}</td>
+            <td>Any product attribute. eg.: {p.price}, {p.cost}, {p.margin}</td>
+        </tr>
+        <tr>
+            <td>{c.ATTRIBUTE_CODE}</td>
+            <td>Any customer Attributes. eg.: {c.discount_rate}
+            </td>
+        </tr>
+        <tr>
+            <td>{e.CUSTOMER_KPI}</td>
+            <td>All customer KPI fields. eg.: {e.number_orders}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><strong><?= __('Statistical sales') ?></strong></td>
+        </tr>
+        <tr>
+            <td>{sd.qty_invoiced}</td>
+            <td>Quantity invoice in that day for the product</td>
+        </tr>
+        <tr>
+            <td>{sd.min_price}</td>
+            <td>Min sale price in that day for the product</td>
+        </tr>
+        <tr>
+            <td>{sd.max_price}</td>
+            <td>Max sale price in that day for the product</td>
+        </tr>
+        <tr>
+            <td>{sd.avg_price}</td>
+            <td>Average sale price in that day for that product</td>
+        </tr>
+        <tr>
+            <td>{sm.qty_invoiced}</td>
+            <td>Quantity invoice in current month for the product</td>
+        </tr>
+        <tr>
+            <td>{sm.min_price}</td>
+            <td>Min sale price in current month for the product</td>
+        </tr>
+        <tr>
+            <td>{sm.max_price}</td>
+            <td>Max sale price in current month for the product</td>
+        </tr>
+        <tr>
+            <td>{sm.avg_price}</td>
+            <td>Average sale price in current month for that product</td>
+        </tr>
+        <tr>
+            <td>{sy.qty_invoiced}</td>
+            <td>Quantity invoice in current year for the product</td>
+        </tr>
+        <tr>
+            <td>{sy.min_price}</td>
+            <td>Min sale price in current year for the product</td>
+        </tr>
+        <tr>
+            <td>{sy.max_price}</td>
+            <td>Max sale price in current year for the product</td>
+        </tr>
+        <tr>
+            <td>{sy.avg_price}</td>
+            <td>Average sale price in current year for that product</td>
+        </tr>
+        <tr>
+            <td colspan="2"><strong><?= __('Conditional Pricing') ?></strong></td>
+        </tr>
+        <tr>
+            <td>You can use IF in the formulas</td>
+            <td>{IF {p.price} > 100}
+                {p.price} * 0.9
+                {ELSE}
+                {p.price} * 0.8
+                {/IF}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

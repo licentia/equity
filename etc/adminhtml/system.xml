@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   16/03/20, 19:43 GMT
+  ~ @modified   18/03/20, 05:46 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -386,13 +386,13 @@
             <tab>licentia</tab>
             <resource>Licentia_Equity::config_prices</resource>
             <group id="test" translate="label comment" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="1">
-                <label>Test Formulas</label>
+                <label>Test Product Pricing Formulas</label>
                 <field id="formulas" sortOrder="10" showInDefault="1" type="label" showInStore="0" showInWebsite="1" translate="label comment">
                     <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Formulas</frontend_model>
                 </field>
             </group>
             <group id="display" translate="label comment" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="1">
-                <label>Display New Prices</label>
+                <label>Display New Product Prices</label>
                 <field id="prices" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <source_model>\Licentia\Equity\Model\Source\Prices</source_model>
                     <label>Display Prices Section</label>
@@ -400,12 +400,15 @@
                 </field>
             </group>
             <group id="products" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="20">
-                <label>Products</label>
-                <comment>ATTENTION: Custom prices are only available to logged-in customers.Please check the manual for more information on how to setup product pricing</comment>
+                <label>Product Prices</label>
+                <comment>ATTENTION: Custom prices are only available to logged-in customers. Please check the manual for more information on how to setup product pricing</comment>
                 <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                     <comment>Enable Product Prices per Customer</comment>
+                </field>
+                <field id="help" sortOrder="10" showInDefault="1" type="label" showInStore="0" showInWebsite="1" translate="label comment">
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Formulas</frontend_model>
                 </field>
                 <field id="min_price" sortOrder="40" showInDefault="1" type="textarea" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Global Min Price</label>
@@ -441,8 +444,7 @@
                 </field>
                 <field id="round_up_99_decimals" sortOrder="80" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Round Upper Values to xx.99</label>
-                    <comment>The value that will make the price to round to xx.99. Eg: if inserted 50 and the product that costs 1.55 will see it's price
-                        rounded to 1.99
+                    <comment>The value that will make the price to round to xx.99. Eg: if inserted 50 and the product that costs 1.55 will see it's price rounded to 1.99
                     </comment>
                     <depends>
                         <field id="round_up_99">1</field>
@@ -500,12 +502,15 @@
                 </field>
             </group>
             <group id="customers" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="20">
-                <label>Customers</label>
-                <comment>ATTENTION: Custom prices are only available to logged-in customers.Please check the manual for more information on how to setup product pricing</comment>
+                <label>Customers Prices</label>
+                <comment>ATTENTION: Custom prices are only available to logged-in customers. Please check the manual for more information on how to setup product pricing</comment>
                 <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                     <comment>Enable Product Prices per Customer</comment>
+                </field>
+                <field id="help" sortOrder="10" showInDefault="1" type="label" showInStore="0" showInWebsite="1" translate="label comment">
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Formulas</frontend_model>
                 </field>
                 <!--
                 <field id="customer_attribute" sortOrder="20" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
@@ -534,7 +539,6 @@
                     <validate>required-entry</validate>
                     <comment>Independently of the Product Price Formula result is, the product price can never be higher than the result of this formula</comment>
                 </field>
-
                 <field id="price" sortOrder="60" showInDefault="1" type="textarea" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Product Price Formula</label>
                     <depends>
