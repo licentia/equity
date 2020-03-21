@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   18/03/20, 05:46 GMT
+  ~ @modified   21/03/20, 22:51 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -466,7 +466,7 @@
                         <field id="enabled">1</field>
                     </depends>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>If the product price is something like 80.00, lower it to 79.99</comment>
+                    <comment>If the resulting product price from the formula is something like 80.00, lower it to 79.99</comment>
                 </field>
                 <field id="round_up_49" sortOrder="100" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Round Values to xx.49</label>

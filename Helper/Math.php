@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   06/03/20, 14:59 GMT
+ * @modified   19/03/20, 14:52 GMT
  *
  */
 
@@ -246,20 +246,21 @@ class Math extends \Magento\Framework\App\Helper\AbstractHelper
                 return null;
             }
         }
-        if ($this->evaluate) {
+        #if ($this->evaluate) {
 
-            $result = $this->evaluateExpression($expression);
+        $result = $this->evaluateExpression($expression);
 
-            if (is_float($result) || is_numeric($result)) {
-                if ($scope == 'global') {
-                    $this->cacheManager->getFrontend()->save((string) $result, $cacheKey);
-                }
-
-                $customerSession->setData($cacheKey, $result);
-
-                return $result;
+        if (is_float($result) || is_numeric($result)) {
+            if ($scope == 'global') {
+                $this->cacheManager->getFrontend()->save((string) $result, $cacheKey);
             }
+
+            $customerSession->setData($cacheKey, $result);
+
+            return $result;
         }
+
+        #}
 
         return null;
     }
