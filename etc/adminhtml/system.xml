@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   21/03/20, 22:51 GMT
+  ~ @modified   23/03/20, 16:02 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -373,7 +373,7 @@
                     <source_model>Magento\Directory\Model\Config\Source\Allregion</source_model>
                     <comment>Ignored if Region type not selected above</comment>
                 </field>
-                <field id="search" sortOrder="80" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="0" translate="label comment">
+                <field id="search" sortOrder="80" showInDefault="1" type="text" showInStore="0" showInWebsite="0" translate="label comment">
                     <label>Minimum number of search results for Search Performance</label>
                     <validate>required-entry validate-digits validate-digits-range digits-range-50-100000</validate>
                     <comment>Do not build reports for terms searched less than X times. Having a lower number will increase the indexing time for search perforamnce reports</comment>

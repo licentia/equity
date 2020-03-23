@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   19/03/20, 14:52 GMT
+ * @modified   23/03/20, 16:26 GMT
  *
  */
 
@@ -37,7 +37,7 @@ use Magento\Framework\App\Helper\Context;
 class Math extends \Magento\Framework\App\Helper\AbstractHelper
 {
 
-    const CONSTRUCTION_IF_PATTERN = '/{if\s*(.*?)}?(.*?)({else}(.*?))?{\\/if\s*}/si';
+    const CONSTRUCTION_IF_PATTERN = '/{{if\s*(.*?)}}(.*?)({{else}}(.*?))?{{\\/if\s*}}/si';
 
     /**
      * @var \Magento\Framework\App\CacheInterface
@@ -175,8 +175,7 @@ class Math extends \Magento\Framework\App\Helper\AbstractHelper
         if ($customerSession->getCustomer()->getData('panda_price_expression')) {
             $expression = $customerSession->getCustomer()->getData('panda_price_expression');
         }
-
-        if (stripos($expression, '{if') !== false) {
+        if (stripos($expression, '{{if') !== false) {
             preg_match_all(self::CONSTRUCTION_IF_PATTERN, $expression, $constructions, PREG_SET_ORDER);
 
             foreach ($constructions as $eval) {
@@ -283,7 +282,7 @@ class Math extends \Magento\Framework\App\Helper\AbstractHelper
         }
 
         $expression = preg_replace('/[\x00-\x1F\x7F]/u', '', $expression);
-        if (stripos($expression, '{if') !== false) {
+        if (stripos($expression, '{{if') !== false) {
             preg_match_all(self::CONSTRUCTION_IF_PATTERN, $expression, $constructions, PREG_SET_ORDER);
 
             foreach ($constructions as $eval) {
