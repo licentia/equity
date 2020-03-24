@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   30/01/20, 13:19 GMT
+ * @modified   24/03/20, 18:03 GMT
  *
  */
 
@@ -170,17 +170,21 @@ class FinalPrice
                         $price >= $products['round_up_99_min']
                         && $decimals > floatval('0.' . $products['round_up_99_decimals'])
                     ) {
-                        $price = floor($price) . '.99';
+                        if ($products['round_up_99'] == 1) {
+                            $price = floor($price) . '.99';
+                        }
                     }
 
                     if (isset($products['round_up_49'], $products['round_up_49_min'], $products['round_up_49_decimals']) &&
                         $price >= $products['round_up_49_min'] &&
                         $decimals > floatval('0.' . $products['round_up_49_decimals'])
                     ) {
-                        $price = floor($price) . '.49';
+                        if ($products['round_up_49'] == 1) {
+                            $price = floor($price) . '.49';
+                        }
                     }
 
-                    if (isset($products['round_down_99']) && $decimals == 0) {
+                    if (isset($products['round_down_99']) && $products['round_down_99'] == 1 && $decimals == 0) {
                         $price = $price - 0.01;
                     }
                 }
