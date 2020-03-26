@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   23/03/20, 16:02 GMT
+  ~ @modified   26/03/20, 19:55 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -432,7 +432,7 @@
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
-                    <comment>How should we calculate the product price. Please make sure you only use variables and mathematical symbols: + - * / ( )</comment>
+                    <comment>How should we calculate the product price. Please make sure you only use variables and mathematical symbols: + - * / ( ). If you want to use customer variables, please use the section below</comment>
                 </field>
                 <field id="round_up_99" sortOrder="70" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Round Values to xx.99</label>
@@ -574,13 +574,13 @@
                     </depends>
                     <comment>Do not round up product prices to xx.99 if the product price is lower than this amount</comment>
                 </field>
-                <field id="round_down_99" sortOrder="120" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
+                <field id="round_down_99" sortOrder="120" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Round down to .99 on non-decimal prices</label>
-                    <validate>required-entry</validate>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
-                    <comment>ie. if the product price is 80.00, lower it to 79.99</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If the resulting product price from the formula is something like 80.00, lower it to 79.99</comment>
                 </field>
                 <field id="round_up_49" sortOrder="100" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Round Values to xx.49</label>

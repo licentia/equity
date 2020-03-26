@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   23/03/20, 16:26 GMT
+ * @modified   24/03/20, 18:42 GMT
  *
  */
 
@@ -138,6 +138,44 @@ class Math extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * @param $expression
+     *
+     * @return bool|null
+     */
+    public function evaluateIfExpression($expression)
+    {
+
+        $expression = str_replace(' ', '', $expression);
+        $parts = preg_split('/(<|<=|=|>|>=)/', $expression, 0, PREG_SPLIT_DELIM_CAPTURE);
+
+        if (count($parts) != 3) {
+            return null;
+        }
+
+        switch ($parts[1]) {
+            CASE '>':
+                return $parts[0] > $parts[2] ? true : false;
+                break;
+            CASE '>=':
+                return $parts[0] >= $parts[2] ? true : false;
+                break;
+            CASE '=':
+                return $parts[0] == $parts[2] ? true : false;
+                break;
+            CASE '<':
+                return $parts[0] < $parts[2] ? true : false;
+                break;
+            CASE '<=':
+                return $parts[0] <= $parts[2] ? true : false;
+                break;
+            default:
+                return null;
+        }
+
+        return null;
+    }
+
+    /**
      * @param \Magento\Catalog\Model\Product  $product
      * @param \Magento\Customer\Model\Session $customerSession
      * @param                                 $expression
@@ -194,8 +232,11 @@ class Math extends \Magento\Framework\App\Helper\AbstractHelper
                 } else {
                     $ifCondition = preg_replace('/[^0-9()&><=.]/si', '', $ifCondition);
 
-                    #$ifCondition = eval('return ' . $ifCondition . ' ;');
-                    $ifCondition = $this->evaluateExpression($ifCondition);
+                    $ifCondition = $this->evaluateIfExpression($ifCondition);
+
+                    if ($ifCondition === null) {
+                        return null;
+                    }
 
                     if (!$ifCondition && isset($eval[4])) {
                         $expression = $this->replaceInExpression($eval[0], $eval[4], $expression);

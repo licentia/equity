@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   16/03/20, 19:37 GMT
+ * @modified   26/03/20, 19:45 GMT
  *
  */
 
@@ -90,7 +90,7 @@ class PricesHttpContext
             $cacheKey[] = sha1($customerGroupId);
         }
 
-        if ($this->scope->isSetFlag('panda_prices/customer/enabled')) {
+        if ($this->scope->isSetFlag('panda_prices/customers/enabled')) {
             $cacheKey[] = 'customer';
             $cacheKey[] = sha1($customerId);
         }

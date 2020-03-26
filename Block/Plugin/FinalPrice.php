@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   24/03/20, 18:03 GMT
+ * @modified   26/03/20, 20:02 GMT
  *
  */
 
@@ -114,7 +114,7 @@ class FinalPrice
         $minPrice = null;
         $maxPrice = null;
         $price = null;
-
+        $products = null;
         $customerId = $this->customerSession->getId();
         $customerGroupId = $this->customerSession->getCustomerGroupId();
 
@@ -122,11 +122,29 @@ class FinalPrice
             ($this->customerSession->getCustomerId() &&
              (bool) $this->customerSession->getCustomer()->getData('panda_prices_disabled') == false)
         ) {
+
             if ($this->scope->isSetFlag('panda_prices/products/enabled')) {
                 $products = $this->scope->getValue(
                     'panda_prices/products',
                     \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE
                 );
+                if ($product->getData('panda_price_expression')) {
+                    $products['price'] = $product->getData('panda_price_expression');
+                }
+
+            }
+
+            if ($this->scope->isSetFlag('panda_prices/customers/enabled')) {
+                $products = $this->scope->getValue(
+                    'panda_prices/customers',
+                    \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE
+                );
+                if ($this->customerSession->getData('panda_price_expression')) {
+                    $products['price'] = $this->customerSession->getCustomer()->getData('panda_price_expression');
+                }
+            }
+
+            if (is_array($products)) {
 
                 $customerGroups = explode(',', $products['customer_groups']);
                 $customerGroups = array_filter($customerGroups);
@@ -142,7 +160,7 @@ class FinalPrice
                     'global'
                 );
 
-                if ($price) {
+                if ($price >= 0) {
                     $minPrice = $this->mathHelper->getEvaluatedProductPriceExpression(
                         $product,
                         $this->customerSession,
@@ -156,13 +174,6 @@ class FinalPrice
                         $products['max_price'],
                         'global'
                     );
-
-                    if ($price && $minPrice) {
-                        $price = max($price, $minPrice);
-                    }
-                    if ($price && $maxPrice) {
-                        $price = min($price, $maxPrice);
-                    }
 
                     $decimals = $price - floor($price);
 
@@ -188,10 +199,17 @@ class FinalPrice
                         $price = $price - 0.01;
                     }
                 }
-            }
 
-            if ($price) {
-                $result = $price;
+                if ($price) {
+                    if ($minPrice) {
+                        $price = max($price, $minPrice);
+                    }
+                    if ($maxPrice) {
+                        $price = min($price, $maxPrice);
+                    }
+
+                    $result = $price;
+                }
             }
         }
 

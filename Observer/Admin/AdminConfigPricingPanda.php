@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   21/03/20, 22:50 GMT
+ * @modified   26/03/20, 20:05 GMT
  *
  */
 
@@ -66,6 +66,19 @@ class AdminConfigPricingPanda implements ObserverInterface
             if ($this->scopeConfig->isSetFlag('panda_prices/products/enabled')) {
 
                 $formula = $this->scopeConfig->getValue('panda_prices/products/price');
+
+                if (stripos($formula, '{e.') !== false || stripos($formula, '{c.') !== false) {
+                    throw new \Magento\Framework\Exception\LocalizedException(__('Customer variables cannot be used in the "Product Prices" section. Use the "Customer Prices" section'));
+                }
+
+                if (stripos($formula, '{') === false && stripos($formula, '}') === false) {
+                    throw new \Magento\Framework\Exception\LocalizedException(__('A variable is required in your pricing formula. Eg: {p.price}'));
+                }
+
+            }
+            if ($this->scopeConfig->isSetFlag('panda_prices/customers/enabled')) {
+
+                $formula = $this->scopeConfig->getValue('panda_prices/customers/price');
 
                 if (stripos($formula, '{') === false && stripos($formula, '}') === false) {
                     throw new \Magento\Framework\Exception\LocalizedException(__('A variable is required in your pricing formula. Eg: {p.price}'));
