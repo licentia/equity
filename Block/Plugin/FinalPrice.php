@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   26/03/20, 20:02 GMT
+ * @modified   27/03/20, 02:19 GMT
  *
  */
 
@@ -128,7 +128,7 @@ class FinalPrice
                     'panda_prices/products',
                     \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE
                 );
-                if ($product->getData('panda_price_expression')) {
+                if (is_array($products) && $product->getData('panda_price_expression')) {
                     $products['price'] = $product->getData('panda_price_expression');
                 }
 
@@ -139,7 +139,7 @@ class FinalPrice
                     'panda_prices/customers',
                     \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE
                 );
-                if ($this->customerSession->getData('panda_price_expression')) {
+                if (is_array($products) && $this->customerSession->getCustomer()->getData('panda_price_expression')) {
                     $products['price'] = $this->customerSession->getCustomer()->getData('panda_price_expression');
                 }
             }
