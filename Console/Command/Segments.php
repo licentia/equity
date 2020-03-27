@@ -20,12 +20,13 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   27/03/20, 15:23 GMT
  *
  */
 
 namespace Licentia\Equity\Console\Command;
 
+use Licentia\Reports\Model\Indexer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -42,6 +43,11 @@ class Segments extends Command
     const CUSTOMER_ARGUMENT = 'customer';
 
     /**
+     * @var \Licentia\Reports\Model\IndexerFactory
+     */
+    protected $indexer;
+
+    /**
      * @var \Licentia\Equity\Model\SegmentsFactory
      */
     protected $segmentsFactory;
@@ -54,15 +60,18 @@ class Segments extends Command
     /**
      * Segments constructor.
      *
+     * @param \Licentia\Reports\Model\IndexerFactory $indexer
      * @param \Licentia\Equity\Helper\Data           $pandaHelper
      * @param \Licentia\Equity\Model\SegmentsFactory $pandaFactory
      */
     public function __construct(
+        \Licentia\Reports\Model\IndexerFactory $indexer,
         \Licentia\Equity\Helper\Data $pandaHelper,
         \Licentia\Equity\Model\SegmentsFactory $pandaFactory
     ) {
 
         parent::__construct();
+        $this->indexer = $indexer->create();
         $this->pandaHelper = $pandaHelper;
         $this->segmentsFactory = $pandaFactory;
     }
@@ -91,6 +100,12 @@ class Segments extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
+        if (!$this->indexer->canReindex('segments')) {
+            throw new \RuntimeException("Indexer status does not allow reindexing");
+        }
+
+        $this->indexer->updateIndexStatus(Indexer::STATUS_WORKING, 'segments');
 
         $start = date_create($this->pandaHelper->gmtDate());
         $output->writeln("Segments | ");
@@ -152,6 +167,8 @@ class Segments extends Command
 
         $end = date_create($this->pandaHelper->gmtDate());
         $diff = date_diff($end, $start);
+
+        $this->indexer->updateIndexStatus(Indexer::STATUS_VALID, 'segments');
 
         $output->writeln("Segments | FINISHED: " . $this->pandaHelper->gmtDate());
         if ($customerId) {

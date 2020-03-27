@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   27/03/20, 15:20 GMT
  *
  */
 
@@ -352,6 +352,12 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
 
         $collection = $this->getCollection()->addFieldToFilter('is_active', 1);
 
+        if (!$this->getData('consoleOutput') && !$this->indexer->canReindex('segments')) {
+            throw new \RuntimeException("Indexer status does not allow reindexing");
+        }
+
+        $this->indexer->updateIndexStatus(Indexer::STATUS_WORKING, 'segments');
+
         /** @var \Licentia\Equity\Model\Segments $segment */
         foreach ($collection as $segment) {
             try {
@@ -360,6 +366,7 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
             }
         }
 
+        $this->indexer->updateIndexStatus(Indexer::STATUS_VALID, 'segments');
         return $this;
     }
 
