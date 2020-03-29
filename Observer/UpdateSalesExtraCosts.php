@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   29/03/20, 03:12 GMT
  *
  */
 
@@ -50,15 +50,15 @@ class UpdateSalesExtraCosts implements ObserverInterface
      * ConvertOrder constructor.
      *
      * @param \Licentia\Equity\Logger\Logger                 $pandaLogger
-     * @param \Licentia\Equity\Model\Sales\ExtraCostsFactory $extraCostsFctory
+     * @param \Licentia\Equity\Model\Sales\ExtraCostsFactory $extraCostsFactory
      */
     public function __construct(
         \Licentia\Equity\Logger\Logger $pandaLogger,
-        \Licentia\Equity\Model\Sales\ExtraCostsFactory $extraCostsFctory
+        \Licentia\Equity\Model\Sales\ExtraCostsFactory $extraCostsFactory
     ) {
 
         $this->pandaLogger = $pandaLogger;
-        $this->extraCostsFactory = $extraCostsFctory;
+        $this->extraCostsFactory = $extraCostsFactory;
     }
 
     /**

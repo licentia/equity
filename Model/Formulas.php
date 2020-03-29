@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   29/03/20, 03:09 GMT
  *
  */
 
@@ -1092,7 +1092,6 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
                     }
                 } catch (\Exception $e) {
                     $this->_logger->info($e);
-                    $eqNumber = substr(key(reset($sql)), 0, 1);
                     throw new \Magento\Framework\Exception\CouldNotSaveException(
                         __(
                             'Could not save Formula %1. Please check the Variables format. ' .

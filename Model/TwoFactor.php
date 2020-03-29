@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   29/03/20, 02:49 GMT
  *
  */
 
@@ -139,7 +139,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     public function checkLogin(\Magento\Framework\Event\Observer $event)
     {
 
-        if (!$this->scopeConfig->isSetFlag('panda_customer/twofactor/enable')) {
+        if (!$this->scopeConfig->isSetFlag('panda_customer/twofactor/enabled')) {
             return true;
         }
 

@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   27/03/20, 15:23 GMT
+ * @modified   29/03/20, 03:07 GMT
  *
  */
 
@@ -137,6 +137,7 @@ class Segments extends Command
 
         /** @var \Licentia\Equity\Model\Segments $segment */
         foreach ($collection as $segment) {
+            $segmentId = 0;
             try {
                 $segmentId = $segment->getId();
                 $startSegment = date_create($this->pandaHelper->gmtDate());

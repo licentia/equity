@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   26/03/20, 19:55 GMT
+  ~ @modified   29/03/20, 02:56 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -34,7 +34,7 @@
             <resource>Licentia_Equity::config_magna</resource>
             <group id="twofactor" showInWebsite="1" showInStore="1" showInDefault="1" sortOrder="10">
                 <label>General</label>
-                <field id="enable" sortOrder="10" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
+                <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>Two Factor Authentication</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                     <comment>Enable two factor authentication for customers</comment>
@@ -44,40 +44,60 @@
                     <source_model>Licentia\Panda\Model\Source\SmsSenders</source_model>
                     <comment>Select the SMS sender for the SMS</comment>
                     <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
                 </field>
                 <field id="customer_groups" sortOrder="20" showInDefault="1" type="multiselect" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>Customer Groups</label>
                     <source_model>Magento\Customer\Model\Config\Source\Group</source_model>
                     <comment>Enable Only for customers in the selected customer groups</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
                 </field>
                <field id="segments" sortOrder="30" showInDefault="1" type="multiselect" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>Customer Segments</label>
                     <source_model>Licentia\Equity\Model\Source\Segments</source_model>
                     <comment>Enable Only for customers in selected segments</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
                 </field>
                 <field id="length" sortOrder="40" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>Code Length</label>
                     <validate>required-entry validate-digits validate-digits-range digits-range-4-20</validate>
                     <comment>Between 4 and 20</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
                 </field>
                 <field id="max_resends" sortOrder="50" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>New SMS code (30 mins)</label>
                     <comment>Max Times the Customer can ask for a new Message for 30mins</comment>
                     <validate>required-entry validate-digits</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
                 </field>
                 <field id="max_resends_day" sortOrder="60" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>New SMS code (day)</label>
                     <comment>Max Times the Customer can ask for a new Message in a day</comment>
                     <validate>required-entry validate-digits</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
                 </field>
                 <field id="message" sortOrder="70" showInDefault="1" type="textarea" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>SMS Message</label>
                     <validate>required-entry</validate>
                     <comment>Variable {code} will be replaced with the actual code</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
                 </field>
             </group>
         </section>
-
         <section id="panda_magna" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
             <class>separator-top</class>
             <label>Customer Segments</label>
@@ -91,12 +111,12 @@
                     <comment>Enable ACL on Products, Categories, CMS Pages and CMS Blocks</comment>
                 </field>
                 <field id="percentage" sortOrder="20" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label">
-                    <label>Frequency percentage</label>
+                    <label>Attributes Frequency percentage</label>
                     <validate>required-entry validate-digits validate-digits-range digits-range-10-100</validate>
                     <comment>When building segments using the condition containing Frequent, what's the percentage of views it must have to be considered frequent</comment>
                 </field>
                 <field id="recent" sortOrder="30" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label">
-                    <label>Recent</label>
+                    <label>Recent Attributes</label>
                     <validate>required-entry validate-digits validate-digits-range digits-range-1-30</validate>
                     <comment>When building segments using the condition containing Recent, how many days back should we go</comment>
                 </field>
@@ -111,8 +131,69 @@
                     <comment>Log customer activity information related with these attributes</comment>
                 </field>
             </group>
-            <group id="kpis" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
-                <label>Show KPI's description Customer Page</label>
+            <group id="customer" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
+                <label>Customer Admin Page</label>
+                <field id="enabled" sortOrder="110" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Show Customer Segments</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Show customer segment when editing the customer in the admin?</comment>
+                </field>
+            </group>
+            <group id="prices" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
+                <label>Pricing</label>
+                <field id="enabled" sortOrder="110" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Enable Product Prices</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="percentage" sortOrder="110" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Prices in percentage?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>When inserting segments prices in products, if the value inserted is the segment final price, or a percentage of the product's price</comment>
+                </field>
+            </group>
+            <!--
+            <group id="info" showInWebsite="Describe to logged in admin the purpose of the KPI
+0" showInStore="0" showInDefault="1" sortOrder="100">
+                <label>Status Info</label>
+                <field id="status" sortOrder="70" showInDefault="1" type="label" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label/>
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Process</frontend_model>
+                </field>
+                <field id="rebuild" sortOrder="80" showInDefault="1" type="label" showInStore="0" showInWebsite="1">
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Rebuild</frontend_model>
+                    <comment>This process will erase ALL meta data (not actual customers/subscribers or any other Magento data) and rebuild it.</comment>
+                </field>
+            </group>
+            -->
+            <group id="maintenance" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="80">
+                <label>Maintenance</label>
+                <field id="clear_prices" sortOrder="10" showInDefault="1" type="label" showInStore="0" showInWebsite="1">
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Prices</frontend_model>
+                    <comment>Clear ALL defined Segment Prices</comment>
+                </field>
+            </group>
+        </section>
+        <section id="panda_equity" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+            <class>separator-top</class>
+            <label>Customer Equity</label>
+            <tab>licentia</tab>
+            <resource>Licentia_Equity::config_equity</resource>
+            <group id="kpis" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="10">
+                <label>Show Kpis in Customer Page</label>
+                <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Show Customer KPI's</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Show customer KPI's when editing the customer in the admin?</comment>
+                </field>
+                <field id="list" sortOrder="20" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="1" translate="label">
+                    <label>KPI's to Show</label>
+                    <source_model>Licentia\Equity\Model\Kpis</source_model>
+                    <comment>Only show selected KPI's</comment>
+                </field>
+            </group>
+            <group id="kpis_desc" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
+                <label>Show KPI's description iCustomer Page</label>
+                <comment>Describe to logged-in admins the purpose of the KPI</comment>
                 <field id="email_meta" sortOrder="10" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Customer Email</label>
                 </field>
@@ -270,63 +351,6 @@
                     <label>Formula 10 Result</label>
                 </field>
             </group>
-            <group id="customer" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
-                <label>Customer Admin Page</label>
-                <field id="enabled" sortOrder="110" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
-                    <label>Show Customer Segments</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Show customer segment when editing the customer in the admin?</comment>
-                </field>
-            </group>
-            <group id="prices" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
-                <label>Pricing</label>
-                <field id="enabled" sortOrder="110" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
-                    <label>Enable Product Prices</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="percentage" sortOrder="110" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
-                    <label>Prices in percentage?</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>When inserting segments prices in products, if the value inserted is the segment final price, or a percentage of the product's price</comment>
-                </field>
-            </group>
-            <group id="info" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="100">
-                <label>Status Info</label>
-                <field id="status" sortOrder="70" showInDefault="1" type="label" showInStore="0" showInWebsite="1" translate="label comment">
-                    <label/>
-                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Process</frontend_model>
-                </field>
-                <field id="rebuild" sortOrder="80" showInDefault="1" type="label" showInStore="0" showInWebsite="1">
-                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Rebuild</frontend_model>
-                    <comment>This process will erase ALL meta data (not actual customers/subscribers or any other Magento data) and rebuild it.</comment>
-                </field>
-            </group>
-            <group id="maintenance" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="80">
-                <label>Maintenance</label>
-                <field id="clear_prices" sortOrder="10" showInDefault="1" type="label" showInStore="0" showInWebsite="1">
-                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Prices</frontend_model>
-                    <comment>Clear ALL defined Segment Prices</comment>
-                </field>
-            </group>
-        </section>
-        <section id="panda_equity" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
-            <class>separator-top</class>
-            <label>Customer Equity</label>
-            <tab>licentia</tab>
-            <resource>Licentia_Equity::config_equity</resource>
-            <group id="kpis" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="10">
-                <label>Show Kpis in Customer Page</label>
-                <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
-                    <label>Show Customer KPI's</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Show customer KPI's when editing the customer in the admin?</comment>
-                </field>
-                <field id="list" sortOrder="20" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="1" translate="label">
-                    <label>KPI's to Show</label>
-                    <source_model>Licentia\Equity\Model\Kpis</source_model>
-                    <comment>Only show selected KPI's</comment>
-                </field>
-            </group>
             <group id="equity" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="10" translate="label">
                 <label>Customer Equity Variables</label>
                 <field id="rate" sortOrder="10" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
@@ -376,7 +400,7 @@
                 <field id="search" sortOrder="80" showInDefault="1" type="text" showInStore="0" showInWebsite="0" translate="label comment">
                     <label>Minimum number of search results for Search Performance</label>
                     <validate>required-entry validate-digits validate-digits-range digits-range-50-100000</validate>
-                    <comment>Do not build reports for terms searched less than X times. Having a lower number will increase the indexing time for search perforamnce reports</comment>
+                    <comment>Do not build reports for terms searched less than X times. Having a lower number will increase the indexing time for search performance reports</comment>
                 </field>
             </group>
         </section>

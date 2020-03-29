@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   29/03/20, 03:09 GMT
  *
  */
 
@@ -45,9 +45,6 @@ class Refresh extends \Licentia\Equity\Controller\Adminhtml\ExtraCosts
         parent::execute();
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
-
-        /** @var \Licentia\Equity\Model\Sales\ExtraCosts $model */
-        $model = $this->registry->registry('panda_extra_cost');
 
         $this->pandaHelper->scheduleEvent('panda_update_sales_extra_costs');
         $this->messageManager->addSuccessMessage(__('Costs will be updated next time your cron runs'));

@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   29/01/20, 15:22 GMT
+  ~ @modified   29/03/20, 03:12 GMT
   ~
   -->
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
@@ -663,7 +663,7 @@
                 <options class="Magento\Config\Model\Config\Source\Yesno"/>
                 <filter>select</filter>
                 <dataType>select</dataType>
-                <label translate="true">Loayl Costumer</label>
+                <label translate="true">Loyal Costumer</label>
             </settings>
         </column>
         <actionsColumn name="actions" class="Licentia\Equity\Ui\Component\Listing\Column\KpisActions">

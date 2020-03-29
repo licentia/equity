@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   29/03/20, 03:09 GMT
  *
  */
 
@@ -1361,7 +1361,6 @@ class Metadata
         if (!$commandLine) {
             $number = (int) $indexer['last_entity_id'];
             $type = $indexer['entity_type'];
-            $lastId = 0;
 
             $processNumber = (int) $this->scopeConfig->getValue('panda_magna/segments/process');
             if ($processNumber == 0) {
@@ -1402,6 +1401,7 @@ class Metadata
 
                 $orders->getSelect()->where('customer_email NOT IN (?)', $customerLabelSelect);
 
+                $lastId = 0;
                 /** @var \Magento\Sales\Model\Order $order */
                 foreach ($orders as $order) {
                     $this->orderRelated($order, true);
@@ -1449,7 +1449,7 @@ class Metadata
                                             ->select()->from($this->getTable('customer_entity'), ['email']);
 
                 $quotes->getSelect()->where('customer_email NOT IN (?)', $customerLabelSelect);
-
+                $lastId = 0;
                 foreach ($quotes as $quote) {
                     $this->quoteRelated($quote, true);
                     $lastId = $quote->getId();

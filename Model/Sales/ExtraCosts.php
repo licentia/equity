@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   28/03/20, 12:49 GMT
  *
  */
 
@@ -215,7 +215,7 @@ class ExtraCosts extends \Magento\Framework\Model\AbstractModel
 
             $updateData = [
                 'number_orders' => $totalOrders,
-                'cost'          => $globalCost / $totalOrders,
+                'cost'          => $totalOrders > 0 ? ($globalCost / $totalOrders) : 0,
                 'global_cost'   => $globalCost,
                 'updated_at'    => $this->pandaHelper->gmtDate(),
             ];

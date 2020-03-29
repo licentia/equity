@@ -21,13 +21,11 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   18/03/20, 05:33 GMT
+ * @modified   29/03/20, 03:09 GMT
  *
  */
 
 namespace Licentia\Equity\Controller\Adminhtml\Formulas;
-
-use Magento\Backend\App\Action;
 
 /**
  * Class Help

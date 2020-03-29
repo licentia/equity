@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   24/03/20, 18:42 GMT
+ * @modified   29/03/20, 03:08 GMT
  *
  */
 
@@ -172,7 +172,6 @@ class Math extends \Magento\Framework\App\Helper\AbstractHelper
                 return null;
         }
 
-        return null;
     }
 
     /**
@@ -194,9 +193,9 @@ class Math extends \Magento\Framework\App\Helper\AbstractHelper
         $expression = preg_replace('/[\x00-\x1F\x7F]/u', '', $expression);
         $cacheKey = 'panda_' . $scope . sha1('_prices_product_' . $expression . '_' . $product->getId());
 
-        if ($scope == 'global' && $this->cacheManager->getFrontend()->test($cacheKey)) {
+        #if ($scope == 'global' && $this->cacheManager->getFrontend()->test($cacheKey)) {
             #return $this->cacheManager->getFrontend()->load($cacheKey);
-        }
+        #}
 
         if ($scope == 'customer') {
             $this->loadPandaEquity($customerSession);
@@ -318,6 +317,7 @@ class Math extends \Magento\Framework\App\Helper\AbstractHelper
         $expression
     ) {
 
+        $equity = '';
         if ($customer->getId()) {
             $equity = $this->kpisFactory->create()->load($customer->getId(), 'customer_id');
         }

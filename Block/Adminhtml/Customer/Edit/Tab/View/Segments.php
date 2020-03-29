@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   29/03/20, 02:46 GMT
  *
  */
 
@@ -112,7 +112,7 @@ class Segments extends \Magento\Backend\Block\Template
     {
 
         return (string ) $this->_scopeConfig->getValue(
-            'panda_magna/kpis/' . $kpi,
+            'panda_equity/kpis_desc/' . $kpi,
             \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE
         );
     }
