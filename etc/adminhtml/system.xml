@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   29/03/20, 02:56 GMT
+  ~ @modified   20/04/20, 17:10 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -379,7 +379,11 @@
             </group>
             <group id="reports" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="10" translate="label">
                 <label>Reports</label>
-                <field id="attributes" sortOrder="50" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="1" translate="label comment">
+                <field id="product_list" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Show shortcut to product performance in product listing</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="attributes" sortOrder="40" showInDefault="1" type="multiselect" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Build Report Attributes</label>
                     <source_model>Licentia\Equity\Model\Source\AttributesSelect</source_model>
                 </field>
