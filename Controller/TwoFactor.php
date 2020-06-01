@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   01/06/20, 17:06 GMT
  *
  */
 
@@ -80,25 +80,6 @@ class TwoFactor extends \Magento\Framework\App\Action\Action
     protected $twofactorFactory;
 
     /**
-     *
-     */
-    public function execute()
-    {
-
-        $customerId = $this->customerSession->getId();
-
-        if (!$customerId) {
-            $this->customerSession->setData('panda_twofactor_required', false);
-
-            return $this->_redirect('/');
-        }
-
-        if ($this->customerSession->getData('panda_twofactor_required') !== true) {
-            return $this->_redirect('/');
-        }
-    }
-
-    /**
      * TwoFactor constructor.
      *
      * @param \Magento\Framework\App\Action\Context               $context
@@ -136,5 +117,24 @@ class TwoFactor extends \Magento\Framework\App\Action\Action
         $this->registry = $coreRegistry;
         $this->customerSession = $session;
         $this->storeManager = $storeManagerInterface;
+    }
+
+    /**
+     *
+     */
+    public function execute()
+    {
+
+        $customerId = $this->customerSession->getId();
+
+        if (!$customerId) {
+            $this->customerSession->setData('panda_twofactor_required', false);
+
+            return $this->_redirect('/');
+        }
+
+        if ($this->customerSession->getData('panda_twofactor_required') !== true) {
+            return $this->_redirect('/');
+        }
     }
 }

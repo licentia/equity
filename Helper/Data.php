@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   01/06/20, 17:04 GMT
  *
  */
 
@@ -34,6 +34,25 @@ namespace Licentia\Equity\Helper;
  */
 class Data extends \Licentia\Panda\Helper\Data
 {
+
+    /**
+     * @return mixed
+     */
+    public function getBrowser()
+    {
+
+        return $this->_getRequest()->getServer('HTTP_USER_AGENT');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwoAuthRememberCode()
+    {
+
+        return $this->encryptor->encrypt($this->customerSession->getId() . $this->_getRequest()
+                                                                                ->getServer('HTTP_USER_AGENT'));
+    }
 
     /**
      * @param \Licentia\Equity\Model\Segments $model

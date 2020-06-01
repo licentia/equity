@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/03/20, 03:11 GMT
+ * @modified   01/06/20, 17:06 GMT
  *
  */
 
@@ -47,6 +47,8 @@ class Save extends \Licentia\Equity\Controller\TwoFactor
         }
 
         $code = $this->getRequest()->getParam('sms_code');
+        $allowRemember = $this->getRequest()->getParam('sms_remember_browser');
+        $agent = $this->getRequest()->getServer('HTTP_USER_AGENT');
 
         $customer = $this->customerSession->getCustomer();
         $customerId = $customer->getId();
@@ -97,7 +99,9 @@ class Save extends \Licentia\Equity\Controller\TwoFactor
             $this->customerSession->setData('panda_twofactor_required', false);
         } else {
             try {
-                $auth = $this->twofactorFactory->create()->validateCode($customer, $code);
+
+                $hash = $this->pandaHelper->getTwoAuthRememberCode();
+                $auth = $this->twofactorFactory->create()->validateCode($customer, $code, $allowRemember, $hash);
 
                 if ($auth) {
                     $this->customerSession->setData('panda_twofactor_required', false);

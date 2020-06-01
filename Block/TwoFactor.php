@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   01/06/20, 15:56 GMT
  *
  */
 
@@ -82,6 +82,24 @@ class TwoFactor extends \Magento\Framework\View\Element\Template
 
         $this->customerSession = $session;
         $this->registry = $registry;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAllowRemember()
+    {
+
+        return $this->_scopeConfig->isSetFlag('panda_customer/twofactor/allow_remember');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDaysToRemember()
+    {
+
+        return $this->_scopeConfig->getValue('panda_customer/twofactor/remember_days');
     }
 
     /**

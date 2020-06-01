@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/03/20, 02:49 GMT
+ * @modified   01/06/20, 17:04 GMT
  *
  */
 
@@ -34,6 +34,8 @@ namespace Licentia\Equity\Model;
  */
 class TwoFactor extends \Magento\Framework\Model\AbstractModel
 {
+
+    const REMINDER_COOKIE_NAME = 'panda_auth';
 
     /**
      * Prefix of model events names
@@ -132,6 +134,47 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
+     * @param $event
+     */
+    public function logoutCustomer($event)
+    {
+
+        if (!$this->scopeConfig->isSetFlag('panda_customer/twofactor/enabled')) {
+            return;
+        }
+        /** @var \Magento\Customer\Model\Customer $customer */
+        $customer = $event->getCustomer();
+
+        $item = $this->getCollection()
+                     ->addFieldToFilter('remember_hash', $this->pandaHelper->getTwoAuthRememberCode())
+                     ->addFieldToFilter('customer_id', $customer->getId());
+
+        /** @var TwoFactor $log */
+        foreach ($item as $log) {
+            $log->setRememberHash('')
+                ->save();
+        }
+
+    }
+
+    /**
+     * @return bool
+     */
+    public function validateRemember()
+    {
+
+        $item = $this->getCollection()
+                     ->addFieldToFilter('used', 1)
+                     ->addFieldToFilter('remember_until', ['gteq' => $this->pandaHelper->gmtDate()])
+                     ->addFieldToFilter('remember_hash', $this->pandaHelper->getTwoAuthRememberCode())
+                     ->addFieldToFilter('customer_id', $this->customerSession->getCustomerId())
+                     ->getFirstItem();
+
+        return $item->getId() ? true : false;
+
+    }
+
+    /**
      * @param \Magento\Framework\Event\Observer $event
      *
      * @return bool
@@ -154,12 +197,19 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
         $groups = explode(',', $data['customer_groups']);
         $segments = explode(',', $data['segments']);
 
+        if ($data['allow_remember']) {
+            if ($this->validateRemember()) {
+                return true;
+            }
+        }
+
         if (in_array($customer->getGroupId(), $groups) ||
             array_intersect($segments, $this->pandaHelper->getCustomerSegmentsIds())) {
             $this->customerSession->setData('panda_twofactor_required', true);
 
             try {
-                $this->generateCode($customer);
+
+                $this->generateCode($this->customerSession->getCustomer());
             } catch (\Exception $e) {
                 return false;
             }
@@ -227,7 +277,12 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     {
 
         if (!$customer->getData('panda_twofactor_number')) {
-            return false;
+
+            $customer->load($customer->getId())->getData();
+
+            if (!$customer->getData('panda_twofactor_number')) {
+                return false;
+            }
         }
 
         if (!$this->canGenerateCode($customer)) {
@@ -297,12 +352,16 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     /**
      * @param \Magento\Customer\Model\Customer $customer
      * @param                                  $code
+     * @param                                  $remember
+     * @param                                  $hash
      *
      * @return bool
      */
     public function validateCode(
         \Magento\Customer\Model\Customer $customer,
-        $code
+        $code,
+        $remember,
+        $hash
     ) {
 
         $currentDate = new \DateTime($this->pandaHelper->gmtDate());
@@ -317,8 +376,16 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
                      ->addFieldToFilter('sent_at', ['gt' => $minutes])
                      ->getFirstItem();
 
-        /** @var \Licentia\Equity\Model\TwoFactor $item */
+        /** @var TwoFactor $item */
         if ($item->getId()) {
+
+            if ($remember) {
+                $days = $this->scopeConfig->getValue('panda_customer/twofactor/remember_days');
+
+                $item->setRememberHash($hash);
+                $item->setRememberUntil(strtotime('now +' . $days . ' days'));
+            }
+
             $item->setUsed(1)
                  ->setIsActive(0)
                  ->setUsedAt($this->pandaHelper->gmtDate())
@@ -381,6 +448,28 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     {
 
         return $this->setData('used', $used);
+    }
+
+    /**
+     * @param $used
+     *
+     * @return $this
+     */
+    public function setRememberHash($used)
+    {
+
+        return $this->setData('remember_hash', $used);
+    }
+
+    /**
+     * @param $used
+     *
+     * @return $this
+     */
+    public function setRememberUntil($used)
+    {
+
+        return $this->setData('remember_until', $used);
     }
 
     /**
@@ -505,6 +594,24 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     {
 
         return $this->getData('used');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRememberHash()
+    {
+
+        return $this->getData('remember_hash');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRememberUntil()
+    {
+
+        return $this->getData('remember_until');
     }
 
     /**
