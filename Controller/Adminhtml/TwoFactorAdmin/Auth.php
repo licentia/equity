@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   03/06/20, 01:47 GMT
+ * @modified   03/06/20, 19:35 GMT
  *
  */
 
@@ -62,9 +62,9 @@ class Auth extends \Licentia\Equity\Controller\Adminhtml\TwoFactorAdmin
 
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend(__('Two Factor Authentication - Admin'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Two-Factor Authentication - Admin'));
         $resultPage->addBreadcrumb(__('Sales Automation'), __('Sales Automation'));
-        $resultPage->addBreadcrumb(__('Two Factor Authentication'), __('Two Factor Authentication - Admin'));
+        $resultPage->addBreadcrumb(__('Two-Factor Authentication'), __('Two-Factor Authentication - Admin'));
 
         return $resultPage;
     }

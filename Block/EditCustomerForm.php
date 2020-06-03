@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   03/06/20, 17:07 GMT
+ * @modified   03/06/20, 19:30 GMT
  *
  */
 
@@ -35,11 +35,6 @@ use Magento\Framework\View\Element\Template;
  */
 class EditCustomerForm extends Template
 {
-
-    /**
-     * @var \Magento\Theme\Block\Html\Header\Logo
-     */
-    protected $logo;
 
     /**
      * @var \Magento\Customer\Model\Session
@@ -57,31 +52,29 @@ class EditCustomerForm extends Template
     protected $twofactorFactory;
 
     /**
-     * TwoFactor constructor.
+     * @var \Licentia\Equity\Helper\Data
+     */
+    protected $pandaHelper;
+
+    /**
+     * EditCustomerForm constructor.
      *
-     * @param \Magento\Theme\Block\Html\Header\Logo   $logo
-     * @param \Licentia\Equity\Model\TwoFactorFactory $twoFactorFactory
-     * @param \Magento\Customer\Model\Session         $session
-     * @param \Magento\Framework\Registry             $registry
-     * @param Template\Context                        $context
-     * @param array                                   $data
+     * @param \Licentia\Equity\Helper\Data    $pandaHelper
+     * @param \Magento\Customer\Model\Session $session
+     * @param Template\Context                $context
+     * @param array                           $data
      */
     public function __construct(
-        \Magento\Theme\Block\Html\Header\Logo $logo,
-        \Licentia\Equity\Model\TwoFactorFactory $twoFactorFactory,
+        \Licentia\Equity\Helper\Data $pandaHelper,
         \Magento\Customer\Model\Session $session,
-        \Magento\Framework\Registry $registry,
         Template\Context $context,
         array $data = []
     ) {
 
         parent::__construct($context, $data);
-
-        $this->logo = $logo;
-        $this->twofactorFactory = $twoFactorFactory;
+        $this->pandaHelper = $pandaHelper;
 
         $this->customerSession = $session;
-        $this->registry = $registry;
     }
 
     public function getCustomer()
@@ -90,56 +83,24 @@ class EditCustomerForm extends Template
         return $this->customerSession->getCustomer();
     }
 
-    /**
-     * @return mixed
-     */
-    public function hasCellphone()
+    public function isTwoFactorEnabled()
     {
 
-        return $this->customerSession->getCustomer()->getData('panda_twofactor_number');
+        $customer = $this->customerSession->getCustomer();
+        $data = $this->_scopeConfig->getValue(
+            'panda_customer/twofactor',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+
+        $groups = explode(',', $data['customer_groups']);
+        $segments = explode(',', $data['segments']);
+
+        if (in_array($customer->getGroupId(), $groups) ||
+            array_intersect($segments, $this->pandaHelper->getCustomerSegmentsIds())) {
+            return false;
+        }
+
+        return false;
     }
 
-    /**
-     * Get logo image URL
-     *
-     * @return string
-     */
-    public function getLogoSrc()
-    {
-
-        return $this->logo->getLogoSrc();
-    }
-
-    /**
-     * Get logo text
-     *
-     * @return string
-     */
-    public function getLogoAlt()
-    {
-
-        return $this->logo->getLogoAlt();
-    }
-
-    /**
-     * Get logo width
-     *
-     * @return int
-     */
-    public function getLogoWidth()
-    {
-
-        return $this->logo->getLogoWidth();
-    }
-
-    /**
-     * Get logo height
-     *
-     * @return int
-     */
-    public function getLogoHeight()
-    {
-
-        return $this->logo->getLogoHeight();
-    }
 }

@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   02/06/20, 17:06 GMT
+  ~ @modified   03/06/20, 19:36 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -29,15 +29,15 @@
         </tab>
         <section id="panda_customer" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
-            <label>Customer Two Factor Authentication</label>
+            <label>Two-Factor Authentication</label>
             <tab>licentia</tab>
             <resource>Licentia_Equity::config_magna</resource>
             <group id="twofactor" showInWebsite="1" showInStore="1" showInDefault="1" sortOrder="10">
-                <label>General</label>
+                <label>Two-Factor Authentication - Customers</label>
                 <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
-                    <label>Two Factor Authentication</label>
+                    <label>Two-Factor Authentication</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
-                    <comment>Enable two factor authentication for customers</comment>
+                    <comment>Enable two-factor authentication for customers</comment>
                 </field>
                 <field id="sender" sortOrder="15" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>SMS Sender</label>
@@ -114,11 +114,11 @@
                 </field>
             </group>
             <group id="twofactor_admin" showInWebsite="1" showInStore="1" showInDefault="1" sortOrder="10">
-                <label>General</label>
+                <label>Two-Factor Authentication - Admins</label>
                 <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
-                    <label>Two Factor Authentication</label>
+                    <label>Two-Factor Authentication</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
-                    <comment>Enable two factor authentication for customers</comment>
+                    <comment>Enable two-factor authentication for customers</comment>
                 </field>
                 <field id="sender" sortOrder="15" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>SMS Sender</label>

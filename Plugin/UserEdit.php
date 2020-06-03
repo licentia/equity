@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   03/06/20, 16:48 GMT
+ * @modified   03/06/20, 19:35 GMT
  *
  */
 
@@ -64,7 +64,7 @@ class UserEdit
 
         $form = $subject->getForm();
         if (is_object($form)) {
-            $fieldset = $form->addFieldset('panda_twofactor_nusmber', ['legend' => __('Two Factor Authentication')]);
+            $fieldset = $form->addFieldset('panda_twofactor_nusmber', ['legend' => __('Two-Factor Authentication')]);
             $fieldset->addField(
                 'panda_twofactor_number',
                 'text',
