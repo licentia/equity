@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -81,7 +81,7 @@ interface RecordsInterface
      *
      * @param string $record_id
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setRecordId($record_id);
@@ -99,7 +99,7 @@ interface RecordsInterface
      *
      * @param string $segment_id
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setSegmentId($segment_id);
@@ -117,7 +117,7 @@ interface RecordsInterface
      *
      * @param string $firstname
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setFirstname($firstname);
@@ -135,7 +135,7 @@ interface RecordsInterface
      *
      * @param string $lastname
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setLastname($lastname);
@@ -153,7 +153,7 @@ interface RecordsInterface
      *
      * @param string $email
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setEmail($email);
@@ -171,7 +171,7 @@ interface RecordsInterface
      *
      * @param string $customer_id
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setCustomerId($customer_id);
@@ -189,7 +189,7 @@ interface RecordsInterface
      *
      * @param string $subscriber_id
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setSubscriberId($subscriber_id);
@@ -207,7 +207,7 @@ interface RecordsInterface
      *
      * @param string $data_1
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setData1($data_1);
@@ -225,7 +225,7 @@ interface RecordsInterface
      *
      * @param string $data_2
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setData2($data_2);
@@ -243,7 +243,7 @@ interface RecordsInterface
      *
      * @param string $data_3
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setData3($data_3);
@@ -261,7 +261,7 @@ interface RecordsInterface
      *
      * @param string $data_4
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setData4($data_4);
@@ -279,7 +279,7 @@ interface RecordsInterface
      *
      * @param string $data_5
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setData5($data_5);
@@ -297,7 +297,7 @@ interface RecordsInterface
      *
      * @param string $data_6
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setData6($data_6);
@@ -315,7 +315,7 @@ interface RecordsInterface
      *
      * @param string $data_7
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setData7($data_7);
@@ -333,7 +333,7 @@ interface RecordsInterface
      *
      * @param string $data_8
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setData8($data_8);
@@ -351,7 +351,7 @@ interface RecordsInterface
      *
      * @param string $data_9
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setData9($data_9);
@@ -369,7 +369,7 @@ interface RecordsInterface
      *
      * @param string $data_10
      *
-     * @return \Licentia\Equity\Api\Data\RecordsInterface
+     * @return RecordsInterface
      */
 
     public function setData10($data_10);

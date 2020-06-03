@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -37,7 +37,7 @@ interface FormulasSearchResultsInterface extends \Magento\Framework\Api\SearchRe
     /**
      * Get Formulas list.
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface[]
+     * @return FormulasInterface[]
      */
 
     public function getItems();
@@ -45,7 +45,7 @@ interface FormulasSearchResultsInterface extends \Magento\Framework\Api\SearchRe
     /**
      * Set formula_id list.
      *
-     * @param \Licentia\Equity\Api\Data\FormulasInterface[] $items
+     * @param FormulasInterface[] $items
      *
      * @return $this
      */

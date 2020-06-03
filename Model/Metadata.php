@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/03/20, 03:09 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -93,7 +93,7 @@ class Metadata
     protected $scopeConfig;
 
     /**
-     * @var \Licentia\Equity\Logger\Logger
+     * @var \Licentia\Panda\Helper\Data
      */
     protected $logger;
 
@@ -143,7 +143,7 @@ class Metadata
     protected $registry;
 
     /**
-     * @var \Licentia\Reports\Model\Indexer
+     * @var Indexer
      */
     protected $indexer;
 
@@ -157,7 +157,7 @@ class Metadata
      * @param \Licentia\Equity\Helper\Data                                     $pandaHelper
      * @param KpisFactory                                                      $kpisFactory
      * @param SegmentsFactory                                                  $segmentsFactory
-     * @param \Licentia\Equity\Logger\Logger                                   $logger
+     * @param \Licentia\Panda\Helper\Data                                      $logger
      * @param \Magento\Sales\Model\ResourceModel\Order\CollectionFactory       $orderCollection
      * @param \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerCollection
      * @param \Magento\Customer\Model\CustomerFactory                          $customerFactory
@@ -174,13 +174,13 @@ class Metadata
      */
     public function __construct(
         \Licentia\Reports\Model\IndexerFactory $indexer,
-        \Licentia\Equity\Model\FormulasFactory $formulasFactory,
+        FormulasFactory $formulasFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManagerInterface,
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone,
         \Licentia\Equity\Helper\Data $pandaHelper,
-        \Licentia\Equity\Model\KpisFactory $kpisFactory,
-        \Licentia\Equity\Model\SegmentsFactory $segmentsFactory,
-        \Licentia\Equity\Logger\Logger $logger,
+        KpisFactory $kpisFactory,
+        SegmentsFactory $segmentsFactory,
+        \Licentia\Panda\Helper\Data $logger,
         \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollection,
         \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerCollection,
         \Magento\Customer\Model\CustomerFactory $customerFactory,
@@ -294,7 +294,7 @@ class Metadata
                 try {
                     $this->getConnection()->insert($this->getTable($table), $insert);
                 } catch (\Exception $e) {
-                    $this->logger->critical($e->getMessage());
+                    $this->pandaHelper->logException($e);
                 }
                 $select = $this->getConnection()
                                ->select()
@@ -1559,7 +1559,7 @@ class Metadata
                         $this->reviewRelated($review, true);
                     }
                 } catch (\Exception $e) {
-                    $this->logger->alert($e->getMessage());
+                    $this->pandaHelper->logException($e);
                 }
 
                 $lastCustomerId = $customer->getId();
@@ -1751,7 +1751,7 @@ class Metadata
 
         if ($segments->count() > 0) {
 
-            /** @var \Licentia\Equity\Model\Segments $segment */
+            /** @var Segments $segment */
             foreach ($segments as $segment) {
                 if (!$segment->getRealTimeUpdateCron()) {
                     $segment->updateSegmentRecords($customerId);

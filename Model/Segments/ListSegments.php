@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/03/20, 03:10 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -216,7 +216,7 @@ class ListSegments extends \Magento\Framework\Model\AbstractModel
             $segment = $this->segmentsFactory->create()->load($segmentId);
 
             try {
-                /** @var \Licentia\Equity\Model\Segments\ListSegments $record */
+                /** @var ListSegments $record */
                 foreach ($item as $record) {
                     $record->delete();
                     $segment->setData('records', $segment->getData('records') - 1)

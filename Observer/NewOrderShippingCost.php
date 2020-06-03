@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -37,9 +37,9 @@ class NewOrderShippingCost implements ObserverInterface
 {
 
     /**
-     * @var \Licentia\Equity\Logger\Logger
+     * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaLogger;
+    protected $pandaHelper;
 
     /**
      * @var \Magento\Checkout\Model\Session
@@ -49,16 +49,16 @@ class NewOrderShippingCost implements ObserverInterface
     /**
      * NewOrder constructor.
      *
-     * @param \Licentia\Equity\Logger\Logger  $pandaLogger
+     * @param \Licentia\Panda\Helper\Data     $pandaHelper
      * @param \Magento\Checkout\Model\Session $checkoutSession
      */
     public function __construct(
-        \Licentia\Equity\Logger\Logger $pandaLogger,
+        \Licentia\Panda\Helper\Data $pandaHelper,
         \Magento\Checkout\Model\Session $checkoutSession
     ) {
 
         $this->checkoutSession = $checkoutSession;
-        $this->pandaLogger = $pandaLogger;
+        $this->pandaHelper = $pandaHelper;
     }
 
     /**
@@ -81,7 +81,7 @@ class NewOrderShippingCost implements ObserverInterface
 
             $order->setData('panda_shipping_cost', $cost);
         } catch (\Exception $e) {
-            $this->pandaLogger->warning($e->getMessage());
+            $this->pandaHelper->logWarning($e);
         }
     }
 }

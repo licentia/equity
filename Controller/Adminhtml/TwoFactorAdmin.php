@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   03/06/20, 01:43 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -33,7 +33,7 @@ use Magento\Backend\App\Action;
  *
  * @package Licentia\Equity\Controller\Adminhtml
  */
-class TwoFactorAdmin extends \Magento\Backend\App\Action
+class TwoFactorAdmin extends Action
 {
 
     /**

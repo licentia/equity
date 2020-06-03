@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   27/03/20, 02:19 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -37,7 +37,7 @@ class FinalPrice
 {
 
     /**
-     * @var \Magento\Customer\Model\Session
+     * @var Session
      */
     protected $customerSession;
 

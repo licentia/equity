@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -163,7 +163,7 @@ interface FormulasInterface
      *
      * @param string $formula_id
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormulaId($formula_id);
@@ -181,7 +181,7 @@ interface FormulasInterface
      *
      * @param string $formula_1
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula1($formula_1);
@@ -199,7 +199,7 @@ interface FormulasInterface
      *
      * @param string $formula_1_name
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula1Name($formula_1_name);
@@ -217,7 +217,7 @@ interface FormulasInterface
      *
      * @param string $formula_2
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula2($formula_2);
@@ -235,7 +235,7 @@ interface FormulasInterface
      *
      * @param string $formula_2_name
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula2Name($formula_2_name);
@@ -253,7 +253,7 @@ interface FormulasInterface
      *
      * @param string $formula_3
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula3($formula_3);
@@ -271,7 +271,7 @@ interface FormulasInterface
      *
      * @param string $formula_3_name
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula3Name($formula_3_name);
@@ -289,7 +289,7 @@ interface FormulasInterface
      *
      * @param string $formula_4
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula4($formula_4);
@@ -307,7 +307,7 @@ interface FormulasInterface
      *
      * @param string $formula_4_name
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula4Name($formula_4_name);
@@ -325,7 +325,7 @@ interface FormulasInterface
      *
      * @param string $formula_5
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula5($formula_5);
@@ -343,7 +343,7 @@ interface FormulasInterface
      *
      * @param string $formula_5_name
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula5Name($formula_5_name);
@@ -361,7 +361,7 @@ interface FormulasInterface
      *
      * @param string $formula_6
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula6($formula_6);
@@ -379,7 +379,7 @@ interface FormulasInterface
      *
      * @param string $formula_6_name
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula6Name($formula_6_name);
@@ -397,7 +397,7 @@ interface FormulasInterface
      *
      * @param string $formula_7
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula7($formula_7);
@@ -415,7 +415,7 @@ interface FormulasInterface
      *
      * @param string $formula_7_name
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula7Name($formula_7_name);
@@ -433,7 +433,7 @@ interface FormulasInterface
      *
      * @param string $formula_8
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula8($formula_8);
@@ -451,7 +451,7 @@ interface FormulasInterface
      *
      * @param string $formula_8_name
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula8Name($formula_8_name);
@@ -469,7 +469,7 @@ interface FormulasInterface
      *
      * @param string $formula_9
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula9($formula_9);
@@ -487,7 +487,7 @@ interface FormulasInterface
      *
      * @param string $formula_9_name
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula9Name($formula_9_name);
@@ -505,7 +505,7 @@ interface FormulasInterface
      *
      * @param string $formula_10
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula10($formula_10);
@@ -523,7 +523,7 @@ interface FormulasInterface
      *
      * @param string $formula_10_name
      *
-     * @return \Licentia\Equity\Api\Data\FormulasInterface
+     * @return FormulasInterface
      */
 
     public function setFormula10Name($formula_10_name);

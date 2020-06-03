@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/03/20, 03:12 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -37,9 +37,9 @@ class UpdateSalesExtraCosts implements ObserverInterface
 {
 
     /**
-     * @var \Licentia\Equity\Logger\Logger
+     * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaLogger;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\Sales\ExtraCostsFactory
@@ -49,15 +49,15 @@ class UpdateSalesExtraCosts implements ObserverInterface
     /**
      * ConvertOrder constructor.
      *
-     * @param \Licentia\Equity\Logger\Logger                 $pandaLogger
+     * @param \Licentia\Panda\Helper\Data                    $pandaHelper
      * @param \Licentia\Equity\Model\Sales\ExtraCostsFactory $extraCostsFactory
      */
     public function __construct(
-        \Licentia\Equity\Logger\Logger $pandaLogger,
+        \Licentia\Panda\Helper\Data $pandaHelper,
         \Licentia\Equity\Model\Sales\ExtraCostsFactory $extraCostsFactory
     ) {
 
-        $this->pandaLogger = $pandaLogger;
+        $this->pandaHelper = $pandaHelper;
         $this->extraCostsFactory = $extraCostsFactory;
     }
 
@@ -77,7 +77,7 @@ class UpdateSalesExtraCosts implements ObserverInterface
                 $this->extraCostsFactory->create()->updateOrdersOtherCosts($order);
             }
         } catch (\Exception $e) {
-            $this->pandaLogger->warning($e->getMessage());
+            $this->pandaHelper->logWarning($e);
         }
     }
 }

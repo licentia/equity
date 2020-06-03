@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   27/03/20, 15:20 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -168,7 +168,7 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     protected function _construct()
     {
 
-        $this->_init(\Licentia\Equity\Model\ResourceModel\Segments::class);
+        $this->_init(ResourceModel\Segments::class);
     }
 
     /**
@@ -358,7 +358,7 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
 
         $this->indexer->updateIndexStatus(Indexer::STATUS_WORKING, 'segments');
 
-        /** @var \Licentia\Equity\Model\Segments $segment */
+        /** @var Segments $segment */
         foreach ($collection as $segment) {
             try {
                 $segment->updateSegmentRecords($greaterThanCustomerId);
@@ -367,6 +367,7 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
         }
 
         $this->indexer->updateIndexStatus(Indexer::STATUS_VALID, 'segments');
+
         return $this;
     }
 
@@ -675,7 +676,7 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
 
         $segments = $this->segmentsCollection->create()->addFieldToFilter('build', 1);
 
-        /** @var \Licentia\Equity\Model\Segments $segment */
+        /** @var Segments $segment */
         foreach ($segments as $segment) {
             $this->load($segment->getId())->setData('build', 2)->save();
 

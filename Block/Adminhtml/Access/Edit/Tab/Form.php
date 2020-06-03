@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -58,7 +58,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
      * @param array                                   $data
      */
     public function __construct(
-        \Licentia\Equity\Model\SegmentsFactory $segmentsFactory,
+        SegmentsFactory $segmentsFactory,
         \Licentia\Equity\Helper\Data $pandaHelper,
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,

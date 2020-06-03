@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   03/06/20, 16:19 GMT
+ * @modified   03/06/20, 17:07 GMT
  *
  */
 
@@ -33,7 +33,7 @@ use Magento\Framework\View\Element\Template;
  *
  * @package Licentia\Panda\Block
  */
-class TwoFactor extends Template
+class EditCustomerForm extends Template
 {
 
     /**
@@ -84,32 +84,10 @@ class TwoFactor extends Template
         $this->registry = $registry;
     }
 
-    /**
-     * @return bool
-     */
-    public function getAllowRemember()
+    public function getCustomer()
     {
 
-        return $this->_scopeConfig->isSetFlag('panda_customer/twofactor/allow_remember');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDaysToRemember()
-    {
-
-        return $this->_scopeConfig->getValue('panda_customer/twofactor/remember_days');
-    }
-
-    /**
-     * @return bool|int
-     */
-    public function canGenerateCode()
-    {
-
-        return $this->twofactorFactory->create()
-                                      ->canGenerateCode($this->customerSession->getCustomer());
+        return $this->customerSession->getCustomer();
     }
 
     /**

@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   03/06/20, 01:55 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -37,9 +37,9 @@ class ControllerPreDispatch implements ObserverInterface
 {
 
     /**
-     * @var \Licentia\Equity\Logger\Logger
+     * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaLogger;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Helper\Data
@@ -63,7 +63,7 @@ class ControllerPreDispatch implements ObserverInterface
      * @param \Magento\Checkout\Model\Session            $checkoutSession
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Licentia\Equity\Helper\Data               $helper
-     * @param \Licentia\Equity\Logger\Logger             $pandaLogger
+     * @param \Licentia\Panda\Helper\Data                $pandaHelper
      * @param \Magento\Framework\App\Action\Context      $context
      */
     public function __construct(
@@ -71,13 +71,13 @@ class ControllerPreDispatch implements ObserverInterface
         \Magento\Checkout\Model\Session $checkoutSession,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Licentia\Equity\Helper\Data $helper,
-        \Licentia\Equity\Logger\Logger $pandaLogger,
+        \Licentia\Panda\Helper\Data $pandaHelper,
         \Magento\Framework\App\Action\Context $context
     ) {
 
         $this->userSession = $userSession;
         $this->redirect = $context->getRedirect();
-        $this->pandaLogger = $pandaLogger;
+        $this->pandaHelper = $pandaHelper;
         $this->helper = $helper;
     }
 
@@ -121,7 +121,7 @@ class ControllerPreDispatch implements ObserverInterface
                 }
             }
         } catch (\Exception $e) {
-            $this->pandaLogger->warning($e->getMessage());
+            $this->pandaHelper->logWarning($e);
         }
     }
 }

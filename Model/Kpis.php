@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -125,7 +125,7 @@ class Kpis extends \Magento\Framework\Model\AbstractModel implements KpisInterfa
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
-        \Licentia\Equity\Model\FormulasFactory $formulasFactory,
+        FormulasFactory $formulasFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -150,7 +150,7 @@ class Kpis extends \Magento\Framework\Model\AbstractModel implements KpisInterfa
     protected function _construct()
     {
 
-        $this->_init(\Licentia\Equity\Model\ResourceModel\Kpis::class);
+        $this->_init(ResourceModel\Kpis::class);
     }
 
     /**

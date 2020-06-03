@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:09 GMT
  *
  */
 
@@ -40,9 +40,9 @@ class UpdateRealTimeSegments
     protected $scopeConfig;
 
     /**
-     * @var \Licentia\Equity\Logger\Logger
+     * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaLogger;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\SegmentsFactory
@@ -54,17 +54,17 @@ class UpdateRealTimeSegments
      *
      * @param \Licentia\Equity\Model\SegmentsFactory             $segmentsFactory
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface
-     * @param \Licentia\Equity\Logger\Logger                     $pandaLogger
+     * @param \Licentia\Panda\Helper\Data                        $pandaHelper
      */
     public function __construct(
         \Licentia\Equity\Model\SegmentsFactory $segmentsFactory,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface,
-        \Licentia\Equity\Logger\Logger $pandaLogger
+        \Licentia\Panda\Helper\Data $pandaHelper
     ) {
 
         $this->segmentsFactory = $segmentsFactory;
         $this->scopeConfig = $scopeConfigInterface;
-        $this->pandaLogger = $pandaLogger;
+        $this->pandaHelper = $pandaHelper;
     }
 
     /**
@@ -76,7 +76,7 @@ class UpdateRealTimeSegments
         try {
             return $this->segmentsFactory->create()->updateRealTimeCron();
         } catch (\Exception $e) {
-            $this->pandaLogger->warning($e->getMessage());
+            $this->pandaHelper->logException($e);
         }
 
         return true;

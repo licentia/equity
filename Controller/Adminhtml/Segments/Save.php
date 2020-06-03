@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -67,7 +67,7 @@ class Save extends \Licentia\Equity\Controller\Adminhtml\Segments
     public function __construct(
         \Magento\Cron\Model\ScheduleFactory $scheduleFactory,
         Action\Context $context,
-        \Licentia\Equity\Helper\Data $helper,
+        Data $helper,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface,

@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -312,7 +312,7 @@ interface KpisInterface
      *
      * @param string $kpi_id
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setKpiId($kpi_id);
@@ -330,7 +330,7 @@ interface KpisInterface
      *
      * @param string $numberVisits
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setNumberVisits($numberVisits);
@@ -348,7 +348,7 @@ interface KpisInterface
      *
      * @param string $percentageOrdersWithDiscount
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setPercentageOrdersWithDiscount($percentageOrdersWithDiscount);
@@ -366,7 +366,7 @@ interface KpisInterface
      *
      * @param string $customer_id
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setCustomerId($customer_id);
@@ -384,7 +384,7 @@ interface KpisInterface
      *
      * @param string $gender
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setGender($gender);
@@ -402,7 +402,7 @@ interface KpisInterface
      *
      * @param string $name
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setCustomerName($name);
@@ -420,7 +420,7 @@ interface KpisInterface
      *
      * @param string $email_meta
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setEmailMeta($email_meta);
@@ -438,7 +438,7 @@ interface KpisInterface
      *
      * @param string $subtotal
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setSubtotal($subtotal);
@@ -456,7 +456,7 @@ interface KpisInterface
      *
      * @param string $profit
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setProfit($profit);
@@ -474,7 +474,7 @@ interface KpisInterface
      *
      * @param string $cost
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setCost($cost);
@@ -492,7 +492,7 @@ interface KpisInterface
      *
      * @param string $store_id_meta
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setStoreIdMeta($store_id_meta);
@@ -510,7 +510,7 @@ interface KpisInterface
      *
      * @param string $abandoned
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setAbandoned($abandoned);
@@ -528,7 +528,7 @@ interface KpisInterface
      *
      * @param string $abandoned_date
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setAbandonedDate($abandoned_date);
@@ -546,7 +546,7 @@ interface KpisInterface
      *
      * @param string $cart_totals
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setCartTotals($cart_totals);
@@ -564,7 +564,7 @@ interface KpisInterface
      *
      * @param string $cart_number
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setCartNumber($cart_number);
@@ -582,7 +582,7 @@ interface KpisInterface
      *
      * @param string $cart_products
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setCartProducts($cart_products);
@@ -600,7 +600,7 @@ interface KpisInterface
      *
      * @param string $anniversary
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setAnniversary($anniversary);
@@ -618,7 +618,7 @@ interface KpisInterface
      *
      * @param string $age
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setAge($age);
@@ -636,7 +636,7 @@ interface KpisInterface
      *
      * @param string $dob
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setDob($dob);
@@ -654,7 +654,7 @@ interface KpisInterface
      *
      * @param string $pending_payment
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setPendingPayment($pending_payment);
@@ -672,7 +672,7 @@ interface KpisInterface
      *
      * @param string $pending_payment_date
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setPendingPaymentDate($pending_payment_date);
@@ -690,7 +690,7 @@ interface KpisInterface
      *
      * @param string $last_order
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setLastOrder($last_order);
@@ -708,7 +708,7 @@ interface KpisInterface
      *
      * @param string $last_order_date
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setLastOrderDate($last_order_date);
@@ -726,7 +726,7 @@ interface KpisInterface
      *
      * @param string $first_order
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setFirstOrder($first_order);
@@ -744,7 +744,7 @@ interface KpisInterface
      *
      * @param string $first_order_date
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setFirstOrderDate($first_order_date);
@@ -762,7 +762,7 @@ interface KpisInterface
      *
      * @param string $last_review
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setLastReview($last_review);
@@ -780,7 +780,7 @@ interface KpisInterface
      *
      * @param string $last_review_date
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setLastReviewDate($last_review_date);
@@ -798,7 +798,7 @@ interface KpisInterface
      *
      * @param string $account
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setAccount($account);
@@ -816,7 +816,7 @@ interface KpisInterface
      *
      * @param string $activity
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setLastActivity($activity);
@@ -834,7 +834,7 @@ interface KpisInterface
      *
      * @param string $activity
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setLastActivityDate($activity);
@@ -852,7 +852,7 @@ interface KpisInterface
      *
      * @param string $account_date
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setAccountDate($account_date);
@@ -870,7 +870,7 @@ interface KpisInterface
      *
      * @param string $number_reviews
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setNumberReviews($number_reviews);
@@ -888,7 +888,7 @@ interface KpisInterface
      *
      * @param string $number_orders
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setNumberOrders($number_orders);
@@ -906,7 +906,7 @@ interface KpisInterface
      *
      * @param string $number_completed_orders
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setNumberCompletedOrders($number_completed_orders);
@@ -924,7 +924,7 @@ interface KpisInterface
      *
      * @param string $percentage_complete_orders
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setPercentageCompleteOrders($percentage_complete_orders);
@@ -942,7 +942,7 @@ interface KpisInterface
      *
      * @param string $order_amount
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setOrderAmount($order_amount);
@@ -960,7 +960,7 @@ interface KpisInterface
      *
      * @param string $order_average
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setOrderAverage($order_average);
@@ -978,7 +978,7 @@ interface KpisInterface
      *
      * @param string $percentage_order_amount
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setPercentageOrderAmount($percentage_order_amount);
@@ -996,7 +996,7 @@ interface KpisInterface
      *
      * @param string $order_average_1year
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setOrderAverage1year($order_average_1year);
@@ -1014,7 +1014,7 @@ interface KpisInterface
      *
      * @param string $order_amount_1year
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setOrderAmount1year($order_amount_1year);
@@ -1032,7 +1032,7 @@ interface KpisInterface
      *
      * @param string $order_average_older
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setOrderAverageOlder($order_average_older);
@@ -1050,7 +1050,7 @@ interface KpisInterface
      *
      * @param string $order_amount_older
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setOrderAmountOlder($order_amount_older);
@@ -1068,7 +1068,7 @@ interface KpisInterface
      *
      * @param string $order_average_days
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setOrderAverageDays($order_average_days);
@@ -1086,7 +1086,7 @@ interface KpisInterface
      *
      * @param string $shipping
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setShipping($shipping);
@@ -1104,7 +1104,7 @@ interface KpisInterface
      *
      * @param string $taxes
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setTaxes($taxes);
@@ -1122,7 +1122,7 @@ interface KpisInterface
      *
      * @param string $discount
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setDiscount($discount);
@@ -1140,7 +1140,7 @@ interface KpisInterface
      *
      * @param string $refunded
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setRefunded($refunded);
@@ -1158,7 +1158,7 @@ interface KpisInterface
      *
      * @param string $number
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setNumberOrdersWithDiscount($number);
@@ -1176,7 +1176,7 @@ interface KpisInterface
      *
      * @param string $formula_1
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setFormula1($formula_1);
@@ -1194,7 +1194,7 @@ interface KpisInterface
      *
      * @param string $formula_2
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setFormula2($formula_2);
@@ -1212,7 +1212,7 @@ interface KpisInterface
      *
      * @param string $formula_3
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setFormula3($formula_3);
@@ -1230,7 +1230,7 @@ interface KpisInterface
      *
      * @param string $formula_4
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setFormula4($formula_4);
@@ -1248,7 +1248,7 @@ interface KpisInterface
      *
      * @param string $formula_5
      *
-     * @return \Licentia\Equity\Api\Data\KpisInterface
+     * @return KpisInterface
      */
 
     public function setFormula5($formula_5);

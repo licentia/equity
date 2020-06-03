@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   02/06/20, 17:02 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -50,6 +50,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     {
 
         parent::_construct();
-        $this->_init(\Licentia\Equity\Model\TwoFactorAdmin::class, \Licentia\Equity\Model\ResourceModel\TwoFactorAdmin::class);
+        $this->_init(\Licentia\Equity\Model\TwoFactorAdmin::class,
+            \Licentia\Equity\Model\ResourceModel\TwoFactorAdmin::class);
     }
 }

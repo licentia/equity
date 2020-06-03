@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -35,9 +35,9 @@ class UpdateSalesExtraCosts
 {
 
     /**
-     * @var \Licentia\Equity\Logger\Logger
+     * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaLogger;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\Sales\ExtraCostsFactory
@@ -48,15 +48,15 @@ class UpdateSalesExtraCosts
      * UpdateSalesExtraCosts constructor.
      *
      * @param \Licentia\Equity\Model\Sales\ExtraCostsFactory $extraCostsFactory
-     * @param \Licentia\Equity\Logger\Logger                 $pandaLogger
+     * @param \Licentia\Panda\Helper\Data                    $pandaHelper
      */
     public function __construct(
         \Licentia\Equity\Model\Sales\ExtraCostsFactory $extraCostsFactory,
-        \Licentia\Equity\Logger\Logger $pandaLogger
+        \Licentia\Panda\Helper\Data $pandaHelper
     ) {
 
         $this->extraCostsFactory = $extraCostsFactory;
-        $this->pandaLogger = $pandaLogger;
+        $this->pandaHelper = $pandaHelper;
     }
 
     /**
@@ -68,7 +68,7 @@ class UpdateSalesExtraCosts
         try {
             $this->extraCostsFactory->create()->updateOrdersOtherCosts();
         } catch (\Exception $e) {
-            $this->pandaLogger->warning($e->getMessage());
+            $this->pandaHelper->logWarning($e);
         }
     }
 }

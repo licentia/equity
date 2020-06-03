@@ -20,20 +20,20 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   03/06/20, 16:19 GMT
+ * @modified   03/06/20, 16:52 GMT
  *
  */
 
-namespace Licentia\Equity\Observer;
+namespace Licentia\Equity\Observer\Admin;
 
 use Magento\Framework\Event\ObserverInterface;
 
 /**
- * Class QuoteRelated
+ * Class UpdateUserPhone
  *
- * @package Licentia\Panda\Observer
+ * @package Licentia\Equity\Observer\Admin
  */
-class QuoteRelated implements ObserverInterface
+class UpdateUserPhone implements ObserverInterface
 {
 
     /**
@@ -42,33 +42,54 @@ class QuoteRelated implements ObserverInterface
     protected $pandaHelper;
 
     /**
-     * @var \Licentia\Equity\Model\MetadataFactory
+     * @var \Magento\Framework\App\Response\RedirectInterface
      */
-    protected $metadataFactory;
+    protected $redirect;
 
     /**
-     * QuoteRelated constructor.
+     * @var \Magento\Backend\Model\Auth\Session
+     */
+    protected $userSession;
+
+    /**
+     * UpdateUserPhone constructor.
      *
-     * @param \Licentia\Panda\Helper\Data            $pandaHelper
-     * @param \Licentia\Equity\Model\MetadataFactory $metadataFactory
+     * @param \Magento\Backend\Model\Auth\Session        $userSession
+     * @param \Magento\Checkout\Model\Session            $checkoutSession
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Licentia\Equity\Helper\Data               $pandaHelper
+     * @param \Magento\Framework\App\Action\Context      $context
      */
     public function __construct(
-        \Licentia\Panda\Helper\Data $pandaHelper,
-        \Licentia\Equity\Model\MetadataFactory $metadataFactory
+        \Magento\Backend\Model\Auth\Session $userSession,
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Licentia\Equity\Helper\Data $pandaHelper,
+        \Magento\Framework\App\Action\Context $context
     ) {
 
+        $this->userSession = $userSession;
+        $this->redirect = $context->getRedirect();
         $this->pandaHelper = $pandaHelper;
-        $this->metadataFactory = $metadataFactory;
     }
 
     /**
      * @param \Magento\Framework\Event\Observer $event
+     *
+     * @return $this|void
      */
     public function execute(\Magento\Framework\Event\Observer $event)
     {
 
         try {
-            $this->metadataFactory->create()->quoteRelated($event);
+
+            /** @var \Magento\Framework\App\RequestInterface $request */
+            $request = $event->getEvent()->getRequest();
+
+            $this->userSession->getUser()
+                              ->setData('panda_twofactor_number', $request->getParam('panda_twofactor_number'))
+                              ->save();
+
         } catch (\Exception $e) {
             $this->pandaHelper->logWarning($e);
         }

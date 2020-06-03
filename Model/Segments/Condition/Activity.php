@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -104,7 +104,7 @@ class Activity extends AbstractCondition
         \Licentia\Equity\Model\Segments\ListSegmentsFactory $listSegmentsFactory,
         \Licentia\Equity\Model\KpisFactory $kpisFactory,
         \Licentia\Equity\Model\FormulasFactory $formulasFactory,
-        \Magento\Customer\Model\Session $customerSession,
+        Session $customerSession,
         \Magento\Backend\Helper\Data $backendData,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeInterface,

@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   02/06/20, 17:23 GMT
+ * @modified   03/06/20, 16:14 GMT
  *
  */
 
@@ -73,7 +73,7 @@ class Data extends \Licentia\Panda\Helper\Data
                 }
             }
         } catch (\Exception $e) {
-            $this->_logger->error($e->getMessage());
+            $this->logWarning($e);
         }
 
     }

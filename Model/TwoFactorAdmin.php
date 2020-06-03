@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   03/06/20, 02:29 GMT
+ * @modified   03/06/20, 16:16 GMT
  *
  */
 
@@ -206,7 +206,7 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
             $this->generateCode($this->userSession->getUser());
         } catch (\Exception $e) {
 
-            $this->_logger->critical($e->getMessage());
+            $this->pandaHelper->logException($e);
 
             return false;
         }

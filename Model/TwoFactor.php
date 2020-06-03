@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   03/06/20, 02:28 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -91,7 +91,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     protected function _construct()
     {
 
-        $this->_init(\Licentia\Equity\Model\ResourceModel\TwoFactor::class);
+        $this->_init(ResourceModel\TwoFactor::class);
     }
 
     /**

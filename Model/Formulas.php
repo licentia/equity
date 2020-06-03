@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/03/20, 03:09 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -121,7 +121,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
     protected function _construct()
     {
 
-        $this->_init(\Licentia\Equity\Model\ResourceModel\Formulas::class);
+        $this->_init(ResourceModel\Formulas::class);
     }
 
     /**
@@ -142,7 +142,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Licentia\Equity\Model\SegmentsFactory $segmentsFactory,
+        SegmentsFactory $segmentsFactory,
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Licentia\Equity\Helper\Data $pandaHelper,
@@ -1013,7 +1013,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
                         $connection->rollBack();
                     }
 
-                    $this->_logger->critical($e->getMessage());
+                    $this->pandaHelper->logException($e);
                 }
             }
         }
@@ -1091,7 +1091,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
                         }
                     }
                 } catch (\Exception $e) {
-                    $this->_logger->info($e);
+                    $this->pandaHelper->logException($e);
                     throw new \Magento\Framework\Exception\CouldNotSaveException(
                         __(
                             'Could not save Formula %1. Please check the Variables format. ' .

@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -31,7 +31,7 @@ namespace Licentia\Equity\Model\Segments\Condition\Product;
  *
  * @package Licentia\Equity\Model\Segments\Condition\Product
  */
-class Found extends \Licentia\Equity\Model\Segments\Condition\Product\Combine
+class Found extends Combine
 {
 
     /**
@@ -56,7 +56,7 @@ class Found extends \Licentia\Equity\Model\Segments\Condition\Product\Combine
 
         parent::__construct($context, $ruleConditionProduct, $data);
 
-        $this->setType(\Licentia\Equity\Model\Segments\Condition\Product\Found::class);
+        $this->setType(Found::class);
 
         $this->orderCollection = $collectionFactory;
     }

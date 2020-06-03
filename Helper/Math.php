@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/03/20, 03:08 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -194,7 +194,7 @@ class Math extends \Magento\Framework\App\Helper\AbstractHelper
         $cacheKey = 'panda_' . $scope . sha1('_prices_product_' . $expression . '_' . $product->getId());
 
         #if ($scope == 'global' && $this->cacheManager->getFrontend()->test($cacheKey)) {
-            #return $this->cacheManager->getFrontend()->load($cacheKey);
+        #return $this->cacheManager->getFrontend()->load($cacheKey);
         #}
 
         if ($scope == 'customer') {

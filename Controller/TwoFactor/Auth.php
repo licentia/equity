@@ -20,18 +20,18 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   02/06/20, 23:51 GMT
+ * @modified   03/06/20, 16:59 GMT
  *
  */
 
-namespace Licentia\Equity\Controller\Adminhtml\TwoFactorAdmin;
+namespace Licentia\Equity\Controller\TwoFactor;
 
 /**
  * Class Auth
  *
  * @package Licentia\Panda\Controller\Subscriber
  */
-class Auth extends \Licentia\Equity\Controller\Adminhtml\TwoFactorAdmin
+class Auth extends \Licentia\Equity\Controller\TwoFactor
 {
 
     /**
@@ -47,7 +47,7 @@ class Auth extends \Licentia\Equity\Controller\Adminhtml\TwoFactorAdmin
             $twoFactor = $this->twofactorFactory->create();
 
             try {
-                $twoFactor->generateCode($this->userSession->getUser());
+                $twoFactor->generateCode($this->customerSession->getCustomer());
 
                 $this->messageManager->addSuccessMessage(__('Code sent successfully'));
             } catch (\Magento\Framework\Exception\LocalizedException $exception) {
@@ -62,9 +62,9 @@ class Auth extends \Licentia\Equity\Controller\Adminhtml\TwoFactorAdmin
         $resultPage = $this->resultPageFactory->create();
         $resultPage->initLayout();
 
-        if (!$this->userSession->getData('panda_twofactor_referer') &&
+        if (!$this->customerSession->getData('panda_twofactor_referer') &&
             stripos('pandae/twofactor/', $this->_redirect->getRefererUrl()) === false) {
-            $this->userSession->setData('panda_twofactor_referer', $this->_redirect->getRefererUrl());
+            $this->customerSession->setData('panda_twofactor_referer', $this->_redirect->getRefererUrl());
         }
 
         return $resultPage;

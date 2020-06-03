@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -37,9 +37,9 @@ class ProductRelated implements ObserverInterface
 {
 
     /**
-     * @var \Licentia\Equity\Logger\Logger
+     * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaLogger;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\MetadataFactory
@@ -49,16 +49,16 @@ class ProductRelated implements ObserverInterface
     /**
      * ProductRelated constructor.
      *
-     * @param \Licentia\Equity\Logger\Logger         $pandaLogger
+     * @param \Licentia\Panda\Helper\Data            $pandaHelper
      * @param \Licentia\Equity\Model\MetadataFactory $metadataFactory
      */
     public function __construct(
-        \Licentia\Equity\Logger\Logger $pandaLogger,
+        \Licentia\Panda\Helper\Data $pandaHelper,
         \Licentia\Equity\Model\MetadataFactory $metadataFactory
     ) {
 
         $this->metadataFactory = $metadataFactory;
-        $this->pandaLogger = $pandaLogger;
+        $this->pandaHelper = $pandaHelper;
     }
 
     /**
@@ -70,7 +70,7 @@ class ProductRelated implements ObserverInterface
         try {
             $this->metadataFactory->create()->productRelated($event);
         } catch (\Exception $e) {
-            $this->pandaLogger->warning($e->getMessage());
+            $this->pandaHelper->logWarning($e);
         }
     }
 }

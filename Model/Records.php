@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -42,7 +42,7 @@ class Records extends \Magento\Framework\Model\AbstractModel implements RecordsI
     protected function _construct()
     {
 
-        $this->_init(\Licentia\Equity\Model\ResourceModel\Records::class);
+        $this->_init(ResourceModel\Records::class);
     }
 
     /**

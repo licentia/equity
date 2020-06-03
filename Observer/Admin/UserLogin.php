@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   02/06/20, 21:20 GMT
+ * @modified   03/06/20, 16:08 GMT
  *
  */
 
@@ -37,9 +37,9 @@ class UserLogin implements ObserverInterface
 {
 
     /**
-     * @var \Licentia\Equity\Logger\Logger
+     * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaLogger;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\TwoFactorAdminFactory
@@ -49,16 +49,16 @@ class UserLogin implements ObserverInterface
     /**
      * UserLogin constructor.
      *
-     * @param \Licentia\Equity\Logger\Logger               $pandaLogger
+     * @param \Licentia\Panda\Helper\Data                  $pandaHelper
      * @param \Licentia\Equity\Model\TwoFactorAdminFactory $twoFactorFactory
      */
     public function __construct(
-        \Licentia\Equity\Logger\Logger $pandaLogger,
+        \Licentia\Panda\Helper\Data $pandaHelper,
         \Licentia\Equity\Model\TwoFactorAdminFactory $twoFactorFactory
     ) {
 
         $this->twoFactorFactory = $twoFactorFactory;
-        $this->pandaLogger = $pandaLogger;
+        $this->pandaHelper = $pandaHelper;
     }
 
     /**
@@ -70,7 +70,7 @@ class UserLogin implements ObserverInterface
         try {
             $this->twoFactorFactory->create()->checkLogin($event);
         } catch (\Exception $e) {
-            $this->pandaLogger->warning($e->getMessage());
+            $this->pandaHelper->logWarning($e);
         }
     }
 }

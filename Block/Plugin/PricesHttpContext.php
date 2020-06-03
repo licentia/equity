@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   26/03/20, 20:07 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -57,7 +57,7 @@ class PricesHttpContext
      * @param \Magento\Customer\Model\Session                    $customerSession
      */
     public function __construct(
-        \Licentia\Equity\Block\Plugin\Segments $segments,
+        Segments $segments,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface,
         \Magento\Customer\Model\Session $customerSession
     ) {

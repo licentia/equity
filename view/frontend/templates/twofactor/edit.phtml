@@ -1,0 +1,15 @@
+<fieldset class="fieldset phone">
+    <legend class="legend"><span><?= $this->escapeHtml(__('Two-Factor Authentication')) ?></span>
+    </legend>
+    <br>
+    <div class="field phone">
+        <label class="label"
+               for="panda_twofactor_number"><span><?= $this->escapeHtml(__('Phone Number')) ?></span></label>
+        <div class="control">
+            <input type="text" name="panda_twofactor_number" id="panda_twofactor_number"
+                   value="<?= $this->escapeHtmlAttr($this->getCustomer()->getData('panda_twofactor_number')) ?>"
+                   title="<?= $this->escapeHtmlAttr(__('Two-Factor Authentication Phone Number')) ?>"
+                   class="input-text""/>
+        </div>
+    </div>
+</fieldset>

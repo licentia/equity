@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -79,7 +79,7 @@ interface SegmentsInterface
      *
      * @param int $segment_id
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setSegmentId($segment_id);
@@ -97,7 +97,7 @@ interface SegmentsInterface
      *
      * @param string $name
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setName($name);
@@ -115,7 +115,7 @@ interface SegmentsInterface
      *
      * @param int $is_active
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setIsActive($is_active);
@@ -133,7 +133,7 @@ interface SegmentsInterface
      *
      * @param int $records
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setRecords($records);
@@ -151,7 +151,7 @@ interface SegmentsInterface
      *
      * @param string $description
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setDescription($description);
@@ -169,7 +169,7 @@ interface SegmentsInterface
      *
      * @param string $cron
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setCron($cron);
@@ -187,7 +187,7 @@ interface SegmentsInterface
      *
      * @param string $last_update
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setLastUpdate($last_update);
@@ -205,7 +205,7 @@ interface SegmentsInterface
      *
      * @param string $type
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setType($type);
@@ -223,7 +223,7 @@ interface SegmentsInterface
      *
      * @param int $manual
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setManual($manual);
@@ -241,7 +241,7 @@ interface SegmentsInterface
      *
      * @param int $manually_added
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setManuallyAdded($manually_added);
@@ -259,7 +259,7 @@ interface SegmentsInterface
      *
      * @param string $formula_1
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setFormula1($formula_1);
@@ -277,7 +277,7 @@ interface SegmentsInterface
      *
      * @param string $formula_2
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setFormula2($formula_2);
@@ -295,7 +295,7 @@ interface SegmentsInterface
      *
      * @param string $formula_3
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setFormula3($formula_3);
@@ -313,7 +313,7 @@ interface SegmentsInterface
      *
      * @param string $formula_4
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setFormula4($formula_4);
@@ -331,7 +331,7 @@ interface SegmentsInterface
      *
      * @param string $formula_5
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setFormula5($formula_5);
@@ -349,7 +349,7 @@ interface SegmentsInterface
      *
      * @param bool $RealTimeUpdateCron
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setRealTimeUpdateCron($RealTimeUpdateCron);
@@ -357,7 +357,7 @@ interface SegmentsInterface
     /**
      * @param $conditionsSerialized
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setConditionsSerialized($conditionsSerialized);
 
@@ -366,7 +366,7 @@ interface SegmentsInterface
      *
      * @param string $run
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setRun($run);
@@ -376,7 +376,7 @@ interface SegmentsInterface
      *
      * @param string $cronLastRun
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
 
     public function setCronLastRun($cronLastRun);
@@ -384,357 +384,357 @@ interface SegmentsInterface
     /**
      * @param string $build
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setBuild($build);
 
     /**
      * @param int $notifyUser
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setNotifyUser($notifyUser);
 
     /**
      * @param string $extraData
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setExtraData($extraData);
 
     /**
      * @param string $websitesIds
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setWebsitesIds($websitesIds);
 
     /**
      * @param string $productsRelations
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setProductsRelations($productsRelations);
 
     /**
      * @param string $formula_0
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setFormula0($formula_0);
 
     /**
      * @param string $formula_6
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setFormula6($formula_6);
 
     /**
      * @param string $formula_7
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setFormula7($formula_7);
 
     /**
      * @param string $formula_8
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setFormula8($formula_8);
 
     /**
      * @param string $formula_9
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setFormula9($formula_9);
 
     /**
      * @param string $formula_10
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setFormula10($formula_10);
 
     /**
      * @param string $numberOrders
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setNumberOrders($numberOrders);
 
     /**
      * @param string $numberCompletedOrders
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setNumberCompletedOrders($numberCompletedOrders);
 
     /**
      * @param double $orderAmount
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setOrderAmount($orderAmount);
 
     /**
      * @param double $orderAverage
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setOrderAverage($orderAverage);
 
     /**
      * @param int $percentageCompleteOrders
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setPercentageCompleteOrders($percentageCompleteOrders);
 
     /**
      * @param int $percentageOrderAmount
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setPercentageOrderAmount($percentageOrderAmount);
 
     /**
      * @param double $orderAverage_1year
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setOrderAverage1year($orderAverage_1year);
 
     /**
      * @param double $orderAmount_1year
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setOrderAmount1year($orderAmount_1year);
 
     /**
      * @param double $orderAverageOlder
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setOrderAverageOlder($orderAverageOlder);
 
     /**
      * @param double $orderAmountOlder
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setOrderAmountOlder($orderAmountOlder);
 
     /**
      * @param int $orderAverageDays
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setOrderAverageDays($orderAverageDays);
 
     /**
      * @param double $numberOrdersWithDiscount
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setNumberOrdersWithDiscount($numberOrdersWithDiscount);
 
     /**
      * @param double $shipping
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setShipping($shipping);
 
     /**
      * @param double $taxes
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setTaxes($taxes);
 
     /**
      * @param double $subtotal
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setSubtotal($subtotal);
 
     /**
      * @param double $discount
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setDiscount($discount);
 
     /**
      * @param double $cost
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setCost($cost);
 
     /**
      * @param double $profit
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setProfit($profit);
 
     /**
      * @param double $refunded
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setRefunded($refunded);
 
     /**
      * @param int $lastOrder
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setLastOrder($lastOrder);
 
     /**
      * @param int $firstOrder
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setFirstOrder($firstOrder);
 
     /**
      * @param int $lastActivity
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setLastActivity($lastActivity);
 
     /**
      * @param int $age
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setAge($age);
 
     /**
      * @param int $abandoned
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setAbandoned($abandoned);
 
     /**
      * @param double $cartTotals
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setCartTotals($cartTotals);
 
     /**
      * @param int $cartNumber
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setCartNumber($cartNumber);
 
     /**
      * @param int $cartProducts
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setCartProducts($cartProducts);
 
     /**
      * @param int $pendingPayment
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setPendingPayment($pendingPayment);
 
     /**
      * @param int $account
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setAccount($account);
 
     /**
      * @param int $lastReview
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setLastReview($lastReview);
 
     /**
      * @param int $numberReviews
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setNumberReviews($numberReviews);
 
     /**
      * @param string $skuBought
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setSkuBought($skuBought);
 
     /**
      * @param bool $affectsOrder
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setAffectsOrder($affectsOrder);
 
     /**
      * @param bool $affectsProduct
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setAffectsProduct($affectsProduct);
 
     /**
      * @param bool $affectsQuote
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setAffectsQuote($affectsQuote);
 
     /**
      * @param bool $affectsAccount
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setAffectsAccount($affectsAccount);
 
     /**
      * @param bool $affectsReview
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setAffectsReview($affectsReview);
 
     /**
      * @param bool $affectsSearch
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setAffectsSearch($affectsSearch);
 
     /**
      * @param bool $affectsSubscriber
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setAffectsSubscriber($affectsSubscriber);
 
     /**
      * @param bool $affectsUpdate
      *
-     * @return \Licentia\Equity\Api\Data\SegmentsInterface
+     * @return SegmentsInterface
      */
     public function setAffectsUpdate($affectsUpdate);
 

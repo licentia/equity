@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -35,9 +35,9 @@ class BuildCustomerAttributesPredictions
 {
 
     /**
-     * @var \Licentia\Equity\Logger\Logger
+     * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaLogger;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\KpisFactory
@@ -48,15 +48,15 @@ class BuildCustomerAttributesPredictions
      * BuildCustomerAttributesPredictions constructor.
      *
      * @param \Licentia\Equity\Model\KpisFactory $kpisFactory
-     * @param \Licentia\Equity\Logger\Logger     $pandaLogger
+     * @param \Licentia\Panda\Helper\Data        $pandaHelper
      */
     public function __construct(
         \Licentia\Equity\Model\KpisFactory $kpisFactory,
-        \Licentia\Equity\Logger\Logger $pandaLogger
+        \Licentia\Panda\Helper\Data $pandaHelper
     ) {
 
         $this->kpisFactory = $kpisFactory;
-        $this->pandaLogger = $pandaLogger;
+        $this->pandaHelper = $pandaHelper;
     }
 
     /**
@@ -68,7 +68,7 @@ class BuildCustomerAttributesPredictions
         try {
             $this->kpisFactory->create()->buildCustomerAttributesPredictions();
         } catch (\Exception $e) {
-            $this->pandaLogger->warning($e->getMessage());
+            $this->pandaHelper->logWarning($e);
         }
 
         return true;

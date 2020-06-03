@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   03/06/20, 00:01 GMT
+  ~ @modified   03/06/20, 16:53 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
@@ -44,5 +44,8 @@
     </event>
     <event name="admin_system_config_changed_section_panda_prices">
         <observer name="panda_update_mail_transport" instance="Licentia\Equity\Observer\Admin\AdminConfigPricingPanda"/>
+    </event>
+    <event name="controller_action_postdispatch_adminhtml_system_account_save">
+        <observer name="panda_update_user_phone" instance="Licentia\Equity\Observer\Admin\UpdateUserPhone"/>
     </event>
 </config>

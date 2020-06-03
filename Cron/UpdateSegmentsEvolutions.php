@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -35,9 +35,9 @@ class UpdateSegmentsEvolutions
 {
 
     /**
-     * @var \Licentia\Equity\Logger\Logger
+     * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaLogger;
+    protected $pandaHelper;
 
     /**
      * @var  \Licentia\Equity\Model\ResourceModel\Evolutions
@@ -47,16 +47,16 @@ class UpdateSegmentsEvolutions
     /**
      * UpdateSegmentsEvolutions constructor.
      *
-     * @param \Licentia\Equity\Logger\Logger                  $pandaLogger
+     * @param \Licentia\Panda\Helper\Data                     $pandaHelper
      * @param \Licentia\Equity\Model\ResourceModel\Evolutions $evolutionsResource
      */
     public function __construct(
-        \Licentia\Equity\Logger\Logger $pandaLogger,
+        \Licentia\Panda\Helper\Data $pandaHelper,
         \Licentia\Equity\Model\ResourceModel\Evolutions $evolutionsResource
     ) {
 
         $this->evolutionsResource = $evolutionsResource;
-        $this->pandaLogger = $pandaLogger;
+        $this->pandaHelper = $pandaHelper;
     }
 
     /**
@@ -68,7 +68,7 @@ class UpdateSegmentsEvolutions
         try {
             $this->evolutionsResource->updateEvolutions();
         } catch (\Exception $e) {
-            $this->pandaLogger->warning($e->getMessage());
+            $this->pandaHelper->logWarning($e);
         }
     }
 }

@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -37,9 +37,9 @@ class AdminConfigPanda implements ObserverInterface
 {
 
     /**
-     * @var \Licentia\Equity\Logger\Logger
+     * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaLogger;
+    protected $pandaHelper;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
@@ -64,14 +64,14 @@ class AdminConfigPanda implements ObserverInterface
     /**
      * AdminConfigPanda constructor.
      *
-     * @param \Licentia\Equity\Logger\Logger                     $pandaLogger
+     * @param \Licentia\Panda\Helper\Data                        $pandaHelper
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Framework\App\RequestInterface            $request
      * @param \Magento\Eav\Model\Entity\AttributeFactory         $attributeFactory
      * @param \Licentia\Panda\Helper\DomHelper                   $domHelper
      */
     public function __construct(
-        \Licentia\Equity\Logger\Logger $pandaLogger,
+        \Licentia\Panda\Helper\Data $pandaHelper,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Eav\Model\Entity\AttributeFactory $attributeFactory,
@@ -81,7 +81,7 @@ class AdminConfigPanda implements ObserverInterface
         $this->request = $request;
         $this->domHelper = $domHelper;
         $this->scopeConfig = $scopeConfig;
-        $this->pandaLogger = $pandaLogger;
+        $this->pandaHelper = $pandaHelper;
         $this->attributeFactory = $attributeFactory;
     }
 
@@ -103,7 +103,7 @@ class AdminConfigPanda implements ObserverInterface
                 }
             }
         } catch (\Exception $e) {
-            $this->pandaLogger->warning($e->getMessage());
+            $this->pandaHelper->logWarning($e);
         }
     }
 }

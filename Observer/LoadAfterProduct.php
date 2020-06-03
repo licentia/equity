@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   03/06/20, 16:19 GMT
  *
  */
 
@@ -37,9 +37,9 @@ class LoadAfterProduct implements ObserverInterface
 {
 
     /**
-     * @var \Licentia\Equity\Logger\Logger
+     * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaLogger;
+    protected $pandaHelper;
 
     /**
      * @var \Magento\Framework\App\RequestInterface
@@ -64,14 +64,14 @@ class LoadAfterProduct implements ObserverInterface
     /**
      * LoadAfter constructor.
      *
-     * @param \Licentia\Equity\Logger\Logger                     $pandaLogger
+     * @param \Licentia\Panda\Helper\Data                        $pandaHelper
      * @param \Magento\Framework\App\RequestInterface            $request
      * @param \Magento\Store\Model\StoreManagerInterface         $storeManagerInterface
      * @param \Licentia\Equity\Model\AccessFactory               $accessFactory
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface
      */
     public function __construct(
-        \Licentia\Equity\Logger\Logger $pandaLogger,
+        \Licentia\Panda\Helper\Data $pandaHelper,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Store\Model\StoreManagerInterface $storeManagerInterface,
         \Licentia\Equity\Model\AccessFactory $accessFactory,
@@ -82,7 +82,7 @@ class LoadAfterProduct implements ObserverInterface
         $this->storeManager = $storeManagerInterface;
         $this->accessFactory = $accessFactory;
         $this->request = $request;
-        $this->pandaLogger = $pandaLogger;
+        $this->pandaHelper = $pandaHelper;
     }
 
     /**
@@ -118,7 +118,7 @@ class LoadAfterProduct implements ObserverInterface
                 $model->setData([]);
             }
         } catch (\Exception $e) {
-            $this->pandaLogger->warning($e->getMessage());
+            $this->pandaHelper->logWarning($e);
         }
     }
 }
