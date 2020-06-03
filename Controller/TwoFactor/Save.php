@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   01/06/20, 17:06 GMT
+ * @modified   02/06/20, 17:19 GMT
  *
  */
 
@@ -107,6 +107,19 @@ class Save extends \Licentia\Equity\Controller\TwoFactor
                     $this->customerSession->setData('panda_twofactor_required', false);
 
                     $url = $this->customerSession->getData('panda_twofactor_referer');
+
+                    if ($allowRemember) {
+                        $allow = $this->scopeConfig->isSetFlag('panda_customer/twofactor/allow_remember');
+                        $days = $this->scopeConfig->getValue('panda_customer/twofactor/remember_days');
+
+                        if ($allow) {
+                            $metadata = $this->cookieMetadataFactory->setDuration(3600 * 24 * $days)
+                                                                    ->setPath('/');
+
+                            $this->cookieManager->setPublicCookie(
+                                \Licentia\Equity\Model\TwoFactor::REMINDER_COOKIE_NAME, $hash, $metadata);
+                        }
+                    }
 
                     return $this->resultRedirectFactory->create()->setUrl($url);
                 } else {

@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   01/06/20, 17:06 GMT
+ * @modified   02/06/20, 23:53 GMT
  *
  */
 
@@ -80,20 +80,41 @@ class TwoFactor extends \Magento\Framework\App\Action\Action
     protected $twofactorFactory;
 
     /**
+     * @var \Magento\Framework\Stdlib\CookieManagerInterface
+     */
+    protected $cookieManager;
+
+    /**
+     * @var \Magento\Framework\Stdlib\Cookie\PublicCookieMetadata
+     */
+    protected $cookieMetadataFactory;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
      * TwoFactor constructor.
      *
-     * @param \Magento\Framework\App\Action\Context               $context
-     * @param \Magento\Framework\Data\Form\FormKey\Validator      $formKeyValidator
-     * @param \Magento\Customer\Api\CustomerRepositoryInterface   $customerRepository
-     * @param \Magento\Framework\Registry                         $coreRegistry
-     * @param \Licentia\Equity\Helper\Data                        $pandaHelper
-     * @param \Licentia\Equity\Model\TwoFactorFactory             $twoFactorFactory
-     * @param \Magento\Customer\Model\Session                     $session
-     * @param \Magento\Store\Model\StoreManagerInterface          $storeManagerInterface
-     * @param \Magento\Framework\View\Result\PageFactory          $resultPageFactory
-     * @param \Magento\Framework\Controller\Result\ForwardFactory $resultForwardFactory
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface    $scopeConfigInterface
+     * @param \Magento\Framework\Stdlib\Cookie\PublicCookieMetadata $cookieMetadata
+     * @param \Magento\Framework\Stdlib\CookieManagerInterface      $cookieManager
+     * @param \Magento\Framework\App\Action\Context                 $context
+     * @param \Magento\Framework\Data\Form\FormKey\Validator        $formKeyValidator
+     * @param \Magento\Customer\Api\CustomerRepositoryInterface     $customerRepository
+     * @param \Magento\Framework\Registry                           $coreRegistry
+     * @param \Licentia\Equity\Helper\Data                          $pandaHelper
+     * @param \Licentia\Equity\Model\TwoFactorFactory               $twoFactorFactory
+     * @param \Magento\Customer\Model\Session                       $session
+     * @param \Magento\Store\Model\StoreManagerInterface            $storeManagerInterface
+     * @param \Magento\Framework\View\Result\PageFactory            $resultPageFactory
+     * @param \Magento\Framework\Controller\Result\ForwardFactory   $resultForwardFactory
      */
     public function __construct(
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface,
+        \Magento\Framework\Stdlib\Cookie\PublicCookieMetadata $cookieMetadata,
+        \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager,
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
@@ -108,6 +129,9 @@ class TwoFactor extends \Magento\Framework\App\Action\Action
 
         parent::__construct($context);
 
+        $this->scopeConfig = $scopeConfigInterface;
+        $this->cookieManager = $cookieManager;
+        $this->cookieMetadataFactory = $cookieMetadata;
         $this->twofactorFactory = $twoFactorFactory;
         $this->formKeyValidator = $formKeyValidator;
         $this->customerRepository = $customerRepository;

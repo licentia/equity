@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   02/06/20, 23:51 GMT
+ * @modified   03/06/20, 01:47 GMT
  *
  */
 
@@ -29,18 +29,19 @@ namespace Licentia\Equity\Controller\Adminhtml\TwoFactorAdmin;
 /**
  * Class Auth
  *
- * @package Licentia\Panda\Controller\Subscriber
+ * @package Licentia\Equity\Controller\Adminhtml\TwoFactorAdmin
  */
 class Auth extends \Licentia\Equity\Controller\Adminhtml\TwoFactorAdmin
 {
 
     /**
-     * @return $this|\Magento\Framework\View\Result\Page
+     * @return \Magento\Backend\Model\View\Result\Page
      */
     public function execute()
     {
 
         parent::execute();
+
         if ($this->getRequest()->getParam('resend') == 1) {
             $resultRedirect = $this->resultRedirectFactory->create();
 
@@ -59,13 +60,11 @@ class Auth extends \Licentia\Equity\Controller\Adminhtml\TwoFactorAdmin
             return $resultRedirect->setPath('*/*/*');
         }
 
+        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->initLayout();
-
-        if (!$this->userSession->getData('panda_twofactor_referer') &&
-            stripos('pandae/twofactor/', $this->_redirect->getRefererUrl()) === false) {
-            $this->userSession->setData('panda_twofactor_referer', $this->_redirect->getRefererUrl());
-        }
+        $resultPage->getConfig()->getTitle()->prepend(__('Two Factor Authentication - Admin'));
+        $resultPage->addBreadcrumb(__('Sales Automation'), __('Sales Automation'));
+        $resultPage->addBreadcrumb(__('Two Factor Authentication'), __('Two Factor Authentication - Admin'));
 
         return $resultPage;
     }

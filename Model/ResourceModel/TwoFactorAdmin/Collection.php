@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2020 Licentia, Unipessoal LDA
  *
@@ -20,31 +21,35 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   02/06/20, 17:02 GMT
  *
  */
 
-namespace Licentia\Equity\Controller\TwoFactor;
+namespace Licentia\Equity\Model\ResourceModel\TwoFactorAdmin;
 
 /**
- * Class Resend
+ * Class Collection
  *
- * @package Licentia\Panda\Controller\TwoFactor
+ * @package Licentia\Panda\Model\ResourceModel\TwoFactorAdmin
  */
-class Resend extends \Licentia\Equity\Controller\TwoFactor
+class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
 
     /**
-     * @return $this|\Magento\Framework\View\Result\Page
+     * @var string
      */
-    public function execute()
+    protected $_idFieldName = 'auth_id';
+
+    /**
+     * Constructor
+     * Configures collection
+     *
+     * @return void
+     */
+    protected function _construct()
     {
 
-        $resultPage = $this->resultPageFactory->create();
-        $resultPage->initLayout();
-
-        $this->twofactorFactory->create()->generateCode($this->customerSession->getCustomer());
-
-        return $resultPage;
+        parent::_construct();
+        $this->_init(\Licentia\Equity\Model\TwoFactorAdmin::class, \Licentia\Equity\Model\ResourceModel\TwoFactorAdmin::class);
     }
 }

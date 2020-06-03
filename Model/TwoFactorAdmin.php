@@ -21,28 +21,28 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   02/06/20, 21:59 GMT
+ * @modified   03/06/20, 01:17 GMT
  *
  */
 
 namespace Licentia\Equity\Model;
 
 /**
- * Class TwoFactor
+ * Class TwoFactorAdmin
  *
- * @package Licentia\Panda\Model
+ * @package Licentia\Equity\Model
  */
-class TwoFactor extends \Magento\Framework\Model\AbstractModel
+class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
 {
 
-    const REMINDER_COOKIE_NAME = 'panda_auth';
+    const REMINDER_COOKIE_NAME = 'panda_auth_admin';
 
     /**
      * Prefix of model events names
      *
      * @var string
      */
-    protected $_eventPrefix = 'panda_two_factor';
+    protected $_eventPrefix = 'panda_two_factor_admin';
 
     /**
      * Parameter name in event
@@ -51,7 +51,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected $_eventObject = 'panda_two_factor';
+    protected $_eventObject = 'panda_two_factor_admin';
 
     /**
      * @var \Magento\Framework\App\RequestInterface
@@ -64,19 +64,14 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     protected $scopeConfig;
 
     /**
-     * @var \Magento\Customer\Model\Session
+     * @var \Magento\Backend\Model\Auth\Session
      */
-    protected $customerSession;
+    protected $userSession;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
     protected $pandaHelper;
-
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
-    protected $storeManager;
 
     /**
      * @var \Magento\Framework\UrlInterface
@@ -91,15 +86,14 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     protected function _construct()
     {
 
-        $this->_init(\Licentia\Equity\Model\ResourceModel\TwoFactor::class);
+        $this->_init(ResourceModel\TwoFactorAdmin::class);
     }
 
     /**
-     * TwoFactor constructor.
+     * TwoFactorAdmin constructor.
      *
      * @param \Magento\Framework\UrlInterface                              $url
-     * @param \Magento\Store\Model\StoreManagerInterface                   $storeManager
-     * @param \Magento\Customer\Model\Session                              $customerSession
+     * @param \Magento\Backend\Model\Auth\Session                          $userSession
      * @param \Licentia\Equity\Helper\Data                                 $helperData
      * @param \Magento\Framework\App\RequestInterface                      $request
      * @param \Magento\Framework\App\Config\ScopeConfigInterface           $scopeConfig
@@ -111,8 +105,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
      */
     public function __construct(
         \Magento\Framework\UrlInterface $url,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Customer\Model\Session $customerSession,
+        \Magento\Backend\Model\Auth\Session $userSession,
         \Licentia\Equity\Helper\Data $helperData,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
@@ -126,33 +119,34 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
 
         $this->url = $url;
-        $this->storeManager = $storeManager;
-        $this->customerSession = $customerSession;
+        $this->userSession = $userSession;
         $this->pandaHelper = $helperData;
         $this->request = $request;
         $this->scopeConfig = $scopeConfig;
     }
 
     /**
-     * @param $event
+     *
      */
-    public function logoutCustomer($event)
+    public function logoutUser()
     {
 
-        if (!$this->scopeConfig->isSetFlag('panda_customer/twofactor/enabled')) {
+        if (!$this->scopeConfig->isSetFlag('panda_customer/twofactor_admin/enabled')) {
             return;
         }
-        /** @var \Magento\Customer\Model\Customer $customer */
-        $customer = $event->getCustomer();
+        /** @var \Magento\User\Model\User $user */
+        $user = $this->userSession->getUser();
 
-        $item = $this->getCollection()
-                     ->addFieldToFilter('remember_hash', $this->pandaHelper->getTwoAuthRememberCode())
-                     ->addFieldToFilter('customer_id', $customer->getId());
+        if ($user) {
+            $item = $this->getCollection()
+                         ->addFieldToFilter('remember_hash', $this->pandaHelper->getTwoAuthRememberCode())
+                         ->addFieldToFilter('user_id', $user->getId());
 
-        /** @var TwoFactor $log */
-        foreach ($item as $log) {
-            $log->setRememberHash('')
-                ->save();
+            /** @var TwoFactorAdmin $log */
+            foreach ($item as $log) {
+                $log->setRememberHash('')
+                    ->save();
+            }
         }
 
     }
@@ -173,7 +167,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
                      ->addFieldToFilter('used', 1)
                      ->addFieldToFilter('remember_until', ['gteq' => $this->pandaHelper->gmtDate()])
                      ->addFieldToFilter('remember_hash', $hash)
-                     ->addFieldToFilter('customer_id', $this->customerSession->getCustomerId())
+                     ->addFieldToFilter('user_id', $this->userSession->getUser()->getId())
                      ->getFirstItem();
 
         return $item->getId() ? true : false;
@@ -188,20 +182,17 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     public function checkLogin(\Magento\Framework\Event\Observer $event)
     {
 
-        if (!$this->scopeConfig->isSetFlag('panda_customer/twofactor/enabled')) {
+        if (!$this->scopeConfig->isSetFlag('panda_customer/twofactor_admin/enabled')) {
             return true;
         }
 
-        /** @var \Magento\Customer\Model\Customer $customer */
-        $customer = $event->getCustomer();
+        /** @var \Magento\User\Model\User $user */
+        $user = $event->getUser();
 
         $data = $this->scopeConfig->getValue(
-            'panda_customer/twofactor',
+            'panda_customer/twofactor_admin',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
-
-        $groups = explode(',', $data['customer_groups']);
-        $segments = explode(',', $data['segments']);
 
         if (isset($data['allow_remember']) && $data['allow_remember'] == 1) {
             if ($this->validateRemember()) {
@@ -209,31 +200,30 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
             }
         }
 
-        if (in_array($customer->getGroupId(), $groups) ||
-            array_intersect($segments, $this->pandaHelper->getCustomerSegmentsIds())) {
-            $this->customerSession->setData('panda_twofactor_required', true);
+        $this->userSession->setData('panda_twofactor_required', true);
 
-            try {
+        try {
+            $this->generateCode($this->userSession->getUser());
+        } catch (\Exception $e) {
 
-                $this->generateCode($this->customerSession->getCustomer());
-            } catch (\Exception $e) {
-                return false;
-            }
+            $this->_logger->critical($e->getMessage());
+
+            return false;
         }
 
         return false;
     }
 
     /**
-     * @param \Magento\Customer\Model\Customer $customer
+     * @param \Magento\User\Model\User $user
      *
      * @return bool|int
      */
-    public function canGenerateCode(\Magento\Customer\Model\Customer $customer)
+    public function canGenerateCode(\Magento\User\Model\User $user)
     {
 
         $data = $this->scopeConfig->getValue(
-            'panda_customer/twofactor',
+            'panda_customer/twofactor_admin',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
 
@@ -246,8 +236,8 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
 
         $attemptsHour = $connection->fetchOne(
             $connection->select()
-                       ->from($resource->getTable('panda_two_factor_attempts'), ['COUNT(*)'])
-                       ->where('customer_id=?', $customer->getId())
+                       ->from($resource->getTable('panda_two_factor_attempts_admin'), ['COUNT(*)'])
+                       ->where('user_id=?', $user->getId())
                        ->where("attempt_date>=?", $hourDate)
         );
 
@@ -261,8 +251,8 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
 
         $attemptsDay = $connection->fetchOne(
             $connection->select()
-                       ->from($resource->getTable('panda_two_factor_attempts'), ['COUNT(*)'])
-                       ->where('customer_id=?', $customer->getId())
+                       ->from($resource->getTable('panda_two_factor_attempts_admin'), ['COUNT(*)'])
+                       ->where('user_id=?', $user->getId())
                        ->where("attempt_date>=?", $dayDate)
         );
 
@@ -274,29 +264,22 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
-     * @param \Magento\Customer\Model\Customer $customer
+     * @param \Magento\User\Model\User $user
      *
-     * @return bool|TwoFactor
+     * @return bool|TwoFactorAdmin
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function generateCode(\Magento\Customer\Model\Customer $customer)
+    public function generateCode(\Magento\User\Model\User $user)
     {
 
-        if (!$customer->getData('panda_twofactor_number')) {
-
-            $customer->load($customer->getId())->getData();
-
-            if (!$customer->getData('panda_twofactor_number')) {
-                return false;
-            }
+        if (!$user->getData('panda_twofactor_number')) {
+            return false;
         }
-
-        if (!$this->canGenerateCode($customer)) {
+        if (!$this->canGenerateCode($user)) {
             throw new \Magento\Framework\Exception\LocalizedException(__('Too many requests'));
         }
-
         $data = $this->scopeConfig->getValue(
-            'panda_customer/twofactor',
+            'panda_customer/twofactor_admin',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
 
@@ -327,24 +310,23 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
 
         $message = str_replace('{code}', $code, __($data['message']));
 
-        $phone = $customer->getData('panda_twofactor_number');
+        $phone = $user->getData('panda_twofactor_number');
 
         $this->pandaHelper->getSmsTransport($data['sender'])->sendSMS($phone, $message);
 
         $new = [];
-        $new['customer_id'] = $customer->getId();
-        $new['customer_name'] = $customer->getName();
-        $new['customer_email'] = $customer->getEmail();
+        $new['user_id'] = $user->getId();
+        $new['user_name'] = $user->getName();
+        $new['user_email'] = $user->getEmail();
         $new['phone'] = $phone;
         $new['code'] = $code;
         $new['message'] = $message;
         $new['used'] = 0;
         $new['sent_at'] = $this->pandaHelper->gmtDate();
         $new['is_active'] = 1;
-        $new['store_id'] = $this->storeManager->getStore()->getId();
 
         $collection = $this->getCollection()
-                           ->addFieldToFilter('customer_id', $customer->getId())
+                           ->addFieldToFilter('user_id', $user->getId())
                            ->addFieldToFilter('is_active', 1);
 
         /** @var TwoFactor $item */
@@ -356,7 +338,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
-     * @param \Magento\Customer\Model\Customer $customer
+     * @param \Magento\User\Model\User         $user
      * @param                                  $code
      * @param                                  $remember
      * @param                                  $hash
@@ -364,7 +346,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
      * @return bool
      */
     public function validateCode(
-        \Magento\Customer\Model\Customer $customer,
+        \Magento\User\Model\User $user,
         $code,
         $remember,
         $hash
@@ -375,7 +357,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
         $minutes = $currentDate->format('Y-m-d H:i:s');
 
         $item = $this->getCollection()
-                     ->addFieldToFilter('customer_id', $customer->getId())
+                     ->addFieldToFilter('user_id', $user->getId())
                      ->addFieldToFilter('used', 0)
                      ->addFieldToFilter('is_active', 1)
                      ->addFieldToFilter('code', $code)
@@ -386,7 +368,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
         if ($item->getId()) {
 
             if ($remember) {
-                $days = $this->scopeConfig->getValue('panda_customer/twofactor/remember_days');
+                $days = $this->scopeConfig->getValue('panda_customer/twofactor_admin/remember_days');
 
                 $item->setRememberHash($hash);
                 $item->setRememberUntil(strtotime('now +' . $days . ' days'));
@@ -402,9 +384,9 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
 
         $this->getResource()->getConnection()
              ->insert(
-                 $this->getResource()->getTable('panda_two_factor_attempts'),
+                 $this->getResource()->getTable('panda_two_factor_attempts_admin'),
                  [
-                     'customer_id'  => $customer->getId(),
+                     'user_id'      => $user->getId(),
                      'attempt_date' => $this->pandaHelper->gmtDate(),
                  ]
              );
@@ -421,17 +403,6 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     {
 
         return $this->setData('code', $code);
-    }
-
-    /**
-     * @param $storeId
-     *
-     * @return $this
-     */
-    public function setStoreId($storeId)
-    {
-
-        return $this->setData('store_id', $storeId);
     }
 
     /**
@@ -512,36 +483,36 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
-     * @param $customerEmail
+     * @param $userEmail
      *
      * @return $this
      */
-    public function setCustomerEmail($customerEmail)
+    public function setUserEmail($userEmail)
     {
 
-        return $this->setData('customer_email', $customerEmail);
+        return $this->setData('user_email', $userEmail);
     }
 
     /**
-     * @param $customerName
+     * @param $userName
      *
      * @return $this
      */
-    public function setCustomerName($customerName)
+    public function setUserName($userName)
     {
 
-        return $this->setData('customer_name', $customerName);
+        return $this->setData('user_name', $userName);
     }
 
     /**
-     * @param $customerId
+     * @param $userId
      *
      * @return $this
      */
-    public function setCustomerId($customerId)
+    public function setUserId($userId)
     {
 
-        return $this->setData('customer_id', $customerId);
+        return $this->setData('user_id', $userId);
     }
 
     /**
@@ -573,15 +544,6 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     {
 
         return $this->getData('code');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStoreId()
-    {
-
-        return $this->getData('store_id');
     }
 
     /**
@@ -650,28 +612,28 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     /**
      * @return mixed
      */
-    public function getCustomerEmail()
+    public function getUserEmail()
     {
 
-        return $this->getData('customer_email');
+        return $this->getData('user_email');
     }
 
     /**
      * @return mixed
      */
-    public function getCustomerName()
+    public function getUserName()
     {
 
-        return $this->getData('customer_name');
+        return $this->getData('user_name');
     }
 
     /**
      * @return mixed
      */
-    public function getCustomerId()
+    public function getUserId()
     {
 
-        return $this->getData('customer_id');
+        return $this->getData('user_id');
     }
 
     /**

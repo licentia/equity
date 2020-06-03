@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   01/06/20, 15:56 GMT
+  ~ @modified   02/06/20, 17:06 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -60,6 +60,71 @@
                     <label>Customer Segments</label>
                     <source_model>Licentia\Equity\Model\Source\Segments</source_model>
                     <comment>Enable Only for customers in selected segments</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="length" sortOrder="40" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Code Length</label>
+                    <validate>required-entry validate-digits validate-digits-range digits-range-4-20</validate>
+                    <comment>Between 4 and 20</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="max_resends" sortOrder="50" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>New SMS code (30 mins)</label>
+                    <comment>Max Times the Customer can ask for a new Message for 30mins</comment>
+                    <validate>required-entry validate-digits</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="max_resends_day" sortOrder="60" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>New SMS code (day)</label>
+                    <comment>Max Times the Customer can ask for a new Message in a day</comment>
+                    <validate>required-entry validate-digits</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="message" sortOrder="70" showInDefault="1" type="textarea" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>SMS Message</label>
+                    <validate>required-entry</validate>
+                    <comment>Variable {code} will be replaced with the actual code</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="allow_remember" sortOrder="80" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Allow Remember Device</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    <comment>Give customers the option to skip authentication for the active browser</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="remember_days" sortOrder="90" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Remember Days</label>
+                    <comment>How many days should the customer be allowed to login in the same device without asking for another SMS</comment>
+                    <validate>required-entry validate-digits</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="twofactor_admin" showInWebsite="1" showInStore="1" showInDefault="1" sortOrder="10">
+                <label>General</label>
+                <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Two Factor Authentication</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    <comment>Enable two factor authentication for customers</comment>
+                </field>
+                <field id="sender" sortOrder="15" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>SMS Sender</label>
+                    <source_model>Licentia\Panda\Model\Source\SmsSenders</source_model>
+                    <comment>Select the SMS sender for the SMS</comment>
+                    <validate>required-entry</validate>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>

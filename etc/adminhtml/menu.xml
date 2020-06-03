@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   29/01/20, 15:22 GMT
+  ~ @modified   02/06/20, 17:14 GMT
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
@@ -31,7 +31,8 @@
         <add id="Licentia_Equity::kpis" title="Customer KPIs" module="Licentia_Equity" sortOrder="52" parent="Magento_Customer::customer" action="pandae/kpis" resource="Licentia_Equity::segments"/>
         <!--<add id="Licentia_Equity::access" title="Segments Access" module="Licentia_Equity" sortOrder="53" parent="Magento_Customer::customer" action="pandae/access" resource="Licentia_Equity::access"/>-->
 
-        <add id="Licentia_Equity::twofactor" title="Two Factor Auth" module="Licentia_Equity" sortOrder="54" parent="Magento_Reports::report_customers" action="pandae/twofactor" resource="Licentia_Equity::twofactor"/>
+        <add id="Licentia_Equity::twofactor" title="Two Factor Auth - Customer" module="Licentia_Equity" sortOrder="54" parent="Magento_Reports::report_customers" action="pandae/twofactor" resource="Licentia_Equity::twofactor"/>
+        <add id="Licentia_Equity::twofactor_admin" title="Two Factor Auth - Admin" module="Licentia_Equity" sortOrder="55" parent="Magento_Reports::report_customers" action="pandae/twofactoradmin" resource="Licentia_Equity::twofactor"/>
 
         </menu>
 </config>
