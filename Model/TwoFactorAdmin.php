@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   03/06/20, 01:17 GMT
+ * @modified   03/06/20, 02:29 GMT
  *
  */
 
@@ -312,29 +312,33 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
 
         $phone = $user->getData('panda_twofactor_number');
 
-        $this->pandaHelper->getSmsTransport($data['sender'])->sendSMS($phone, $message);
+        $send = $this->pandaHelper->getSmsTransport($data['sender'])->sendSMS($phone, $message);
+        if ($send) {
+            $new = [];
+            $new['user_id'] = $user->getId();
+            $new['user_name'] = $user->getName();
+            $new['user_email'] = $user->getEmail();
+            $new['phone'] = $phone;
+            $new['code'] = $code;
+            $new['message'] = $message;
+            $new['used'] = 0;
+            $new['sent_at'] = $this->pandaHelper->gmtDate();
+            $new['is_active'] = 1;
 
-        $new = [];
-        $new['user_id'] = $user->getId();
-        $new['user_name'] = $user->getName();
-        $new['user_email'] = $user->getEmail();
-        $new['phone'] = $phone;
-        $new['code'] = $code;
-        $new['message'] = $message;
-        $new['used'] = 0;
-        $new['sent_at'] = $this->pandaHelper->gmtDate();
-        $new['is_active'] = 1;
+            $collection = $this->getCollection()
+                               ->addFieldToFilter('user_id', $user->getId())
+                               ->addFieldToFilter('is_active', 1);
 
-        $collection = $this->getCollection()
-                           ->addFieldToFilter('user_id', $user->getId())
-                           ->addFieldToFilter('is_active', 1);
+            /** @var TwoFactor $item */
+            foreach ($collection as $item) {
+                $item->setIsActive(0)->setUsed(0)->save();
+            }
 
-        /** @var TwoFactor $item */
-        foreach ($collection as $item) {
-            $item->setIsActive(0)->setUsed(0)->save();
+            return $this->setData([])->setData($new)->save();
+        } else {
+            throw  new \Magento\Framework\Exception\LocalizedException(__('Error Sending SMS'));
         }
 
-        return $this->setData([])->setData($new)->save();
     }
 
     /**
