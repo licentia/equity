@@ -19,7 +19,7 @@
   ~ @author     Bento Vilas Boas <bento@licentia.pt>
   ~ @copyright  Copyright (c) Licentia - https://licentia.pt
   ~ @license    GNU General Public License V3
-  ~ @modified   12/03/20, 17:00 GMT
+  ~ @modified   04/06/20, 02:43 GMT
   ~
   -->
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
@@ -124,7 +124,6 @@
                 <filter>dateRange</filter>
                 <dataType>date</dataType>
                 <label translate="true">Sent At</label>
-                <sorting>desc</sorting>
                 <timezone>false</timezone>
                 <dateFormat>MMM dd, YYYY</dateFormat>
                 <fieldClass>
@@ -154,8 +153,7 @@
                 <filter>dateRange</filter>
                 <dataType>date</dataType>
                 <label translate="true">Used At</label>
-                <sorting>desc</sorting>
-                <timezone>false</timezone>
+<timezone>false</timezone>
                 <dateFormat>MMM dd, YYYY</dateFormat>
                 <fieldClass>
                     <class name="column_120">true</class>
