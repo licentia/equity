@@ -21,7 +21,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   29/01/20, 15:22 GMT
+ * @modified   04/06/20, 02:38 GMT
  *
  */
 
@@ -63,8 +63,14 @@ class SegmentsPrices extends \Magento\Eav\Model\Entity\Attribute\Backend\Abstrac
     protected $indexFactory;
 
     /**
+     * @var \Magento\Framework\App\RequestInterface
+     */
+    protected $request;
+
+    /**
      * SegmentsPrices constructor.
      *
+     * @param \Magento\Framework\App\RequestInterface                       $request
      * @param StoreManagerInterface                                         $storeManager
      * @param \Licentia\Equity\Model\PricesFactory                          $pricesFactory
      * @param \Licentia\Equity\Model\IndexFactory                           $indexFactory
@@ -72,6 +78,7 @@ class SegmentsPrices extends \Magento\Eav\Model\Entity\Attribute\Backend\Abstrac
      * @param \Licentia\Equity\Model\ResourceModel\Prices\CollectionFactory $pricesCollection
      */
     public function __construct(
+        \Magento\Framework\App\RequestInterface $request,
         StoreManagerInterface $storeManager,
         \Licentia\Equity\Model\PricesFactory $pricesFactory,
         \Licentia\Equity\Model\IndexFactory $indexFactory,
@@ -84,6 +91,7 @@ class SegmentsPrices extends \Magento\Eav\Model\Entity\Attribute\Backend\Abstrac
         $this->pricesCollection = $pricesCollection;
         $this->indexCollection = $indexCollection;
         $this->storeManager = $storeManager;
+        $this->request = $request;
     }
 
     /**
@@ -137,12 +145,12 @@ class SegmentsPrices extends \Magento\Eav\Model\Entity\Attribute\Backend\Abstrac
             return $this;
         }
 
+        $new = $this->request->getParam('product');
+        $priceRows = $new['panda_segments'] ?? [];
+
         // prepare data for save
         $new = [];
         foreach ($priceRows as $data) {
-            if (isset($data['delete']) && $data['delete'] == 1) {
-                continue;
-            }
             $new[] = [
                 'segment_id' => $data['segment_id'],
                 'product_id' => $object->getId(),
@@ -223,7 +231,7 @@ class SegmentsPrices extends \Magento\Eav\Model\Entity\Attribute\Backend\Abstrac
     protected function _getDuplicateErrorMessage()
     {
 
-        return __('Duplicated records found');
+        return __('Duplicated records found in your segments prices. Products can only have one price per segment');
     }
 
     /**
