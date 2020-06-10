@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   03/06/20, 16:19 GMT
+ * @modified   10/06/20, 14:28 GMT
  *
  */
 
@@ -79,7 +79,8 @@ class PricesHttpContext
         $customerGroupId = $this->customerSession->getCustomerGroupId();
 
         if ((!$this->scope->isSetFlag('panda_magna/prices/enabled') &&
-             !$this->scope->isSetFlag('panda_magna/customers/enabled') &&
+             !$this->scope->isSetFlag('panda_prices/products/enabled') &&
+             !$this->scope->isSetFlag('panda_prices/customers/enabled') &&
              !$this->scope->isSetFlag('panda_magna/segments/acl'))) {
             return true;
         }

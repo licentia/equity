@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   03/06/20, 16:19 GMT
+ * @modified   10/06/20, 14:26 GMT
  *
  */
 
@@ -230,7 +230,8 @@ class FinalPrice
     public function afterGetSpecialPrice(\Magento\Catalog\Model\Product $product, $result)
     {
 
-        if ($this->scope->getValue('panda_prices/display/prices') == 'special_price') {
+        if ($this->scope->isSetFlag('panda_prices/products/enabled') &&
+            $this->scope->getValue('panda_prices/display/prices') == 'special_price') {
             return $this->getProductPrice($product, $result);
         }
 
@@ -246,7 +247,8 @@ class FinalPrice
     public function afterGetPrice(\Magento\Catalog\Model\Product $product, $result)
     {
 
-        if ($this->scope->getValue('panda_prices/display/prices') == 'price') {
+        if ($this->scope->isSetFlag('panda_prices/customers/enabled') &&
+            $this->scope->getValue('panda_prices/display/prices') == 'price') {
             return $this->getProductPrice($product, $result);
         }
 
