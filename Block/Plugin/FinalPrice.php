@@ -20,7 +20,7 @@
  * @author     Bento Vilas Boas <bento@licentia.pt>
  * @copyright  Copyright (c) Licentia - https://licentia.pt
  * @license    GNU General Public License V3
- * @modified   10/06/20, 14:26 GMT
+ * @modified   10/06/20, 17:44 GMT
  *
  */
 
@@ -103,10 +103,11 @@ class FinalPrice
     /**
      * @param \Magento\Catalog\Model\Product $product
      * @param                                $result
+     * @param null                           $special
      *
      * @return bool|float|mixed|string|null
      */
-    protected function getProductPrice(\Magento\Catalog\Model\Product $product, $result)
+    protected function getProductPrice(\Magento\Catalog\Model\Product $product, $result, $special = null)
     {
 
         \Magento\Framework\Profiler::start('PANDA GET PRODUCT PRICE: ' . $product->getSku());
@@ -218,6 +219,10 @@ class FinalPrice
         }
         \Magento\Framework\Profiler::stop();
 
+        if ($special && $special < $result) {
+            $result = $special;
+        }
+
         return (float) $result;
     }
 
@@ -230,9 +235,8 @@ class FinalPrice
     public function afterGetSpecialPrice(\Magento\Catalog\Model\Product $product, $result)
     {
 
-        if ($this->scope->isSetFlag('panda_prices/products/enabled') &&
-            $this->scope->getValue('panda_prices/display/prices') == 'special_price') {
-            return $this->getProductPrice($product, $result);
+        if ($this->scope->getValue('panda_prices/display/prices') == 'special_price') {
+            return $this->getProductPrice($product, $product->getPrice(), $result);
         }
 
         return $result;
@@ -247,8 +251,7 @@ class FinalPrice
     public function afterGetPrice(\Magento\Catalog\Model\Product $product, $result)
     {
 
-        if ($this->scope->isSetFlag('panda_prices/customers/enabled') &&
-            $this->scope->getValue('panda_prices/display/prices') == 'price') {
+        if ($this->scope->getValue('panda_prices/display/prices') == 'price') {
             return $this->getProductPrice($product, $result);
         }
 
