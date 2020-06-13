@@ -42,17 +42,33 @@
                     </depends>
                 </field>
                 <field id="customer_groups" sortOrder="20" showInDefault="1" type="multiselect" showInStore="1" showInWebsite="1" translate="label comment">
-                    <label>Customer Groups</label>
+                    <label>Customer Groups - Required</label>
                     <source_model>Magento\Customer\Model\Config\Source\Group</source_model>
-                    <comment>Enable Only for customers in the selected customer groups</comment>
+                    <comment>Two-Factor Authentication is required for customers in the selected customer groups</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="customer_groups_optional" sortOrder="25" showInDefault="1" type="multiselect" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Customer Groups - Optional</label>
+                    <source_model>Magento\Customer\Model\Config\Source\Group</source_model>
+                    <comment>Two-Factor Authentication is optional for customers in the selected customer groups</comment>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
                 </field>
                <field id="segments" sortOrder="30" showInDefault="1" type="multiselect" showInStore="1" showInWebsite="1" translate="label comment">
-                    <label>Customer Segments</label>
-                    <source_model>Licentia\Equity\Model\Source\Segments</source_model>
-                    <comment>Enable Only for customers in selected segments</comment>
+                    <label>Customer Segments - Required</label>
+                    <source_model>Licentia\Equity\Model\Source\SegmentsSelect</source_model>
+                    <comment>Two-Factor Authentication is required for customers in the selected customer segments</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+               <field id="segments_optional" sortOrder="35" showInDefault="1" type="multiselect" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Customer Segments - Optional</label>
+                    <source_model>Licentia\Equity\Model\Source\SegmentsSelect</source_model>
+                    <comment>Two-Factor Authentication is optional for customers in the selected customer segments</comment>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>

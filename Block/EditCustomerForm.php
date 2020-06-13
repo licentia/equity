@@ -20,6 +20,7 @@
 namespace Licentia\Equity\Block;
 
 use Magento\Framework\View\Element\Template;
+use \Magento\Store\Model\ScopeInterface;
 
 /**
  * Class TwoFactor
@@ -79,18 +80,66 @@ class EditCustomerForm extends Template
     public function isTwoFactorEnabled()
     {
 
-        $customer = $this->customerSession->getCustomer();
-        $data = $this->_scopeConfig->getValue(
-            'panda_customer/twofactor',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
+        if (!$this->_scopeConfig->isSetFlag('panda_customer/twofactor/enabled', ScopeInterface::SCOPE_STORE)) {
+            return false;
+        }
 
-        $groups = explode(',', $data['customer_groups']);
-        $segments = explode(',', $data['segments']);
+        $customer = $this->customerSession->getCustomer();
+
+        $groups = explode(',', $this->_scopeConfig->getValue(
+            'panda_customer/twofactor/customer_groups_optional',
+            ScopeInterface::SCOPE_STORE
+        ));
+        $groupsOptional = explode(',', $this->_scopeConfig->getValue(
+            'panda_customer/twofactor/customer_groups',
+            ScopeInterface::SCOPE_STORE
+        ));
+        $segments = explode(',', $this->_scopeConfig->getValue(
+            'panda_customer/twofactor/segments',
+            ScopeInterface::SCOPE_STORE
+        ));
+        $segmentsOptional = explode(',', $this->_scopeConfig->getValue(
+            'panda_customer/twofactor/segments_optional',
+            ScopeInterface::SCOPE_STORE
+        ));
 
         if (in_array($customer->getGroupId(), $groups) ||
-            array_intersect($segments, $this->pandaHelper->getCustomerSegmentsIds())) {
-            return false;
+            in_array($customer->getGroupId(), $groupsOptional) ||
+            array_intersect($segments, $this->pandaHelper->getCustomerSegmentsIds()) ||
+            array_intersect($segmentsOptional, $this->pandaHelper->getCustomerSegmentsIds())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isTwoFactorOptional()
+    {
+
+        $customer = $this->customerSession->getCustomer();
+
+        $groups = explode(',', $this->_scopeConfig->getValue(
+            'panda_customer/twofactor/customer_groups_optional',
+            ScopeInterface::SCOPE_STORE
+        ));
+        $groupsOptional = explode(',', $this->_scopeConfig->getValue(
+            'panda_customer/twofactor/customer_groups',
+            ScopeInterface::SCOPE_STORE
+        ));
+        $segments = explode(',', $this->_scopeConfig->getValue(
+            'panda_customer/twofactor/segments',
+            ScopeInterface::SCOPE_STORE
+        ));
+        $segmentsOptional = explode(',', $this->_scopeConfig->getValue(
+            'panda_customer/twofactor/segments_optional',
+            ScopeInterface::SCOPE_STORE
+        ));
+
+        if ((!in_array($customer->getGroupId(), $groups) &&
+             in_array($customer->getGroupId(), $groupsOptional)) ||
+            (!array_intersect($segments, $this->pandaHelper->getCustomerSegmentsIds()) &&
+             array_intersect($segmentsOptional, $this->pandaHelper->getCustomerSegmentsIds()))) {
+            return true;
         }
 
         return false;

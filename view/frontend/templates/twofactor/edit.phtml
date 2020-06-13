@@ -28,9 +28,19 @@ if (!$block->isTwoFactorEnabled()) {
     <legend class="legend"><span><?= $this->escapeHtml(__('Two-Factor Authentication')) ?></span>
     </legend>
     <br>
+    <div class="field twofactor">
+        <label class="label"
+               for="panda_twofactor_enabled"><span><?= $this->escapeHtml(__('Enable Two-Factor Authentication?')) ?></span></label>
+        <div class="control">
+            <select name="panda_twofactor_enabled" id="panda_twofactor_enabled">
+                <option  <?= $this->getCustomer()->getData('panda_twofactor_enabled')==0?' selected ':'' ?> value="0"><?= __('No') ?></option>
+                <option  <?= $this->getCustomer()->getData('panda_twofactor_enabled')==1?' selected ':'' ?>" value="1"><?= __('Yes') ?></option>
+            </select>
+        </div>
+    </div> <br>
     <div class="field phone">
         <label class="label"
-               for="panda_twofactor_number"><span><?= $this->escapeHtml(__('Phone Number')) ?></span></label>
+               for="panda_twofactor_number"><span><?= $this->escapeHtml(__('Two-Factor Authentication Phone Number')) ?></span></label>
         <div class="control">
             <input type="text" name="panda_twofactor_number" id="panda_twofactor_number"
                    value="<?= $this->escapeHtmlAttr($this->getCustomer()->getData('panda_twofactor_number')) ?>"
