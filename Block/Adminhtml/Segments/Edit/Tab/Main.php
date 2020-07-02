@@ -90,6 +90,19 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
         );
 
         $fieldset->addField(
+            'code',
+            'text',
+            [
+                'name'     => 'code',
+                'label'    => __('Code'),
+                'title'    => __('Code'),
+                "required" => true,
+                "class"    => 'small_input validate-code',
+                "note"     => 'Must be unique between all segments',
+            ]
+        );
+
+        $fieldset->addField(
             "is_active",
             "select",
             [

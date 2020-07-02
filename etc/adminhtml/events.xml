@@ -25,9 +25,6 @@
     <event name="controller_action_predispatch_adminhtml_auth_logout">
         <observer name="panda_twofactor_admin" instance="Licentia\Equity\Observer\Admin\UserLogout"/>
     </event>
-    <event name="catalog_product_import_bunch_save_after">
-        <observer name="panda_reindex_prices" instance="Licentia\Equity\Observer\Admin\ReindexAll"/>
-    </event>
     <event name="controller_action_predispatch">
         <observer name="panda_notify_build" instance="Licentia\Equity\Observer\Admin\NotifyBuild"/>
         <observer name="panda_twofactor_admin" instance="Licentia\Equity\Observer\Admin\ControllerPreDispatch"/>

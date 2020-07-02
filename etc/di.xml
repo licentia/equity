@@ -48,6 +48,13 @@
       <plugin name="catalog_price_final_segment" type="Licentia\Equity\Block\Plugin\FinalPrice" sortOrder="1000"/>
     </type>
 
+    <type name="Magento\ImportExport\Model\Import\SampleFileProvider">
+        <arguments>
+            <argument name="samples" xsi:type="array">
+                <item name="panda_segments" xsi:type="string">Licentia_Equity</item>
+            </argument>
+        </arguments>
+    </type>
 
     <type name="Magento\Framework\Console\CommandListInterface">
         <arguments>

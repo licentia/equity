@@ -35,16 +35,10 @@ class Prices extends \Licentia\Equity\Controller\Adminhtml\Segments
     protected $pricesFactory;
 
     /**
-     * @var \Licentia\Equity\Model\IndexFactory
-     */
-    protected $indexFactory;
-
-    /**
      * Prices constructor.
      *
      * @param Action\Context                                    $context
      * @param \Licentia\Equity\Model\PricesFactory              $pricesFactory
-     * @param \Licentia\Equity\Model\IndexFactory               $indexFactory
      * @param \Magento\Framework\View\Result\PageFactory        $resultPageFactory
      * @param \Magento\Framework\Registry                       $registry
      * @param \Licentia\Equity\Model\SegmentsFactory            $segmentsFactory
@@ -55,7 +49,6 @@ class Prices extends \Licentia\Equity\Controller\Adminhtml\Segments
     public function __construct(
         Action\Context $context,
         \Licentia\Equity\Model\PricesFactory $pricesFactory,
-        \Licentia\Equity\Model\IndexFactory $indexFactory,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Registry $registry,
         \Licentia\Equity\Model\SegmentsFactory $segmentsFactory,
@@ -75,7 +68,6 @@ class Prices extends \Licentia\Equity\Controller\Adminhtml\Segments
         );
 
         $this->pricesFactory = $pricesFactory;
-        $this->indexFactory = $indexFactory;
     }
 
     /**
@@ -93,10 +85,6 @@ class Prices extends \Licentia\Equity\Controller\Adminhtml\Segments
         try {
             $collection = $this->pricesFactory->create()->getCollection();
             foreach ($collection as $item) {
-                $item->delete();
-            }
-            $collectionIndex = $this->indexFactory->create()->getCollection();
-            foreach ($collectionIndex as $item) {
                 $item->delete();
             }
             $this->messageManager->addSuccessMessage(__('Segments Prices Removed Successfully'));

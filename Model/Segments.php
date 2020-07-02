@@ -912,6 +912,24 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     }
 
     /**
+     * @return \Magento\Framework\Model\AbstractModel
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function validateBeforeSave()
+    {
+
+        if ($this->getCode() && !$this->getOrigData('code')) {
+            $unique = $this->getCollection()->addFieldToFilter('code', $this->getCode());
+
+            if ($unique->count() > 0) {
+                throw new \Magento\Framework\Exception\LocalizedException(__('Duplicated value for the field: Code'));
+            }
+        }
+
+        return parent::validateBeforeSave();
+    }
+
+    /**
      * @return mixed|null|string
      */
     public function getSegmentId()
@@ -941,6 +959,15 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     }
 
     /**
+     * @return mixed|null|string
+     */
+    public function getCode()
+    {
+
+        return $this->getData(self::CODE);
+    }
+
+    /**
      * @param string $name
      *
      * @return SegmentsInterface|Segments
@@ -949,6 +976,17 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     {
 
         return $this->setData(self::NAME, $name);
+    }
+
+    /**
+     * @param string $code
+     *
+     * @return SegmentsInterface|Segments
+     */
+    public function setCode($code)
+    {
+
+        return $this->setData(self::CODE, $code);
     }
 
     /**

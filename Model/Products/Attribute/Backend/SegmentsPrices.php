@@ -4,12 +4,12 @@
  * Copyright (C) Licentia, Unipessoal LDA
  *
  * NOTICE OF LICENSE
- *  
+ *
  *  This source file is subject to the EULA
  *  that is bundled with this package in the file LICENSE.txt.
  *  It is also available through the world-wide-web at this URL:
  *  https://www.greenflyingpanda.com/panda-license.txt
- *  
+ *
  *  @title      Licentia Panda - Magento® Sales Automation Extension
  *  @package    Licentia
  *  @author     Bento Vilas Boas <bento@licentia.pt>
@@ -41,19 +41,9 @@ class SegmentsPrices extends \Magento\Eav\Model\Entity\Attribute\Backend\Abstrac
     protected $pricesCollection;
 
     /**
-     * @var \Licentia\Equity\Model\ResourceModel\Index\CollectionFactory
-     */
-    protected $indexCollection;
-
-    /**
      * @var \Licentia\Equity\Model\PricesFactory
      */
     protected $pricesFactory;
-
-    /**
-     * @var \Licentia\Equity\Model\IndexFactory
-     */
-    protected $indexFactory;
 
     /**
      * @var \Magento\Framework\App\RequestInterface
@@ -66,23 +56,17 @@ class SegmentsPrices extends \Magento\Eav\Model\Entity\Attribute\Backend\Abstrac
      * @param \Magento\Framework\App\RequestInterface                       $request
      * @param StoreManagerInterface                                         $storeManager
      * @param \Licentia\Equity\Model\PricesFactory                          $pricesFactory
-     * @param \Licentia\Equity\Model\IndexFactory                           $indexFactory
-     * @param \Licentia\Equity\Model\ResourceModel\Index\CollectionFactory  $indexCollection
      * @param \Licentia\Equity\Model\ResourceModel\Prices\CollectionFactory $pricesCollection
      */
     public function __construct(
         \Magento\Framework\App\RequestInterface $request,
         StoreManagerInterface $storeManager,
         \Licentia\Equity\Model\PricesFactory $pricesFactory,
-        \Licentia\Equity\Model\IndexFactory $indexFactory,
-        \Licentia\Equity\Model\ResourceModel\Index\CollectionFactory $indexCollection,
         \Licentia\Equity\Model\ResourceModel\Prices\CollectionFactory $pricesCollection
     ) {
 
-        $this->indexFactory = $indexFactory;
         $this->pricesFactory = $pricesFactory;
         $this->pricesCollection = $pricesCollection;
-        $this->indexCollection = $indexCollection;
         $this->storeManager = $storeManager;
         $this->request = $request;
     }
@@ -155,26 +139,11 @@ class SegmentsPrices extends \Magento\Eav\Model\Entity\Attribute\Backend\Abstrac
         $collection = $this->pricesCollection->create()->addFieldToFilter('product_id', $object->getId());
         $collection->walk('delete');
 
-        $index = $this->indexCollection->create()->addFieldToFilter('product_id', $object->getId());
-        $index->walk('delete');
-
         foreach ($new as $item) {
             $this->pricesFactory->create()
                                 ->setData($item)
                                 ->save();
 
-            if ($item['website_id'] == 0) {
-                foreach ($this->getWebsites() as $websiteId) {
-                    $item['website_id'] = $websiteId;
-                    $this->indexFactory->create()
-                                       ->setData($item)
-                                       ->save();
-                }
-            } else {
-                $this->indexFactory->create()
-                                   ->setData($item)
-                                   ->save();
-            }
         }
 
         return $this;
