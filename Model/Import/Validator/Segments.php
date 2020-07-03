@@ -28,11 +28,15 @@ use Magento\Framework\DB\Adapter\AdapterInterface;
 class Segments extends AbstractImportValidator implements RowValidatorInterface
 {
 
+    const ERROR_INVALID_CUSTOMER_ID = 'invalidCustID';
+
     const ERROR_INVALID_SKU = 'invalidSku';
 
     const ERROR_INVALID_SEGMENT = 'invalidSegment';
 
     const ERROR_INVALID_PRICE = 'invalidPrice';
+
+    const ERROR_INVALID_CUSTOMER_EMAIL = 'invalidCustEmail';
 
     /**
      * @var array
@@ -54,6 +58,10 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
      */
     protected $websites;
 
+    protected $customers;
+
+    protected $segmentsManual;
+
     /**
      * @var ResourceConnection
      */
@@ -65,6 +73,11 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
     private $connection;
 
     /**
+     * @var \Magento\CatalogImportExport\Model\Import\Product\StoreResolver
+     */
+    protected $_storeResolver;
+
+    /**
      * Segments constructor.
      *
      * @param \Licentia\Panda\Helper\Data $pandaHelper
@@ -72,12 +85,14 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
      */
     public function __construct(
         \Licentia\Panda\Helper\Data $pandaHelper,
-        ResourceConnection $resourceConnection
+        ResourceConnection $resourceConnection,
+        \Magento\CatalogImportExport\Model\Import\Product\StoreResolver $storeResolver
     ) {
 
         $this->resourceConnection = $resourceConnection;
         $this->pandaHelper = $pandaHelper;
         $this->connection = $this->resourceConnection->getConnection();
+        $this->_storeResolver = $storeResolver;
     }
 
     /**
@@ -123,6 +138,12 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
         if (isset($value['website']) &&
             !in_array($value['website'], $this->getWebsitesIds())) {
             $this->_addMessages([self::ERROR_INVALID_WEBSITE]);
+            $valid = false;
+        }
+
+        if (isset($value['email']) &&
+            !$this->getCustomerId($value['email'], $value)) {
+            $this->_addMessages([self::ERROR_INVALID_CUSTOMER_EMAIL]);
             $valid = false;
         }
 
@@ -173,6 +194,27 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
     /**
      * @return array
      */
+    public function getManualSegmentsIds()
+    {
+
+        if (!$this->segmentsManual) {
+
+            $this->segmentsManual = $this->connection->fetchPairs(
+                $this->connection->select()
+                                 ->from(
+                                     $this->resourceConnection->getTableName('panda_segments'),
+                                     ['segment_id', 'code']
+                                 )
+                                 ->where('manual=?', 1)
+            );
+        }
+
+        return $this->segmentsManual;
+    }
+
+    /**
+     * @return array
+     */
     public function getWebsitesIds()
     {
 
@@ -189,6 +231,52 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
         }
 
         return $this->websites;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllCustomers()
+    {
+
+        if (!$this->customers) {
+
+            $this->customers = $this->connection->fetchAll(
+                $this->connection->select()
+                                 ->from(
+                                     $this->resourceConnection->getTableName('customer_entity'),
+                                     ['entity_id', 'email', 'website_id']
+                                 )
+            );
+        }
+
+        return $this->customers;
+    }
+
+    /**
+     * @param $email
+     * @param $websiteId
+     *
+     * @return mixed|null
+     */
+    public function getCustomerId($email, $row)
+    {
+
+        if (!isset($row['website_id'])) {
+            $websiteId = $this->_storeResolver->getWebsiteCodeToId($row['website']);
+        } else {
+            $websiteId = $row['website_id'];
+        }
+
+        $customers = $this->getAllCustomers();
+
+        foreach ($customers as $customer) {
+            if ($customer['email'] == $email && $customer['website_id'] == $websiteId) {
+                return $customer['entity_id'];
+            }
+        }
+
+        return null;
     }
 
 }

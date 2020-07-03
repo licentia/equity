@@ -24,7 +24,7 @@ use Magento\CatalogImportExport\Model\Import\Product\RowValidatorInterface as Va
 use Magento\ImportExport\Model\Import\ErrorProcessing\ProcessingErrorAggregatorInterface;
 use \Licentia\Equity\Model\Import\Validator\Segments;
 
-class SegmentPrices extends ImportAbstract
+class CustomerPrices extends ImportAbstract
 {
 
     const COL_PRODUCT_ID = 'product_id';
@@ -33,26 +33,26 @@ class SegmentPrices extends ImportAbstract
 
     const COL_WEBSITE = 'website';
 
-    const COL_SEGMENT_ID = 'segment_id';
+    const COL_CUSTOMER_ID = 'customer_id';
 
-    const COL_SEGMENT = 'segment';
+    const COL_CUSTOMER_EMAIL = 'email';
 
     const COL_WEBSITE_ID = 'website_id';
 
     const COL_PRICE = 'price';
 
-    const PANDA_TABLE_NAME = 'panda_segments_prices';
+    const PANDA_TABLE_NAME = 'panda_customer_prices';
 
     const VALID_FIELDS = [
         'sku',
-        'segment',
+        'email',
         'website',
         'price',
     ];
 
     const AVAILABLE_IMPORT_FIELDS = [
         'product_id',
-        'segment_id',
+        'customer_id',
         'website_id',
         'price',
     ];
@@ -63,7 +63,6 @@ class SegmentPrices extends ImportAbstract
      * @var array
      */
     protected $_messageTemplates = [
-        Segments::ERROR_INVALID_SEGMENT => 'Invalid Segment ID',
         Segments::ERROR_INVALID_SKU     => 'Invalid SKU',
         Segments::ERROR_INVALID_WEBSITE => 'Invalid Website code',
         Segments::ERROR_INVALID_PRICE   => 'Invalid Price Format',
@@ -74,7 +73,11 @@ class SegmentPrices extends ImportAbstract
      *
      * @var string[]
      */
-    protected $_permanentAttributes = [self::COL_PRODUCT_SKU, self::COL_WEBSITE, self::COL_SEGMENT];
+    protected $_permanentAttributes = [
+        self::COL_PRODUCT_SKU,
+        self::COL_WEBSITE,
+        self::COL_CUSTOMER_EMAIL,
+    ];
 
     /**
      * Entity type code getter.
@@ -84,7 +87,7 @@ class SegmentPrices extends ImportAbstract
     public function getEntityTypeCode()
     {
 
-        return 'panda_segments';
+        return 'panda_customer_prices';
     }
 
     /**
@@ -151,12 +154,14 @@ class SegmentPrices extends ImportAbstract
                     $listPrices[$rowNum] = $rowData;
 
                     $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
-                    $listPrices[$rowNum] = array_intersect_key($rowData,
-                        array_flip(self::AVAILABLE_IMPORT_FIELDS));
 
                     $listPrices[$rowNum]['website_id'] = $this->getWebsiteId($rowData[self::COL_WEBSITE]);
-                    $listPrices[$rowNum]['segment_id'] = $this->getSegmentId($rowData[self::COL_SEGMENT]);
+                    $listPrices[$rowNum]['customer_id'] = $this->segmentsValidator->getCustomerId($rowData[self::COL_CUSTOMER_EMAIL],
+                        $listPrices[$rowNum]);
                     $listPrices[$rowNum]['product_id'] = $productId;
+
+                    $listPrices[$rowNum] = array_intersect_key($listPrices[$rowNum],
+                        array_flip(self::AVAILABLE_IMPORT_FIELDS));
 
                 }
                 if ($this->getErrorAggregator()->hasToBeTerminated()) {
@@ -203,14 +208,15 @@ class SegmentPrices extends ImportAbstract
 
                 $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
 
-                $prices[$rowNum] = $rowData;
-
-                $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
-                $prices[$rowNum] = array_intersect_key($rowData, array_flip(self::AVAILABLE_IMPORT_FIELDS));
-
                 $prices[$rowNum]['website_id'] = $this->getWebsiteId($rowData[self::COL_WEBSITE]);
-                $prices[$rowNum]['segment_id'] = $this->getSegmentId($rowData[self::COL_SEGMENT]);
                 $prices[$rowNum]['product_id'] = $productId;
+                $prices[$rowNum]['price'] = $rowData[self::COL_PRICE];
+                $prices[$rowNum]['customer_id'] = $this->segmentsValidator->getCustomerId($rowData[self::COL_CUSTOMER_EMAIL],
+                    $rowData);
+
+                $prices[$rowNum] = array_intersect_key($prices[$rowNum],
+                    array_flip(self::AVAILABLE_IMPORT_FIELDS));
+
             }
 
             if (\Magento\ImportExport\Model\Import::BEHAVIOR_APPEND == $behavior) {
@@ -258,7 +264,7 @@ class SegmentPrices extends ImportAbstract
 
                 foreach ($listPrices as $item) {
                     $select->where('product_id=?', $item['product_id']);
-                    $select->where('segment_id=?', $item['segment_id']);
+                    $select->where('customer_id=?', $item['customer_id']);
                     $select->where('website_id=?', $item['website_id']);
                 }
 
@@ -333,7 +339,7 @@ class SegmentPrices extends ImportAbstract
 
         foreach ($oldPrices as $item) {
             $select->where('product_id=?', $item['product_id']);
-            $select->where('segment_id=?', $item['segment_id']);
+            $select->where('customer_id=?', $item['customer_id']);
             $select->where('website_id=?', $item['website_id']);
         }
 
@@ -356,7 +362,7 @@ class SegmentPrices extends ImportAbstract
     {
 
         if ($existingPrice['product_id'] == $prices['product_id']
-            && $existingPrice['segment_id'] == $prices['segment_id']
+            && $existingPrice['customer_id'] == $prices['customer_id']
             && (int) $existingPrice['website_id'] === (int) $prices['website_id']
         ) {
             $this->countItemsUpdated++;

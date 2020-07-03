@@ -90,19 +90,6 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
         );
 
         $fieldset->addField(
-            'code',
-            'text',
-            [
-                'name'     => 'code',
-                'label'    => __('Code'),
-                'title'    => __('Code'),
-                "required" => true,
-                "class"    => 'small_input validate-code',
-                "note"     => 'Must be unique between all segments',
-            ]
-        );
-
-        $fieldset->addField(
             "is_active",
             "select",
             [
@@ -229,7 +216,8 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
             "use_in_pricing",
             "select",
             [
-                "label"    => __("Enable Product Pricing for segment?"),
+                "label"    => __("Segment Pricing?"),
+                "note"     => __("Enable Product Pricing for Segment?"),
                 "options"  => ['1' => __('Yes'), '0' => __('No')],
                 "required" => true,
                 "name"     => "use_in_pricing",
@@ -240,10 +228,23 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
             "use_in_acl",
             "select",
             [
-                "label"    => __("Use to Restrict Access to Pages/Products/Categories"),
+                "label"    => __("Restrict Access?"),
+                "note"     => __("Will be used to Restrict Access to Pages/Products/Categories?"),
                 "options"  => ['1' => __('Yes'), '0' => __('No')],
                 "required" => true,
                 "name"     => "use_in_acl",
+            ]
+        );
+
+        $fieldset->addField(
+            'code',
+            'text',
+            [
+                'name'  => 'code',
+                'label' => __('Code'),
+                'title' => __('Code'),
+                "class" => 'small_input validate-code',
+                "note"  => 'Must be unique between all segments',
             ]
         );
 

@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<!--
+<?xml version="1.0"?><!--
   ~ Copyright (C) Licentia, Unipessoal LDA
   ~
   ~ NOTICE OF LICENSE
@@ -19,4 +18,6 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_ImportExport:etc/import.xsd">
     <entity name="panda_segments" label="Green Flying Panda - Segment Prices" model="Licentia\Equity\Model\Import\SegmentPrices" behaviorModel="Magento\ImportExport\Model\Source\Import\Behavior\Basic"/>
+    <entity name="panda_products" label="Green Flying Panda - Segment Products" model="Licentia\Equity\Model\Import\SegmentProducts" behaviorModel="Magento\ImportExport\Model\Source\Import\Behavior\Basic"/>
+    <entity name="panda_customer_prices" label="Green Flying Panda - Customer Product Prices" model="Licentia\Equity\Model\Import\CustomerPrices" behaviorModel="Magento\ImportExport\Model\Source\Import\Behavior\Basic"/>
 </config>

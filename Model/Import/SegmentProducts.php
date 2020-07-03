@@ -24,37 +24,27 @@ use Magento\CatalogImportExport\Model\Import\Product\RowValidatorInterface as Va
 use Magento\ImportExport\Model\Import\ErrorProcessing\ProcessingErrorAggregatorInterface;
 use \Licentia\Equity\Model\Import\Validator\Segments;
 
-class SegmentPrices extends ImportAbstract
+class SegmentProducts extends ImportAbstract
 {
 
     const COL_PRODUCT_ID = 'product_id';
 
     const COL_PRODUCT_SKU = 'sku';
 
-    const COL_WEBSITE = 'website';
-
     const COL_SEGMENT_ID = 'segment_id';
 
     const COL_SEGMENT = 'segment';
 
-    const COL_WEBSITE_ID = 'website_id';
-
-    const COL_PRICE = 'price';
-
-    const PANDA_TABLE_NAME = 'panda_segments_prices';
+    const PANDA_TABLE_NAME = 'panda_segments_products';
 
     const VALID_FIELDS = [
         'sku',
         'segment',
-        'website',
-        'price',
     ];
 
     const AVAILABLE_IMPORT_FIELDS = [
         'product_id',
         'segment_id',
-        'website_id',
-        'price',
     ];
 
     /**
@@ -65,8 +55,6 @@ class SegmentPrices extends ImportAbstract
     protected $_messageTemplates = [
         Segments::ERROR_INVALID_SEGMENT => 'Invalid Segment ID',
         Segments::ERROR_INVALID_SKU     => 'Invalid SKU',
-        Segments::ERROR_INVALID_WEBSITE => 'Invalid Website code',
-        Segments::ERROR_INVALID_PRICE   => 'Invalid Price Format',
     ];
 
     /**
@@ -74,7 +62,7 @@ class SegmentPrices extends ImportAbstract
      *
      * @var string[]
      */
-    protected $_permanentAttributes = [self::COL_PRODUCT_SKU, self::COL_WEBSITE, self::COL_SEGMENT];
+    protected $_permanentAttributes = [self::COL_PRODUCT_SKU, self::COL_SEGMENT];
 
     /**
      * Entity type code getter.
@@ -84,7 +72,7 @@ class SegmentPrices extends ImportAbstract
     public function getEntityTypeCode()
     {
 
-        return 'panda_segments';
+        return 'panda_products';
     }
 
     /**
@@ -106,12 +94,6 @@ class SegmentPrices extends ImportAbstract
         // BEHAVIOR_DELETE use specific validation logic
         if (\Magento\ImportExport\Model\Import::BEHAVIOR_DELETE == $this->getBehavior()) {
             return true;
-        }
-
-        if (!isset($rowData[self::COL_PRICE])) {
-            $this->addRowError(Segments::ERROR_INVALID_PRICE, $rowNum);
-
-            return false;
         }
 
         if (!$this->segmentsValidator->isValid($rowData)) {
@@ -154,7 +136,6 @@ class SegmentPrices extends ImportAbstract
                     $listPrices[$rowNum] = array_intersect_key($rowData,
                         array_flip(self::AVAILABLE_IMPORT_FIELDS));
 
-                    $listPrices[$rowNum]['website_id'] = $this->getWebsiteId($rowData[self::COL_WEBSITE]);
                     $listPrices[$rowNum]['segment_id'] = $this->getSegmentId($rowData[self::COL_SEGMENT]);
                     $listPrices[$rowNum]['product_id'] = $productId;
 
@@ -188,6 +169,7 @@ class SegmentPrices extends ImportAbstract
         if (\Magento\ImportExport\Model\Import::BEHAVIOR_REPLACE == $behavior) {
             $this->cachedPricesToDelete = null;
         }
+        $listPrices = [];
         $prices = [];
         while ($bunch = $this->_dataSourceModel->getNextBunch()) {
             foreach ($bunch as $rowNum => $rowData) {
@@ -202,15 +184,18 @@ class SegmentPrices extends ImportAbstract
                 }
 
                 $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
+                $rowPrice = $rowNum;
 
-                $prices[$rowNum] = $rowData;
+                $prices[$rowPrice] = array_intersect_key($rowData,
+                    array_flip(self::AVAILABLE_IMPORT_FIELDS));
 
-                $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
-                $prices[$rowNum] = array_intersect_key($rowData, array_flip(self::AVAILABLE_IMPORT_FIELDS));
+                if (!empty($rowData[self::COL_PRODUCT_SKU])) {
+                    $prices[$rowPrice]['product_id'] = $productId;
+                }
+                if (!empty($rowData[self::COL_SEGMENT])) {
+                    $prices[$rowPrice]['segment_id'] = $this->getSegmentId($rowData[self::COL_SEGMENT]);
+                }
 
-                $prices[$rowNum]['website_id'] = $this->getWebsiteId($rowData[self::COL_WEBSITE]);
-                $prices[$rowNum]['segment_id'] = $this->getSegmentId($rowData[self::COL_SEGMENT]);
-                $prices[$rowNum]['product_id'] = $productId;
             }
 
             if (\Magento\ImportExport\Model\Import::BEHAVIOR_APPEND == $behavior) {
@@ -259,7 +244,6 @@ class SegmentPrices extends ImportAbstract
                 foreach ($listPrices as $item) {
                     $select->where('product_id=?', $item['product_id']);
                     $select->where('segment_id=?', $item['segment_id']);
-                    $select->where('website_id=?', $item['website_id']);
                 }
 
                 $this->cachedPricesToDelete = $this->_connection->fetchCol($select);
@@ -326,7 +310,6 @@ class SegmentPrices extends ImportAbstract
         }
 
         $tableName = $this->_resourceFactory->getTable($table);
-        $productEntityLinkField = $this->getProductsTablePrimaryKey();
 
         $select = $this->_connection->select()
                                     ->from($tableName, self::AVAILABLE_IMPORT_FIELDS);
@@ -334,7 +317,6 @@ class SegmentPrices extends ImportAbstract
         foreach ($oldPrices as $item) {
             $select->where('product_id=?', $item['product_id']);
             $select->where('segment_id=?', $item['segment_id']);
-            $select->where('website_id=?', $item['website_id']);
         }
 
         $existingPrices = $this->_connection->fetchAll($select);
@@ -357,7 +339,6 @@ class SegmentPrices extends ImportAbstract
 
         if ($existingPrice['product_id'] == $prices['product_id']
             && $existingPrice['segment_id'] == $prices['segment_id']
-            && (int) $existingPrice['website_id'] === (int) $prices['website_id']
         ) {
             $this->countItemsUpdated++;
         }
@@ -372,6 +353,6 @@ class SegmentPrices extends ImportAbstract
     private function getProductsTablePrimaryKey()
     {
 
-        return 'price_id';
+        return 'record_id';
     }
 }
