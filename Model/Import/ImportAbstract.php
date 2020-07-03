@@ -168,6 +168,8 @@ abstract class ImportAbstract extends \Magento\ImportExport\Model\Import\Entity\
             $this->getErrorAggregator()->addErrorMessageTemplate($errorCode, $message);
         }
 
+        $this->segmentsValidator->caller = $this->getEntityTypeCode();
+
     }
 
     /**
@@ -248,7 +250,7 @@ abstract class ImportAbstract extends \Magento\ImportExport\Model\Import\Entity\
     public function getSegmentId($code)
     {
 
-        return array_search($code, $this->segmentsValidator->getManualSegmentsIds());
+        return array_search($code, $this->segmentsValidator->getSegmentsIds());
 
     }
 

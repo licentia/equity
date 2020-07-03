@@ -111,11 +111,15 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
                                 $("div.admin__field.field.field-cron").hide();
                                 $("div.admin__field.field.field-websites_ids").hide();
                                 $("#websites_ids").removeClass("required-entry");
+                                $("div.admin__field.field.field-code").show();
+                                $("#code").addClass("required-entry");
                          }else{
                                 $("div.admin__field.field.field-type").show();
                                 $("div.admin__field.field.field-cron").show();
                                 $("div.admin__field.field.field-websites_ids").show();
                                 $("#websites_ids").addClass("required-entry");
+                                $("div.admin__field.field.field-code").hide();
+                                $("#code").removeClass("required-entry");
                         }
                     }
                 }
@@ -143,6 +147,18 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
             ]
         )
                  ->setAfterElementHtml($html);
+
+        $fieldset->addField(
+            'code',
+            'text',
+            [
+                'name'  => 'code',
+                'label' => __('Code'),
+                'title' => __('Code'),
+                "class" => 'small_input validate-code',
+                "note"  => 'Must be unique between all segments. This code is used to identify the segment when importing data',
+            ]
+        );
 
         if (!$disabled) {
             $fieldset->addField(
@@ -233,18 +249,6 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
                 "options"  => ['1' => __('Yes'), '0' => __('No')],
                 "required" => true,
                 "name"     => "use_in_acl",
-            ]
-        );
-
-        $fieldset->addField(
-            'code',
-            'text',
-            [
-                'name'  => 'code',
-                'label' => __('Code'),
-                'title' => __('Code'),
-                "class" => 'small_input validate-code',
-                "note"  => 'Must be unique between all segments',
             ]
         );
 

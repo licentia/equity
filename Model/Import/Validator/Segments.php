@@ -77,6 +77,8 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
      */
     protected $_storeResolver;
 
+    public $caller = null;
+
     /**
      * Segments constructor.
      *
@@ -129,10 +131,18 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
             $valid = false;
         }
 
-        if (isset($value['segment']) &&
-            !in_array($value['segment'], $this->getSegmentsIds())) {
-            $this->_addMessages([self::ERROR_INVALID_SEGMENT]);
-            $valid = false;
+        if ($this->caller == 'panda_products') {
+            if (isset($value['segment']) &&
+                !in_array($value['segment'], $this->getManualSegmentsIds())) {
+                $this->_addMessages([self::ERROR_INVALID_SEGMENT]);
+                $valid = false;
+            }
+        } else {
+            if (isset($value['segment']) &&
+                !in_array($value['segment'], $this->getSegmentsIds())) {
+                $this->_addMessages([self::ERROR_INVALID_SEGMENT]);
+                $valid = false;
+            }
         }
 
         if (isset($value['website']) &&

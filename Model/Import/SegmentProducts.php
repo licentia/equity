@@ -186,15 +186,10 @@ class SegmentProducts extends ImportAbstract
                 $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
                 $rowPrice = $rowNum;
 
-                $prices[$rowPrice] = array_intersect_key($rowData,
-                    array_flip(self::AVAILABLE_IMPORT_FIELDS));
+                $prices[$rowPrice] = array_intersect_key($rowData, array_flip(self::AVAILABLE_IMPORT_FIELDS));
 
-                if (!empty($rowData[self::COL_PRODUCT_SKU])) {
-                    $prices[$rowPrice]['product_id'] = $productId;
-                }
-                if (!empty($rowData[self::COL_SEGMENT])) {
-                    $prices[$rowPrice]['segment_id'] = $this->getSegmentId($rowData[self::COL_SEGMENT]);
-                }
+                $prices[$rowPrice]['product_id'] = $productId;
+                $prices[$rowPrice]['segment_id'] = $this->getSegmentId($rowData[self::COL_SEGMENT]);
 
             }
 
@@ -214,6 +209,7 @@ class SegmentProducts extends ImportAbstract
                 if ($this->deletePricesFinal($prices, self::PANDA_TABLE_NAME)) {
                     $this->savePricesExecute($prices, self::PANDA_TABLE_NAME);
                 }
+                $this->updateTotals();
             }
         }
 
@@ -256,6 +252,8 @@ class SegmentProducts extends ImportAbstract
                         $this->_connection->quoteInto($PricesTablePrimaryKey . ' IN (?)',
                             $this->cachedPricesToDelete)
                     );
+
+                    $this->updateTotals();
 
                     return true;
                 } catch (\Exception $e) {
@@ -355,4 +353,27 @@ class SegmentProducts extends ImportAbstract
 
         return 'record_id';
     }
+
+    public function updateTotals()
+    {
+
+        $select = $this->_connection->fetchPairs(
+            $this->_connection->select()
+                              ->from(self::PANDA_TABLE_NAME,
+                                  self::AVAILABLE_IMPORT_FIELDS)
+                              ->columns(['segment_id', 'total' => 'COUNT(*)'])
+                              ->group('segment_id')
+        );
+
+        foreach ($select as $segmentId => $total) {
+            $this->_connection->update($this->pricesTable,
+                [
+                    'number_products' => $total,
+                ],
+                [
+                    'segment_id=?' => $segmentId,
+                ]);
+        }
+    }
+
 }
