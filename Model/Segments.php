@@ -754,10 +754,21 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
         }
 
         if (!$this->getData('controller_panda')) {
-            return false;
+            return parent::beforeSave();
         }
 
         parent::beforeSave();
+
+        if (!$this->getUseAsCatalog() == 0 && $this->getOrigData('use_as_catalog') == 1 && $this->getId()) {
+            $this->getResource()
+                 ->getConnection()
+                 ->delete(
+                     $this->getResource()->getTable('panda_segments_products'),
+                     ['segment_id=?' => $this->getId()]
+                 );
+
+            $this->setNumberProducts(0);
+        }
 
         $attributes = [
             'Magento\SalesRule\Model\Rule\Condition\Product'           => 'order',
@@ -1415,6 +1426,17 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     }
 
     /**
+     * @param string $numberProducts
+     *
+     * @return SegmentsInterface|Segments
+     */
+    public function setNumberProducts($numberProducts)
+    {
+
+        return $this->setData('number_products', $numberProducts);
+    }
+
+    /**
      * @param string $numberCompletedOrders
      *
      * @return SegmentsInterface|Segments
@@ -1976,6 +1998,15 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     {
 
         return $this->getData('number_orders');
+    }
+
+    /**
+     * @return int|mixed|null
+     */
+    public function getNumberProducts()
+    {
+
+        return $this->getData('number_products');
     }
 
     /**
