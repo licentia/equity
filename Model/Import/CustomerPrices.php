@@ -87,7 +87,7 @@ class CustomerPrices extends ImportAbstract
     public function getEntityTypeCode()
     {
 
-        return 'panda_customer_prices';
+        return self::PANDA_TABLE_NAME;
     }
 
     /**

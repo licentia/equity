@@ -229,11 +229,11 @@
                 </field>
             </group>
             <group id="customer" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
-                <label>Customer Admin Page</label>
+                <label>Customer Edit Admin Page</label>
                 <field id="enabled" sortOrder="110" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Show Customer Segments</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Show customer segment when editing the customer in the admin?</comment>
+                    <comment>Show customer segment information when editing the customer in the admin?</comment>
                 </field>
             </group>
             <group id="prices" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
@@ -289,7 +289,7 @@
                 </field>
             </group>
             <group id="kpis_desc" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
-                <label>Show KPI's description iCustomer Page</label>
+                <label>Show KPI's description Customer Page</label>
                 <comment>Describe to logged-in admins the purpose of the KPI</comment>
                 <field id="email_meta" sortOrder="10" showInDefault="1" type="text" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Customer Email</label>
@@ -507,7 +507,7 @@
         </section>
         <section id="panda_prices" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
             <class>separator-top</class>
-            <label>Pricing</label>
+            <label>Customer Segments Pricing</label>
             <tab>licentia</tab>
             <resource>Licentia_Equity::config_prices</resource>
             <group id="test" translate="label comment" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="1">
@@ -525,7 +525,7 @@
                 </field>
             </group>
             <group id="products" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="20">
-                <label>Product Prices</label>
+                <label>Product Prices - Formulas</label>
                 <comment>Please check the manual for more information on how to setup product pricing</comment>
                 <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Enabled</label>
@@ -627,7 +627,7 @@
                 </field>
             </group>
             <group id="customers" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="20">
-                <label>Customers Prices</label>
+                <label>Customers Prices - Formulas</label>
                 <comment>ATTENTION: Custom prices are only available to logged-in customers. Please check the manual for more information on how to setup product pricing</comment>
                 <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Enabled</label>
@@ -741,6 +741,15 @@
                     </depends>
                     <source_model>Magento\Customer\Model\Config\Source\Group</source_model>
                     <comment>Only apply prices if the customer is in the selected customer groups</comment>
+                </field>
+            </group>
+            <group id="import" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="20">
+                <label>Customers Prices - Manual Import</label>
+                <comment>ATTENTION: Please check the manual for more information on how to setup product pricing</comment>
+                <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    <comment>Enable Product Prices per Customer (File Import)</comment>
                 </field>
             </group>
         </section>

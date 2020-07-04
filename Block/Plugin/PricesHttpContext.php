@@ -74,6 +74,7 @@ class PricesHttpContext
         if (!$this->scope->isSetFlag('panda_magna/prices/enabled') &&
             !$this->scope->isSetFlag('panda_magna/segments/acl') &&
             !$this->scope->isSetFlag('panda_magna/products/enabled') &&
+            !$this->scope->isSetFlag('panda_prices/import/enabled') &&
             !$this->scope->isSetFlag('panda_prices/products/enabled') &&
             !$this->scope->isSetFlag('panda_prices/customers/enabled')) {
             return true;
@@ -91,8 +92,8 @@ class PricesHttpContext
             $cacheKey[] = sha1($customerGroupId);
         }
 
-        if ($this->scope->isSetFlag('panda_prices/customers/enabled')) {
-            $cacheKey[] = 'customer';
+        if ($this->scope->isSetFlag('panda_prices/customers/enabled') ||
+            $this->scope->isSetFlag('panda_prices/import/enabled')) {
             $cacheKey[] = sha1($customerId);
         }
 

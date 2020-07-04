@@ -38,7 +38,7 @@ class Prices extends \Magento\Config\Block\System\Config\Form\Field
         $url = $this->getUrl('pandae/segments/prices');
         $message = __('Are you sure?');
 
-        return '<style type="text/css">#row_panda_uninstall_clear td.scope-label {display:none;}</style><br><br><button  onclick="if(!confirm(\'' .
+        return '<style type="text/css">#row_panda_magna_maintenance_clear_prices > td.label > label, #row_panda_uninstall_clear td.scope-label {display:none;}</style><br><br><button  onclick="if(!confirm(\'' .
                $message . '\')){return false;}window.location=\'' . $url .
                '\'" class="scalable" type="button" ><span><span><span>' . __('Clear Segment Prices') .
                '</span></span></span></button>';
