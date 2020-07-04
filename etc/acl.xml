@@ -24,6 +24,7 @@
                     <resource id="Licentia_Equity::kpis" title="Customer KPIs" sortOrder="120"/>
                     <resource id="Licentia_Equity::access" title="Segments Access" sortOrder="130"/>
                     <resource id="Licentia_Equity::twofactor" title="Two-Factor Authentication" sortOrder="140"/>
+                    <resource id="Licentia_Equity::customer_prices" title="Customer Prices" sortOrder="150"/>
                 </resource>
 
                 <resource id="Magento_Sales::sales">
