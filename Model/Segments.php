@@ -2348,4 +2348,24 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
 
         return $this->getData('real_time_update_cron');
     }
+
+    /**
+     * @param bool $useAsCatalog
+     *
+     * @return SegmentsInterface|Segments
+     */
+    public function setUseAsCatalog($useAsCatalog)
+    {
+
+        return $this->setData('use_as_catalog', $useAsCatalog);
+    }
+
+    /**
+     * @return bool|mixed|null
+     */
+    public function getUseAsCatalog()
+    {
+
+        return $this->getData('use_as_catalog');
+    }
 }

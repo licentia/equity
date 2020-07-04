@@ -147,6 +147,45 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
             ]
         )
                  ->setAfterElementHtml($html);
+        $html = '
+                <script type="text/javascript">
+
+                require(["jquery"],function ($){
+
+                toggleControlsValidateCatalog = {
+                    run: function() {
+                        if($("#use_as_catalog").val() == "1" ){
+                                $("div.admin__field.field.field-code").show();
+                                $("#code").addClass("required-entry");
+                         }else{
+                                $("div.admin__field.field.field-code").hide();
+                                $("#code").removeClass("required-entry");
+                        }
+                    }
+                }
+                window.toggleControlsValidateCatalog = toggleControlsValidateCatalog;
+                $(function() {
+                    toggleControlsValidateCatalog.run();
+                });
+
+                });
+                </script>
+                ';
+
+        $fieldset->addField(
+            "use_as_catalog",
+            "select",
+            [
+                "label"    => __("Use Product Catalog"),
+                "options"  => ['1' => __('Yes'), '0' => __('No')],
+                "name"     => "use_as_catalog",
+                "onchange" => "toggleControlsValidateCatalog.run()",
+                "note"     => __(
+                    'If set to yes, You will be allowed to use this segment as a product catalog'
+                ),
+            ]
+        )
+                 ->setAfterElementHtml($html);
 
         $fieldset->addField(
             'code',

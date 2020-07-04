@@ -221,6 +221,13 @@
                     <comment>Log customer activity information related with these attributes</comment>
                 </field>
             </group>
+            <group id="catalog" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="10">
+                <label>Product Catalogs</label>
+                <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
+                    <label>Segments Catalogs</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+            </group>
             <group id="customer" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="50">
                 <label>Customer Admin Page</label>
                 <field id="enabled" sortOrder="110" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">

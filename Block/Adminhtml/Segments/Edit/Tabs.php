@@ -69,7 +69,8 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
     protected function _beforeToHtml()
     {
 
-        $current = $this->registry->registry('panda_segment');
+        /** @var \Licentia\Equity\Model\Segments $segment */
+        $segment = $this->registry->registry('panda_segment');
 
         $this->addTab(
             "main_section",
@@ -82,7 +83,7 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             ]
         );
 
-        if ($current->getId()) {
+        if ($segment->getId()) {
             $this->addTab(
                 "conditions_section",
                 [
@@ -95,28 +96,39 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             );
         }
 
-        if ($current->getId()) {
+        if ($segment->getId()) {
             $this->addTab(
                 "records_section",
                 [
-                    "label"   => __("Records"),
-                    "title"   => __("Records"),
-                    'content' => $this->getLayout()
-                                      ->createBlock('Licentia\Equity\Block\Adminhtml\Segments\Records\Grid')
-                                      ->toHtml(),
+                    "label" => __("Records"),
+                    "title" => __("Records"),
+                    'class' => 'ajax',
+                    'url'   => $this->getUrl('*/*/recordsgrid', ['_current' => true]),
                 ]
             );
         }
 
-        if ($current->getId()) {
+        if ($segment->getId()) {
             $this->addTab(
                 "evolution_section",
                 [
-                    "label"   => __("Evolution"),
-                    "title"   => __("Evolution"),
-                    'content' => $this->getLayout()
-                                      ->createBlock('Licentia\Equity\Block\Adminhtml\Segments\Evolutions\Grid')
-                                      ->toHtml(),
+                    "label" => __("Records Evolution"),
+                    "title" => __("Records Evolution"),
+                    'class' => 'ajax',
+                    'url'   => $this->getUrl('*/*/evolutiongrid', ['_current' => true]),
+                ]
+            );
+        }
+
+        if ($segment->getUseAsCatalog()) {
+
+            $this->addTab(
+                "products_section",
+                [
+                    "label" => __("Products Assigned"),
+                    "title" => __("Products Assigned"),
+                    'class' => 'ajax',
+                    'url'   => $this->getUrl('*/*/productsgrid', ['_current' => true]),
                 ]
             );
         }

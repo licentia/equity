@@ -197,6 +197,7 @@ class SegmentProducts extends ImportAbstract
                 $this->processCountExistingPrices($prices, self::PANDA_TABLE_NAME)
                      ->processCountNewPrices($prices);
 
+                $this->updateTotals();
                 $this->savePricesExecute($prices, self::PANDA_TABLE_NAME);
             }
 
@@ -207,6 +208,7 @@ class SegmentProducts extends ImportAbstract
             if ($prices) {
                 $this->processCountNewPrices($prices);
                 if ($this->deletePricesFinal($prices, self::PANDA_TABLE_NAME)) {
+                    $this->updateTotals();
                     $this->savePricesExecute($prices, self::PANDA_TABLE_NAME);
                 }
                 $this->updateTotals();
@@ -354,6 +356,9 @@ class SegmentProducts extends ImportAbstract
         return 'record_id';
     }
 
+    /**
+     *
+     */
     public function updateTotals()
     {
 
@@ -366,7 +371,7 @@ class SegmentProducts extends ImportAbstract
         );
 
         foreach ($select as $segmentId => $total) {
-            $this->_connection->update($this->pricesTable,
+            $this->_connection->update($this->_resourceFactory->getTable('panda_segments'),
                 [
                     'number_products' => $total,
                 ],

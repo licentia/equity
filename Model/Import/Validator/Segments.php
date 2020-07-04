@@ -133,7 +133,7 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
 
         if ($this->caller == 'panda_products') {
             if (isset($value['segment']) &&
-                !in_array($value['segment'], $this->getManualSegmentsIds())) {
+                !in_array($value['segment'], $this->getCatalogSegmentsIds())) {
                 $this->_addMessages([self::ERROR_INVALID_SEGMENT]);
                 $valid = false;
             }
@@ -204,7 +204,7 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
     /**
      * @return array
      */
-    public function getManualSegmentsIds()
+    public function getCatalogSegmentsIds()
     {
 
         if (!$this->segmentsManual) {
@@ -215,7 +215,7 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
                                      $this->resourceConnection->getTableName('panda_segments'),
                                      ['segment_id', 'code']
                                  )
-                                 ->where('manual=?', 1)
+                                 ->where('use_as_catalog=?', 1)
             );
         }
 
