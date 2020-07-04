@@ -66,6 +66,11 @@ class SegmentsRepository implements SegmentsRepositoryInterface
     protected $segmentsCollectionFactory;
 
     /**
+     * @var Segments\ProductsFactory
+     */
+    protected $productsFactory;
+
+    /**
      * @var StoreManagerInterface
      */
     private $storeManager;
@@ -91,6 +96,7 @@ class SegmentsRepository implements SegmentsRepositoryInterface
     protected $SegmentsFactory;
 
     /**
+     * @param Segments\ProductsFactory              $productsFactory
      * @param ResourceSegments                      $resource
      * @param SegmentsFactory                       $segmentsFactory
      * @param SegmentsInterfaceFactory              $dataSegmentsFactory
@@ -101,6 +107,7 @@ class SegmentsRepository implements SegmentsRepositoryInterface
      * @param StoreManagerInterface                 $storeManager
      */
     public function __construct(
+        Segments\ProductsFactory $productsFactory,
         ResourceSegments $resource,
         SegmentsFactory $segmentsFactory,
         SegmentsInterfaceFactory $dataSegmentsFactory,
@@ -119,6 +126,7 @@ class SegmentsRepository implements SegmentsRepositoryInterface
         $this->dataSegmentsFactory = $dataSegmentsFactory;
         $this->dataObjectProcessor = $dataObjectProcessor;
         $this->storeManager = $storeManager;
+        $this->productsFactory = $productsFactory;
     }
 
     /**
@@ -238,5 +246,23 @@ class SegmentsRepository implements SegmentsRepositoryInterface
     {
 
         return $this->delete($this->getById($segmentsId));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeProducts($products)
+    {
+
+        return $this->productsFactory->create()->removeProducts($products);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function saveProducts($products)
+    {
+
+        return $this->productsFactory->create()->saveProducts($products);
     }
 }

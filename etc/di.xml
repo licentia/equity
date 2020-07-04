@@ -18,6 +18,10 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
 
+    <preference for="Licentia\Equity\Api\PricesRepositoryInterface" type="Licentia\Equity\Model\CustomerPrices"/>
+
+    <preference for="Licentia\Equity\Api\SegmentsRepositoryInterface" type="Licentia\Equity\Model\SegmentsRepository"/>
+
     <preference for="Licentia\Equity\Api\KpisRepositoryInterface" type="Licentia\Equity\Model\KpisRepository"/>
     <preference for="Licentia\Equity\Api\Data\KpisInterface" type="Licentia\Equity\Model\Kpis"/>
     <preference for="Licentia\Equity\Api\Data\KpisSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>

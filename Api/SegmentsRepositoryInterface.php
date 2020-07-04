@@ -86,4 +86,25 @@ interface SegmentsRepositoryInterface
      */
 
     public function deleteById($segmentsId);
+
+    /**
+     * save Products
+     *
+     * @param string $products
+     *
+     * @return int
+     */
+
+    public function saveProducts($products);
+
+    /**
+     * Remove Products
+     *
+     * @param string $products
+     *
+     * @return int
+     */
+
+    public function removeProducts($products);
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) Licentia, Unipessoal LDA
  *
@@ -17,29 +18,51 @@
  *
  */
 
-namespace Licentia\Equity\Model\Segments;
+namespace Licentia\Equity\Model;
 
 /**
- * Class Records
+ * Class Access
  *
  * @package Licentia\Panda\Model
  */
-class Products extends \Magento\Framework\Model\AbstractModel
+class CustomerPrices extends \Magento\Framework\Model\AbstractModel
+    implements \Licentia\Equity\Api\PricesRepositoryInterface
 {
 
     /**
-     * @var \Licentia\Equity\Model\Import\Validator\Segments
+     * Prefix of model events names
+     *
+     * @var string
+     */
+    protected $_eventPrefix = 'panda_customer_prices';
+
+    /**
+     * Parameter name in event
+     *
+     * In observe method you can use $observer->getEvent()->getObject() in this case
+     *
+     * @var string
+     */
+    protected $_eventObject = 'panda_customer_prices';
+
+    /**
+     * @var Import\Validator\Segments
      */
     protected $validator;
 
     /**
-     * @var \Licentia\Panda\Helper\Data
+     * Initialize resource model
+     *
+     * @return void
      */
-    protected $pandaHelper;
+    protected function _construct()
+    {
+
+        $this->_init(ResourceModel\CustomerPrices::class);
+    }
 
     public function __construct(
         \Licentia\Equity\Model\Import\Validator\Segments $validator,
-        \Licentia\Panda\Helper\Data $pandaHelper,
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
@@ -48,76 +71,28 @@ class Products extends \Magento\Framework\Model\AbstractModel
     ) {
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
-        $this->pandaHelper = $pandaHelper;
+
         $this->validator = $validator;
     }
 
     /**
-     * @return void
-     */
-    protected function _construct()
-    {
-
-        $this->_init(\Licentia\Equity\Model\ResourceModel\Segments\Products::class);
-    }
-
-    /**
-     * @param \Magento\Framework\Data\Collection\AbstractDb $collection
-     *
-     * @return \Magento\Framework\Data\Collection\AbstractDb
-     */
-    public function addToCollection(\Magento\Framework\Data\Collection\AbstractDb $collection)
-    {
-
-        $customerSegments = $this->pandaHelper->getCustomerSegmentsIds();
-        $connection = $collection->getResource()->getConnection();
-
-        $parts = $collection->getSelect()->getPart('from');
-
-        if (isset($parts['e']['tableName']) &&
-            isset($parts['e']['tableName']) == $collection->getResource()->getTable('catalog_product_entity')) {
-
-            $allCatalogs = $connection->fetchCol(
-                $connection->select()
-                           ->from($collection->getResource()->getTable('panda_segments'), ['segment_id'])
-                           ->where('manual=?', 1)
-            );
-
-            $collection->getSelect()
-                       ->joinLeft(
-                           ['p' => $collection->getResource()->getTable('panda_segments_products')],
-                           'e.entity_id = p.product_id'
-                           , ['segment_id']
-                       );
-
-            if ($customerSegments) {
-                $collection->getSelect()->where('p.segment_id IS NULL OR p.segment_id IN (?)', $customerSegments);
-            } else {
-                $collection->getSelect()->where('p.segment_id IS NULL OR p.segment_id NOT IN (?)', $allCatalogs);
-            }
-
-        }
-
-        return $collection;
-    }
-
-    /**
-     * @param string $products
+     * @param string $prices
      *
      * @return int
+     * @throws \Exception
      */
-    public function saveProducts($products)
+    public function import($prices)
     {
 
-        $products = json_decode($products, true);
-        if (!is_array($products)) {
+        $prices = json_decode($prices, true);
+        if (!is_array($prices)) {
             throw new \Exception(__('Input must be a valid json string convertible into array'));
         }
 
-        $validFields = \Licentia\Equity\Model\Import\SegmentProducts::VALID_FIELDS;
-        $saveFields = \Licentia\Equity\Model\Import\SegmentProducts::AVAILABLE_IMPORT_FIELDS;
+        $validFields = Import\CustomerPrices::VALID_FIELDS;
+        $saveFields = Import\CustomerPrices::AVAILABLE_IMPORT_FIELDS;
         $valid = [];
-        foreach ($products as $index => $price) {
+        foreach ($prices as $index => $price) {
 
             if (!is_array($price)) {
                 throw new \Exception(__('Input must be a valid json string convertible into array'));
@@ -131,8 +106,10 @@ class Products extends \Magento\Framework\Model\AbstractModel
                 $valid[$index] = $price;
 
                 $productId = $this->validator->getProductId($price['sku']);
+                $valid[$index]['website_id'] = $this->validator->getWebsiteId($price['website']);
                 $valid[$index]['product_id'] = $productId;
-                $valid[$index]['segment_id'] = $this->validator->getSegmentId($price['segment']);
+                $valid[$index]['price'] = $price['price'];
+                $valid[$index]['customer_id'] = $this->validator->getCustomerId($price['email'], $price);
 
                 $valid[$index] = array_intersect_key($valid[$index], array_flip($saveFields));
 
@@ -143,6 +120,7 @@ class Products extends \Magento\Framework\Model\AbstractModel
             }
 
         }
+
         if ($valid) {
             $tableName = $this->getResource()->getMainTable();
 
@@ -154,24 +132,25 @@ class Products extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
-     * @param string $products
+     * @param string $prices
      *
      * @return int
      * @throws \Exception
      */
-    public function removeProducts($products)
+    public function remove($prices)
     {
 
-        $products = json_decode($products, true);
-        if (!is_array($products)) {
+        $prices = json_decode($prices, true);
+        if (!is_array($prices)) {
             throw new \Exception(__('Input must be a valid json string convertible into array'));
         }
 
-        $validFields = \Licentia\Equity\Model\Import\SegmentProducts::VALID_FIELDS;
-        $saveFields = \Licentia\Equity\Model\Import\SegmentProducts::AVAILABLE_IMPORT_FIELDS;
+        $validFields = Import\CustomerPrices::VALID_FIELDS;
+        unset($validFields['price']);
+        $saveFields = Import\CustomerPrices::AVAILABLE_IMPORT_FIELDS;
         $valid = [];
 
-        foreach ($products as $index => $price) {
+        foreach ($prices as $index => $price) {
 
             if (!is_array($price)) {
                 throw new \Exception(__('Input must be a valid json string convertible into array'));
@@ -183,8 +162,9 @@ class Products extends \Magento\Framework\Model\AbstractModel
 
             $valid[$index] = $price;
             $productId = $this->validator->getProductId($price['sku']);
+            $valid[$index]['website_id'] = $this->validator->getWebsiteId($price['website']);
             $valid[$index]['product_id'] = $productId;
-            $valid[$index]['segment_id'] = $this->validator->getSegmentId($price['segment']);
+            $valid[$index]['customer_id'] = $this->validator->getCustomerId($price['email'], $price);
 
             $valid[$index] = array_intersect_key($valid[$index], array_flip($saveFields));
 
@@ -201,7 +181,8 @@ class Products extends \Magento\Framework\Model\AbstractModel
             foreach ($valid as $item) {
                 $sql = '';
                 $sql .= $connection->quoteInto(' product_id=? ', $item['product_id']);
-                $sql .= $connection->quoteInto(' AND segment_id=? ', $item['segment_id']);
+                $sql .= $connection->quoteInto(' AND website_id=? ', $item['website_id']);
+                $sql .= $connection->quoteInto(' AND customer_id=? ', $item['customer_id']);
 
                 $select->orWhere($sql);
             }

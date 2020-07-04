@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright (C) Licentia, Unipessoal LDA
  *
@@ -18,14 +17,15 @@
  *
  */
 
-namespace Licentia\Equity\Block\Adminhtml\Segments\Products;
+namespace Licentia\Equity\Block\Adminhtml\Customer\Edit\Tab;
+
+use Magento\Customer\Controller\RegistryConstants;
+use Magento\Ui\Component\Layout\Tabs\TabInterface;
 
 /**
- * Class Grid
  *
- * @package Licentia\Panda\Block\Adminhtml\Segments\Evolutions
  */
-class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
+class Prices extends \Magento\Backend\Block\Widget\Grid\Extended
 {
 
     /**
@@ -39,32 +39,26 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     protected $registry;
 
     /**
-     * @var \Licentia\Equity\Model\SegmentsFactory
-     */
-    protected $segmentsFactory;
-
-    /**
      * @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory
      */
     protected $productCollection;
 
     /**
-     * Grid constructor.
+     * Prices constructor.
      *
-     * @param \Magento\Backend\Block\Template\Context                                  $context
-     * @param \Magento\Backend\Helper\Data                                             $backendHelper
-     * @param \Magento\Framework\Registry                                              $registry
-     * @param \Licentia\Equity\Model\ResourceModel\Segments\Products\CollectionFactory $collectionFactory
-     * @param \Licentia\Equity\Model\SegmentsFactory                                   $segmentsFactory
-     * @param array                                                                    $data
+     * @param \Magento\Backend\Block\Template\Context                               $context
+     * @param \Magento\Backend\Helper\Data                                          $backendHelper
+     * @param \Magento\Framework\Registry                                           $registry
+     * @param \Licentia\Equity\Model\ResourceModel\CustomerPrices\CollectionFactory $collectionFactory
+     * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory        $productCollection
+     * @param array                                                                 $data
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Backend\Helper\Data $backendHelper,
         \Magento\Framework\Registry $registry,
-        \Licentia\Equity\Model\ResourceModel\Segments\Products\CollectionFactory $collectionFactory,
-        \Licentia\Equity\Model\SegmentsFactory $segmentsFactory,
-        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productColleciton,
+        \Licentia\Equity\Model\ResourceModel\CustomerPrices\CollectionFactory $collectionFactory,
+        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollection,
         array $data = []
     ) {
 
@@ -72,18 +66,95 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 
         $this->registry = $registry;
         $this->collectionFactory = $collectionFactory;
-        $this->segmentsFactory = $segmentsFactory;
-        $this->productCollection = $productColleciton;
+        $this->productCollection = $productCollection;
     }
 
     public function _construct()
     {
 
         parent::_construct();
-        $this->setId('products_grid');
+        $this->setId('prices_grid');
         $this->setDefaultSort('name');
         $this->setDefaultDir('ASC');
         $this->setUseAjax(true);
+    }
+
+    /**
+     * Return Tab label
+     *
+     * @return \Magento\Framework\Phrase
+     */
+    public function getTabLabel()
+    {
+
+        return __('Customer Prices');
+    }
+
+    /**
+     * Return Tab title
+     *
+     * @return \Magento\Framework\Phrase
+     */
+    public function getTabTitle()
+    {
+
+        return __('Customer Prices');
+    }
+
+    /**
+     * Tab class getter
+     *
+     * @return string
+     */
+    public function getTabClass()
+    {
+
+        return 'ajax';
+    }
+
+    /**
+     * Return URL link to Tab content
+     *
+     * @return string
+     */
+    public function getTabUrl()
+    {
+
+        return $this->getUrl('pandae/customerprices/pricesgrid', ['_current' => true]);
+
+    }
+
+    /**
+     * Tab should be loaded trough Ajax call
+     *
+     * @return bool
+     */
+    public function isAjaxLoaded()
+    {
+
+        return true;
+    }
+
+    /**
+     * Can show tab in tabs
+     *
+     * @return boolean
+     */
+    public function canShowTab()
+    {
+
+        return $this->registry->registry(RegistryConstants::CURRENT_CUSTOMER_ID);
+    }
+
+    /**
+     * Tab is hidden
+     *
+     * @return boolean
+     */
+    public function isHidden()
+    {
+
+        return false;
     }
 
     /**
@@ -93,17 +164,18 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     {
 
         $collection = $this->productCollection->create();
-        $resource = $this->segmentsFactory->create()->getResource();
+        $resource = $collection->getResource();
         $collection->getSelect()
                    ->joinInner(
-                       ['p' => $resource->getTable('panda_segments_products')],
+                       ['p' => $resource->getTable('panda_customer_prices')],
                        'e.entity_id = p.product_id'
-                       , ['entity_id' => 'record_id']
+                       , ['entity_id' => 'price_id']
                    );
 
-        if ($segment = $this->registry->registry('panda_segment')) {
-            $collection->getSelect()->where('segment_id=?', $segment->getId());
+        if ($customerId = $this->registry->registry(RegistryConstants::CURRENT_CUSTOMER_ID)) {
+            $collection->getSelect()->where('customer_id=?', $customerId);
         }
+
         $collection->addAttributeToSelect('*');
 
         $this->setCollection($collection);
@@ -117,20 +189,6 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
      */
     protected function _prepareColumns()
     {
-
-        if (!$this->registry->registry('panda_segment')) {
-            $this->addColumn(
-                'segment_id',
-                [
-                    'header'  => __('Segment Name'),
-                    'align'   => 'left',
-                    'index'   => 'segment_id',
-                    'type'    => 'options',
-                    'options' => $this->segmentsFactory->create()
-                                                       ->toFormValues(),
-                ]
-            );
-        }
 
         $this->addColumn(
             'name',
@@ -149,6 +207,15 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
                 'index'  => 'sku',
             ]
         );
+        $this->addColumn(
+            'price',
+            [
+                'header' => __('Price'),
+                'align'  => 'left',
+                'index'  => 'price',
+                'type'   => 'price',
+            ]
+        );
 
         return parent::_prepareColumns();
     }
@@ -159,7 +226,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     public function getGridUrl()
     {
 
-        return $this->getUrl('*/*/productsgrid', ['_current' => true]);
+        return $this->getUrl('pandae/customerprices/pricesgrid', ['_current' => true]);
     }
 
     /**
@@ -178,7 +245,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
                  'Delete',
                  [
                      'label'   => __('Delete'),
-                     'url'     => $this->getUrl('*/*/deleteproducts', ['_current' => true]),
+                     'url'     => $this->getUrl('pandae/customerprices/deleteprices', ['_current' => true]),
                      'confirm' => __('Are you sure?'),
                  ]
              );

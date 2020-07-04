@@ -91,6 +91,7 @@ class LoadBeforeProductCollection implements ObserverInterface
         }
 
         try {
+            /** @var \Magento\Framework\Data\Collection\AbstractDb $model */
             $model = $event->getEvent()->getCollection();
 
             if (!$this->scopeConfig->getValue('panda_magna/segments/acl', ScopeInterface::SCOPE_WEBSITE)) {

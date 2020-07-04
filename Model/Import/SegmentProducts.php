@@ -132,11 +132,11 @@ class SegmentProducts extends ImportAbstract
                 if (!$this->getErrorAggregator()->isRowInvalid($rowNum)) {
                     $listPrices[$rowNum] = $rowData;
 
-                    $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
+                    $productId = $this->segmentsValidator->getProductId($rowData[self::COL_PRODUCT_SKU]);
                     $listPrices[$rowNum] = array_intersect_key($rowData,
                         array_flip(self::AVAILABLE_IMPORT_FIELDS));
 
-                    $listPrices[$rowNum]['segment_id'] = $this->getSegmentId($rowData[self::COL_SEGMENT]);
+                    $listPrices[$rowNum]['segment_id'] = $this->segmentsValidator->getSegmentId($rowData[self::COL_SEGMENT]);
                     $listPrices[$rowNum]['product_id'] = $productId;
 
                 }
@@ -183,13 +183,13 @@ class SegmentProducts extends ImportAbstract
                     continue;
                 }
 
-                $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
+                $productId = $this->segmentsValidator->getProductId($rowData[self::COL_PRODUCT_SKU]);
                 $rowPrice = $rowNum;
 
                 $prices[$rowPrice] = array_intersect_key($rowData, array_flip(self::AVAILABLE_IMPORT_FIELDS));
 
                 $prices[$rowPrice]['product_id'] = $productId;
-                $prices[$rowPrice]['segment_id'] = $this->getSegmentId($rowData[self::COL_SEGMENT]);
+                $prices[$rowPrice]['segment_id'] = $this->segmentsValidator->getSegmentId($rowData[self::COL_SEGMENT]);
 
             }
 
@@ -232,6 +232,7 @@ class SegmentProducts extends ImportAbstract
 
         $tableName = $this->_resourceFactory->getTable($table);
         $PricesTablePrimaryKey = $this->getProductsTablePrimaryKey();
+        $connection = $this->_connection;
 
         if ($tableName && $listPrices) {
             if (!$this->cachedPricesToDelete) {
@@ -240,8 +241,11 @@ class SegmentProducts extends ImportAbstract
                                             ->from($this->pricesTable, [$PricesTablePrimaryKey]);
 
                 foreach ($listPrices as $item) {
-                    $select->where('product_id=?', $item['product_id']);
-                    $select->where('segment_id=?', $item['segment_id']);
+                    $sql = '';
+                    $sql .= $connection->quoteInto(' product_id=? ', $item['product_id']);
+                    $sql .= $connection->quoteInto(' AND segment_id=? ', $item['segment_id']);
+
+                    $select->orWhere($sql);
                 }
 
                 $this->cachedPricesToDelete = $this->_connection->fetchCol($select);

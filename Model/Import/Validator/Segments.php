@@ -82,8 +82,9 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
     /**
      * Segments constructor.
      *
-     * @param \Licentia\Panda\Helper\Data $pandaHelper
-     * @param ResourceConnection          $resourceConnection
+     * @param \Licentia\Panda\Helper\Data                                     $pandaHelper
+     * @param ResourceConnection                                              $resourceConnection
+     * @param \Magento\CatalogImportExport\Model\Import\Product\StoreResolver $storeResolver
      */
     public function __construct(
         \Licentia\Panda\Helper\Data $pandaHelper,
@@ -287,6 +288,43 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param $sku
+     *
+     * @return false|int|string
+     */
+    public function getProductId($sku)
+    {
+
+        return array_search($sku, $this->getAllSkus());
+
+    }
+
+    /**
+     * @param $code
+     *
+     * @return false|int|string
+     */
+    public function getSegmentId($code)
+    {
+
+        return array_search($code, $this->getSegmentsIds());
+
+    }
+
+    /**
+     * Get store id by code
+     *
+     * @param string $websiteId
+     *
+     * @return array|int|string
+     */
+    public function getWebsiteId($websiteId)
+    {
+
+        return $this->_storeResolver->getWebsiteCodeToId($websiteId);
     }
 
 }

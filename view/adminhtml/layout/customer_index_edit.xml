@@ -22,6 +22,7 @@
                 <block class="Licentia\Equity\Block\Adminhtml\Customer\Edit\Tab\View\Segments" after="-" name="magna" template="customer/tab/view/segments.phtml"/>
             </referenceBlock>
             <block class="Licentia\Equity\Block\Adminhtml\Customer\Edit\Tab\Coupons" name="customer_coupons"/>
+            <block class="Licentia\Equity\Block\Adminhtml\Customer\Edit\Tab\Prices" name="customer_prices"/>
         </referenceBlock>
     </body>
 </page>

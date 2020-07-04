@@ -240,33 +240,6 @@ abstract class ImportAbstract extends \Magento\ImportExport\Model\Import\Entity\
         return $this;
     }
 
-    public function getProductId($sku)
-    {
-
-        return array_search($sku, $this->segmentsValidator->getAllSkus());
-
-    }
-
-    public function getSegmentId($code)
-    {
-
-        return array_search($code, $this->segmentsValidator->getSegmentsIds());
-
-    }
-
-    /**
-     * Get store id by code
-     *
-     * @param string $websiteId
-     *
-     * @return array|int|string
-     */
-    protected function getWebsiteId($websiteId)
-    {
-
-        return $this->_storeResolver->getWebsiteCodeToId($websiteId);
-    }
-
     /**
      * Retrieve product skus
      *

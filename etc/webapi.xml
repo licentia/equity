@@ -19,6 +19,21 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
 
 
+    <route method="POST" url="/V1/panda/prices">
+        <service class="Licentia\Equity\Api\PricesRepositoryInterface" method="import"/>
+        <resources>
+            <resource ref="Licentia_Equity::customer_prices"/>
+        </resources>
+    </route>
+
+    <route method="DELETE" url="/V1/panda/prices">
+        <service class="Licentia\Equity\Api\PricesRepositoryInterface" method="remove"/>
+        <resources>
+            <resource ref="Licentia_Equity::customer_prices"/>
+        </resources>
+    </route>
+
+
     <route method="GET" url="/V1/panda/kpis">
         <service class="Licentia\Equity\Api\KpisRepositoryInterface" method="getList"/>
         <resources>
@@ -41,6 +56,18 @@
     </route>
 
 
+    <route method="POST" url="/V1/panda/segments/products">
+        <service class="Licentia\Equity\Api\SegmentsRepositoryInterface" method="saveProducts"/>
+        <resources>
+            <resource ref="Licentia_Equity::segments"/>
+        </resources>
+    </route>
+    <route method="DELETE" url="/V1/panda/segments/products">
+        <service class="Licentia\Equity\Api\SegmentsRepositoryInterface" method="removeProducts"/>
+        <resources>
+            <resource ref="Licentia_Equity::segments"/>
+        </resources>
+    </route>
     <route method="POST" url="/V1/panda/segments">
         <service class="Licentia\Equity\Api\SegmentsRepositoryInterface" method="save"/>
         <resources>

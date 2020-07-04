@@ -153,9 +153,9 @@ class CustomerPrices extends ImportAbstract
                 if (!$this->getErrorAggregator()->isRowInvalid($rowNum)) {
                     $listPrices[$rowNum] = $rowData;
 
-                    $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
+                    $productId = $this->segmentsValidator->getProductId($rowData[self::COL_PRODUCT_SKU]);
 
-                    $listPrices[$rowNum]['website_id'] = $this->getWebsiteId($rowData[self::COL_WEBSITE]);
+                    $listPrices[$rowNum]['website_id'] = $this->segmentsValidator->getWebsiteId($rowData[self::COL_WEBSITE]);
                     $listPrices[$rowNum]['customer_id'] = $this->segmentsValidator->getCustomerId($rowData[self::COL_CUSTOMER_EMAIL],
                         $listPrices[$rowNum]);
                     $listPrices[$rowNum]['product_id'] = $productId;
@@ -206,9 +206,9 @@ class CustomerPrices extends ImportAbstract
                     continue;
                 }
 
-                $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
+                $productId = $this->segmentsValidator->getProductId($rowData[self::COL_PRODUCT_SKU]);
 
-                $prices[$rowNum]['website_id'] = $this->getWebsiteId($rowData[self::COL_WEBSITE]);
+                $prices[$rowNum]['website_id'] = $this->segmentsValidator->getWebsiteId($rowData[self::COL_WEBSITE]);
                 $prices[$rowNum]['product_id'] = $productId;
                 $prices[$rowNum]['price'] = $rowData[self::COL_PRICE];
                 $prices[$rowNum]['customer_id'] = $this->segmentsValidator->getCustomerId($rowData[self::COL_CUSTOMER_EMAIL],
@@ -262,10 +262,13 @@ class CustomerPrices extends ImportAbstract
                 $select = $this->_connection->select()
                                             ->from($this->pricesTable, [$PricesTablePrimaryKey]);
 
+                $sql = '';
                 foreach ($listPrices as $item) {
-                    $select->where('product_id=?', $item['product_id']);
-                    $select->where('customer_id=?', $item['customer_id']);
-                    $select->where('website_id=?', $item['website_id']);
+                    $sql .= $this->_connection->quoteInto('product_id=?', $item['product_id']);
+                    $sql .= $this->_connection->quoteInto(' AND website_id=?', $item['website_id']);
+                    $sql .= $this->_connection->quoteInto(' AND customer_id=?', $item['customer_id']);
+
+                    $select->orWhere($sql);
                 }
 
                 $this->cachedPricesToDelete = $this->_connection->fetchCol($select);

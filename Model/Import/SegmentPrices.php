@@ -150,12 +150,12 @@ class SegmentPrices extends ImportAbstract
                 if (!$this->getErrorAggregator()->isRowInvalid($rowNum)) {
                     $listPrices[$rowNum] = $rowData;
 
-                    $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
+                    $productId = $this->segmentsValidator->getProductId($rowData[self::COL_PRODUCT_SKU]);
                     $listPrices[$rowNum] = array_intersect_key($rowData,
                         array_flip(self::AVAILABLE_IMPORT_FIELDS));
 
-                    $listPrices[$rowNum]['website_id'] = $this->getWebsiteId($rowData[self::COL_WEBSITE]);
-                    $listPrices[$rowNum]['segment_id'] = $this->getSegmentId($rowData[self::COL_SEGMENT]);
+                    $listPrices[$rowNum]['website_id'] = $this->segmentsValidator->getWebsiteId($rowData[self::COL_WEBSITE]);
+                    $listPrices[$rowNum]['segment_id'] = $this->segmentsValidator->getSegmentId($rowData[self::COL_SEGMENT]);
                     $listPrices[$rowNum]['product_id'] = $productId;
 
                 }
@@ -201,15 +201,13 @@ class SegmentPrices extends ImportAbstract
                     continue;
                 }
 
-                $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
+                $productId = $this->segmentsValidator->getProductId($rowData[self::COL_PRODUCT_SKU]);
 
                 $prices[$rowNum] = $rowData;
-
-                $productId = $this->getProductId($rowData[self::COL_PRODUCT_SKU]);
                 $prices[$rowNum] = array_intersect_key($rowData, array_flip(self::AVAILABLE_IMPORT_FIELDS));
 
-                $prices[$rowNum]['website_id'] = $this->getWebsiteId($rowData[self::COL_WEBSITE]);
-                $prices[$rowNum]['segment_id'] = $this->getSegmentId($rowData[self::COL_SEGMENT]);
+                $prices[$rowNum]['website_id'] = $this->segmentsValidator->getWebsiteId($rowData[self::COL_WEBSITE]);
+                $prices[$rowNum]['segment_id'] = $this->segmentsValidator->getSegmentId($rowData[self::COL_SEGMENT]);
                 $prices[$rowNum]['product_id'] = $productId;
             }
 
@@ -256,10 +254,13 @@ class SegmentPrices extends ImportAbstract
                 $select = $this->_connection->select()
                                             ->from($this->pricesTable, [$PricesTablePrimaryKey]);
 
+                $sql = '';
                 foreach ($listPrices as $item) {
-                    $select->where('product_id=?', $item['product_id']);
-                    $select->where('segment_id=?', $item['segment_id']);
-                    $select->where('website_id=?', $item['website_id']);
+                    $sql .= $this->_connection->quoteInto('product_id=?', $item['product_id']);
+                    $sql .= $this->_connection->quoteInto(' AND website_id=?', $item['website_id']);
+                    $sql .= $this->_connection->quoteInto(' AND segment_id=?', $item['segment_id']);
+
+                    $select->orWhere($sql);
                 }
 
                 $this->cachedPricesToDelete = $this->_connection->fetchCol($select);
