@@ -262,11 +262,11 @@ class CustomerPrices extends ImportAbstract
                 $select = $this->_connection->select()
                                             ->from($this->pricesTable, [$PricesTablePrimaryKey]);
 
-                $sql = '';
                 foreach ($listPrices as $item) {
-                    $sql .= $this->_connection->quoteInto('product_id=?', $item['product_id']);
-                    $sql .= $this->_connection->quoteInto(' AND website_id=?', $item['website_id']);
-                    $sql .= $this->_connection->quoteInto(' AND customer_id=?', $item['customer_id']);
+                    $sql = '';
+                    $sql .= $this->_connection->quoteInto(' product_id=? ', $item['product_id']);
+                    $sql .= $this->_connection->quoteInto(' AND website_id=? ', $item['website_id']);
+                    $sql .= $this->_connection->quoteInto(' AND customer_id=? ', $item['customer_id']);
 
                     $select->orWhere($sql);
                 }

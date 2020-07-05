@@ -254,11 +254,11 @@ class SegmentPrices extends ImportAbstract
                 $select = $this->_connection->select()
                                             ->from($this->pricesTable, [$PricesTablePrimaryKey]);
 
-                $sql = '';
                 foreach ($listPrices as $item) {
-                    $sql .= $this->_connection->quoteInto('product_id=?', $item['product_id']);
-                    $sql .= $this->_connection->quoteInto(' AND website_id=?', $item['website_id']);
-                    $sql .= $this->_connection->quoteInto(' AND segment_id=?', $item['segment_id']);
+                    $sql = '';
+                    $sql .= $this->_connection->quoteInto(' product_id=? ', $item['product_id']);
+                    $sql .= $this->_connection->quoteInto(' AND website_id=? ', $item['website_id']);
+                    $sql .= $this->_connection->quoteInto(' AND segment_id=? ', $item['segment_id']);
 
                     $select->orWhere($sql);
                 }
