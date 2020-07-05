@@ -104,7 +104,7 @@ class Products extends \Magento\Framework\Model\AbstractModel
     /**
      * @param string $products
      *
-     * @return int
+     * @return array
      */
     public function saveProducts($products)
     {
@@ -146,17 +146,20 @@ class Products extends \Magento\Framework\Model\AbstractModel
         if ($valid) {
             $tableName = $this->getResource()->getMainTable();
 
-            return $this->getResource()->getConnection()->insertOnDuplicate($tableName, $valid, $saveFields);
+            $results = $this->getResource()->getConnection()->insertOnDuplicate($tableName, $valid, $saveFields);
+
+            return [['affected' => $results, 'success' => true]];
+
         }
 
-        return 0;
+        return [['affected' => 0, 'success' => false]];
 
     }
 
     /**
      * @param string $products
      *
-     * @return int
+     * @return array
      * @throws \Exception
      */
     public function removeProducts($products)
@@ -208,14 +211,16 @@ class Products extends \Magento\Framework\Model\AbstractModel
 
             $toDelete = $connection->fetchCol($select);
 
-            return $connection->delete(
+            $results = $connection->delete(
                 $resource->getMainTable(),
                 $connection->quoteInto($this->getIdFieldName() . ' IN (?)', $toDelete)
             );
 
+            return [['affected' => $results, 'success' => true]];
+
         }
 
-        return 0;
+        return [['affected' => 0, 'success' => false]];
 
     }
 }

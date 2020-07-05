@@ -32,7 +32,7 @@ interface PricesRepositoryInterface
      *
      * @param string $prices
      *
-     * @return int
+     * @return array
      */
 
     public function import($prices);
@@ -42,7 +42,7 @@ interface PricesRepositoryInterface
      *
      * @param string $prices
      *
-     * @return int
+     * @return array
      */
 
     public function remove($prices);

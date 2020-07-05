@@ -92,7 +92,7 @@ interface SegmentsRepositoryInterface
      *
      * @param string $products
      *
-     * @return int
+     * @return array
      */
 
     public function saveProducts($products);
@@ -102,7 +102,7 @@ interface SegmentsRepositoryInterface
      *
      * @param string $products
      *
-     * @return int
+     * @return array
      */
 
     public function removeProducts($products);
