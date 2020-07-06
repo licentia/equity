@@ -1,3 +1,2 @@
-sku,website,segment_id,price
-sku123,base,2,10.12
-sku124,base,2,15.00
+sku,segment,website,price
+24-MB01,portugal,base,12

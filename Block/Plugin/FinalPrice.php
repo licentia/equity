@@ -207,7 +207,7 @@ class FinalPrice
             }
         }
 
-        if ($this->scope->isSetFlag('panda_magna/prices/enabled')) {
+        if ($this->scope->isSetFlag('panda_prices/segments/enabled')) {
             $result = $this->pandaHelper->getSegmentPrice($customerId, $product, $result);
         }
 

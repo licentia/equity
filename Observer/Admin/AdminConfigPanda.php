@@ -86,7 +86,7 @@ class AdminConfigPanda implements ObserverInterface
 
         try {
             if ($event->getEvent()->getName() == 'admin_system_config_changed_section_panda_magna') {
-                $enabled = $this->scopeConfig->isSetFlag('panda_magna/prices/enabled');
+                $enabled = $this->scopeConfig->isSetFlag('panda_prices/segments/enabled');
 
                 $attribute = $this->attributeFactory->create()->loadByCode('catalog_product', 'panda_segments');
                 if (!$enabled) {
