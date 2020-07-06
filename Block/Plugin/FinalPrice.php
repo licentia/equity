@@ -19,6 +19,7 @@
 
 namespace Licentia\Equity\Block\Plugin;
 
+use \Magento\Store\Model\ScopeInterface;
 use Magento\Customer\Model\Session;
 
 /**
@@ -80,10 +81,7 @@ class FinalPrice
     {
 
         if ($result == 0) {
-            $cost = (int) $this->scope->getValue(
-                'panda_equity/products/cost',
-                \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE
-            );
+            $cost = (int) $this->scope->getValue('panda_equity/products/cost', ScopeInterface::SCOPE_WEBSITE);
 
             if ($cost > 0) {
                 $result = round($product->getPrice() * $cost / 100, 4);
@@ -116,12 +114,12 @@ class FinalPrice
             ($this->customerSession->getCustomerId() &&
              (bool) $this->customerSession->getCustomer()->getData('panda_prices_disabled') == false)
         ) {
+            $customerData = $this->customerSession->getCustomer();
 
             if ($this->scope->isSetFlag('panda_prices/products/enabled')) {
-                $products = $this->scope->getValue(
-                    'panda_prices/products',
-                    \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE
-                );
+
+                $products = $this->scope->getValue('panda_prices/products', ScopeInterface::SCOPE_WEBSITE);
+
                 if (is_array($products) && $product->getData('panda_price_expression')) {
                     $products['price'] = $product->getData('panda_price_expression');
                 }
@@ -129,13 +127,13 @@ class FinalPrice
             }
 
             if ($this->scope->isSetFlag('panda_prices/customers/enabled')) {
-                $products = $this->scope->getValue(
-                    'panda_prices/customers',
-                    \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE
-                );
-                if (is_array($products) && $this->customerSession->getCustomer()->getData('panda_price_expression')) {
-                    $products['price'] = $this->customerSession->getCustomer()->getData('panda_price_expression');
+
+                $products = $this->scope->getValue('panda_prices/customers', ScopeInterface::SCOPE_WEBSITE);
+
+                if (is_array($products) && $customerData->getData('panda_price_expression')) {
+                    $products['price'] = $customerData->getData('panda_price_expression');
                 }
+
             }
 
             if (is_array($products)) {
