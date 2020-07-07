@@ -250,19 +250,58 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
         );
 
         if (!$disabled) {
+
+            $html = '
+                <script type="text/javascript">
+
+                require(["jquery"],function ($){
+
+                toggleControlsValidateUpdate = {
+                    run: function() {
+                        if($("#cron").val() != "r" ){
+                                $("div.admin__field.field.field-build_after_event").show();
+                         }else{
+                                $("div.admin__field.field.field-build_after_event").hide();
+                        }
+                    }
+                }
+                window.toggleControlsValidateUpdate = toggleControlsValidateUpdate;
+                $(function() {
+                    toggleControlsValidateUpdate.run();
+                });
+
+                });
+                </script>
+                ';
+
             $fieldset->addField(
                 "cron",
                 "select",
                 [
-                    "label"   => __("Auto Update Options"),
-                    "options" => [
+                    "label"    => __("Auto Update Options"),
+                    "options"  => [
                         '0' => __('No Update'),
                         'd' => __('Update Daily'),
                         'w' => __('Update Weekly'),
                         'm' => __('Update Monthly'),
                         'r' => __('Real Time Update'),
                     ],
-                    "name"    => "cron",
+                    "onchange" => "toggleControlsValidateUpdate.run()",
+                    "name"     => "cron",
+                ]
+            )
+                     ->setAfterElementHtml($html);
+
+            $buildAfter = \Licentia\Equity\Model\Segments::UPDATE_SEGMENT_REQUEST;
+
+            $fieldset->addField(
+                "build_after_event",
+                "multiselect",
+                [
+                    "label"  => __("Live Update Options"),
+                    "values" => $buildAfter,
+                    "name"   => "build_after_event",
+                    "note"   => __('When any of the selected events above is triggered, the segment for the customer will be built during the request'),
                 ]
             );
         }

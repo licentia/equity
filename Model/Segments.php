@@ -30,6 +30,13 @@ use Licentia\Reports\Model\Indexer;
 class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInterface
 {
 
+    const UPDATE_SEGMENT_REQUEST = [
+        ['label' => 'New Order', 'value' => 'order'],
+        ['label' => 'Order Complete', 'value' => 'order_complete'],
+        ['label' => 'New Invoice', 'value' => 'invoice'],
+        ['label' => 'New Account', 'value' => 'account'],
+    ];
+
     /**
      * @var string
      */
@@ -156,6 +163,16 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     protected $indexer;
 
     /**
+     * @var false|\Magento\Framework\DB\Adapter\AdapterInterface
+     */
+    protected $connection;
+
+    /**
+     * @var \Magento\Framework\Model\ResourceModel\AbstractResource|\Magento\Framework\Model\ResourceModel\Db\AbstractDb|null
+     */
+    protected $resource;
+
+    /**
      *
      */
     protected function _construct()
@@ -242,6 +259,9 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
         $this->timezone = $localeDate;
         $this->pandaHelper = $pandaHelper;
         $this->formulasFactory = $formulasFactory;
+
+        $this->resource = $this->getResource();
+        $this->connection = $this->resource->getConnection();
     }
 
     /**
@@ -887,21 +907,18 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     public function updateRealTimeCron()
     {
 
-        $resource = $this->getResource();
-        $connection = $resource->getConnection();
-
-        $records = $connection->fetchAssoc(
-            $connection->select()->from(
-                $resource->getTable('panda_segments_update_queue')
+        $records = $this->connection->fetchAssoc(
+            $this->connection->select()->from(
+                $this->resource->getTable('panda_segments_update_queue')
             )
         );
 
-        $distinctCustomerIds = $connection->fetchCol(
-            $connection->select()->from($resource->getTable('panda_segments_update_queue'))->distinct()
+        $distinctCustomerIds = $this->connection->fetchCol(
+            $this->connection->select()->from($this->resource->getTable('panda_segments_update_queue'))->distinct()
         );
 
-        $connection->delete(
-            $resource->getTable('panda_segments_update_queue'),
+        $this->connection->delete(
+            $this->resource->getTable('panda_segments_update_queue'),
             ['process_id IN (?)' => array_keys($records)]
         );
 
@@ -910,16 +927,37 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
         }
 
         foreach ($distinctCustomerIds as $customerId) {
-            $email = $connection->fetchOne(
-                $connection->select()
-                           ->from($resource->getTable('customer_entity'), ['email'])
-                           ->where('entity_id=?', $customerId)
+            $email = $this->connection->fetchOne(
+                $this->connection->select()
+                                 ->from($this->resource->getTable('customer_entity'), ['email'])
+                                 ->where('entity_id=?', $customerId)
             );
 
             if ($email) {
                 $this->formulasFactory->create()->run(false, $email);
             }
         }
+    }
+
+    /**
+     * @param $eventType
+     * @param $customerId
+     */
+    public function buildForEvent($eventType, $customerId)
+    {
+
+        $segments = $this->connection->fetchCol(
+            $this->connection->select()
+                             ->from($this->resource->getMainTable(), ['segment_id'])
+                             ->where('FIND_IN_SET(?,build_after_event)', $eventType)
+                             ->where('is_active=?', 1)
+                             ->where('manual=?', 0)
+        );
+
+        foreach ($segments as $segment) {
+            $this->updateSegmentRecords($customerId);
+        }
+
     }
 
     /**

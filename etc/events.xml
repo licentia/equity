@@ -19,6 +19,15 @@
     <event name="sales_order_save_after">
         <observer name="panda_metadata_order" instance="Licentia\Equity\Observer\OrderRelated"/>
     </event>
+    <event name="customer_register_success">
+        <observer name="customer_register_success_seg" instance="Licentia\Equity\Observer\UpdateSegmentRequest"/>
+    </event>
+    <event name="checkout_submit_all_after">
+        <observer name="checkout_submit_all_after_seg" instance="Licentia\Equity\Observer\UpdateSegmentRequest"/>
+    </event>
+    <event name="sales_order_invoice_register">
+        <observer name="panda_invoice_register_seg" instance="Licentia\Equity\Observer\UpdateSegmentRequest"/>
+    </event>
     <event name="review_save_after">
         <observer name="panda_metadata_review" instance="Licentia\Equity\Observer\ReviewRelated"/>
     </event>

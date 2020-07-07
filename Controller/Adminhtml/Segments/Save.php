@@ -142,6 +142,10 @@ class Save extends \Licentia\Equity\Controller\Adminhtml\Segments
                     $data['websites_ids'] = implode(',', $data['websites_ids']);
                 }
 
+                if (isset($data['build_after_event'])) {
+                    $data['build_after_event'] = implode(',', $data['build_after_event']);
+                }
+
                 $model->loadPost($data);
                 $this->_getSession()->setFormData($model->getData());
 
