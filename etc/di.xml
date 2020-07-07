@@ -56,6 +56,8 @@
         <arguments>
             <argument name="samples" xsi:type="array">
                 <item name="panda_segments" xsi:type="string">Licentia_Equity</item>
+                <item name="panda_products" xsi:type="string">Licentia_Equity</item>
+                <item name="panda_customer_prices" xsi:type="string">Licentia_Equity</item>
             </argument>
         </arguments>
     </type>

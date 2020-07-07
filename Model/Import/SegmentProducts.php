@@ -64,7 +64,7 @@ class SegmentProducts extends ImportAbstract
      */
     protected $_permanentAttributes = [self::COL_PRODUCT_SKU, self::COL_SEGMENT];
 
-    /**
+    /**z
      * Entity type code getter.
      *
      * @return string
