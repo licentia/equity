@@ -74,7 +74,8 @@ class Products extends \Magento\Framework\Model\AbstractModel
 
         $parts = $collection->getSelect()->getPart('from');
 
-        if (isset($parts['e']['tableName']) &&
+        if (!isset($parts['panda_s']['tableName']) &&
+            isset($parts['e']['tableName']) &&
             isset($parts['e']['tableName']) == $collection->getResource()->getTable('catalog_product_entity')) {
 
             $allCatalogs = $connection->fetchCol(
@@ -85,15 +86,15 @@ class Products extends \Magento\Framework\Model\AbstractModel
 
             $collection->getSelect()
                        ->joinLeft(
-                           ['p' => $collection->getResource()->getTable('panda_segments_products')],
+                           ['panda_s' => $collection->getResource()->getTable('panda_segments_products')],
                            'e.entity_id = p.product_id'
                            , ['segment_id']
                        );
 
             if ($customerSegments) {
-                $collection->getSelect()->where('p.segment_id IS NULL OR p.segment_id IN (?)', $customerSegments);
+                $collection->getSelect()->where('panda_s.segment_id IS NULL OR p.segment_id IN (?)', $customerSegments);
             } else {
-                $collection->getSelect()->where('p.segment_id IS NULL OR p.segment_id NOT IN (?)', $allCatalogs);
+                $collection->getSelect()->where('panda_s.segment_id IS NULL OR p.segment_id NOT IN (?)', $allCatalogs);
             }
 
         }
