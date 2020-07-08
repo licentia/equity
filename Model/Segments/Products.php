@@ -87,14 +87,16 @@ class Products extends \Magento\Framework\Model\AbstractModel
             $collection->getSelect()
                        ->joinLeft(
                            ['panda_s' => $collection->getResource()->getTable('panda_segments_products')],
-                           'e.entity_id = p.product_id'
+                           'e.entity_id = panda_s.product_id'
                            , ['segment_id']
                        );
 
             if ($customerSegments) {
-                $collection->getSelect()->where('panda_s.segment_id IS NULL OR p.segment_id IN (?)', $customerSegments);
+                $collection->getSelect()
+                           ->where('panda_s.segment_id IS NULL OR panda_s.segment_id IN (?)', $customerSegments);
             } else {
-                $collection->getSelect()->where('panda_s.segment_id IS NULL OR p.segment_id NOT IN (?)', $allCatalogs);
+                $collection->getSelect()
+                           ->where('panda_s.segment_id IS NULL OR panda_s.segment_id NOT IN (?)', $allCatalogs);
             }
 
         }
