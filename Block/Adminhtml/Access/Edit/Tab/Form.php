@@ -4,12 +4,12 @@
  * Copyright (C) Licentia, Unipessoal LDA
  *
  * NOTICE OF LICENSE
- *  
+ *
  *  This source file is subject to the EULA
  *  that is bundled with this package in the file LICENSE.txt.
  *  It is also available through the world-wide-web at this URL:
  *  https://www.greenflyingpanda.com/panda-license.txt
- *  
+ *
  *  @title      Licentia Panda - Magento® Sales Automation Extension
  *  @package    Licentia
  *  @author     Bento Vilas Boas <bento@licentia.pt>
@@ -126,19 +126,22 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
             ]
         );
 
-        $fieldset->addField(
-            'segments_ids',
-            'multiselect',
-            [
-                'name'     => 'segments_ids[]',
-                'values'   => $this->segmentsFactory->create()
-                                                    ->getOptionArray(false),
-                'label'    => __('Segment'),
-                'title'    => __('Segment'),
-                "required" => true,
-                "class"    => 'small_input',
-            ]
-        );
+        $options = $this->segmentsFactory->create()->getOptionArray('Any');
+
+        if (count($options) > 1) {
+            $fieldset->addField(
+                'segments_ids',
+                'multiselect',
+                [
+                    'name'     => 'segments_ids[]',
+                    'label'    => __('Segment'),
+                    'title'    => __('Segment'),
+                    'required' => true,
+                    'values'   => $options,
+                    "class"    => 'small_input',
+                ]
+            );
+        }
 
         $entityType = ucwords($model->getEntityType());
 

@@ -607,6 +607,35 @@
                 </item>
             </argument>
         </column>
+        <column name="build_after_event">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="array">
+                    <item name="order" xsi:type="array">
+                        <item name="value" xsi:type="string">order</item>
+                        <item name="label" xsi:type="string" translate="true">New Order</item>
+                    </item>
+                    <item name="order_complete" xsi:type="array">
+                        <item name="value" xsi:type="string">order_complete</item>
+                        <item name="label" xsi:type="string" translate="true">Order Complete</item>
+                    </item>
+                    <item name="invoice" xsi:type="array">
+                        <item name="value" xsi:type="string">invoice</item>
+                        <item name="label" xsi:type="string" translate="true">New Invoice</item>
+                    </item>
+                    <item name="account" xsi:type="array">
+                        <item name="value" xsi:type="string">account</item>
+                        <item name="label" xsi:type="string" translate="true">New Account</item>
+                    </item>
+                </item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Live Update</item>
+                </item>
+            </argument>
+        </column>
         <actionsColumn name="actions" class="Licentia\Equity\Ui\Component\Listing\Column\SegmentsActions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
