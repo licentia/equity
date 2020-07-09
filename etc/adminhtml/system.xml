@@ -250,13 +250,6 @@
                 </field>
             </group>
             -->
-            <group id="maintenance" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="80">
-                <label>Maintenance</label>
-                <field id="clear_prices" sortOrder="10" showInDefault="1" type="label" showInStore="0" showInWebsite="1">
-                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Prices</frontend_model>
-                    <comment>Clear ALL defined Segment Prices</comment>
-                </field>
-            </group>
         </section>
         <section id="panda_equity" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
             <class>separator-top</class>
@@ -750,6 +743,25 @@
                     <label>Prices in percentage?</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>When inserting segments prices in products, if the value inserted is the segment final price, or a percentage of the product's price</comment>
+                </field>
+                <field id="clear_prices" sortOrder="2000" showInDefault="1" type="label" showInStore="0" showInWebsite="1">
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Prices</frontend_model>
+                    <comment>Clear ALL defined Segment Prices</comment>
+                </field>
+                <field id="clear_customer_prices" sortOrder="2010" showInDefault="1" type="label" showInStore="0" showInWebsite="1">
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\PricesCustomer</frontend_model>
+                    <comment>Clear ALL defined Customer Prices</comment>
+                </field>
+            </group>
+            <group id="clear" showInWebsite="0" showInStore="0" showInDefault="1" sortOrder="60">
+                <label>Clear Prices</label>
+                <field id="clear_prices" sortOrder="2000" showInDefault="1" type="label" showInStore="0" showInWebsite="1">
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\Prices</frontend_model>
+                    <comment>Clear ALL defined Segment Prices</comment>
+                </field>
+                <field id="clear_customer_prices" sortOrder="2010" showInDefault="1" type="label" showInStore="0" showInWebsite="1">
+                    <frontend_model>Licentia\Equity\Block\Adminhtml\System\Config\Form\Field\PricesCustomer</frontend_model>
+                    <comment>Clear ALL defined Customer Prices</comment>
                 </field>
             </group>
         </section>

@@ -33,7 +33,7 @@ if (!$block->isTwoFactorEnabled()) {
                for="panda_twofactor_enabled"><span><?= $this->escapeHtml(__('Enable Two-Factor Authentication?')) ?></span></label>
         <div class="control">
             <select name="panda_twofactor_enabled" id="panda_twofactor_enabled">
-                <option  <?= $this->getCustomer()->getData(\Licentia\Equity\Model\TwoFactor::ATTRIBUTE_PANDA_TWOFACTOR_ENABLED)==0?' selected ':'' ?> value="0"><?= __('No') ?></option>
+                <option  <?= $this->getCustomer()->getData(\Licentia\Equity\Model\TwoFactor::ATTRIBUTE_PANDA_TWOFACTOR_ENABLED)==0?' selected ':'' ?>" value="0"><?= __('No') ?></option>
                 <option  <?= $this->getCustomer()->getData(\Licentia\Equity\Model\TwoFactor::ATTRIBUTE_PANDA_TWOFACTOR_ENABLED)==1?' selected ':'' ?>" value="1"><?= __('Yes') ?></option>
             </select>
         </div>

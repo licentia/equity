@@ -83,11 +83,19 @@ class Prices extends \Licentia\Equity\Controller\Adminhtml\Segments
         $resultRedirect = $this->resultRedirectFactory->create();
 
         try {
-            $collection = $this->pricesFactory->create()->getCollection();
-            foreach ($collection as $item) {
-                $item->delete();
+            $resource = $this->pricesFactory->create()->getResource();
+
+            if ($this->getRequest()->getParam('op') == 'customers') {
+
+                $resource->getConnection()->delete($resource->getTable('panda_customer_prices'));
+                $this->messageManager->addSuccessMessage(__('All Customer Prices Removed Successfully'));
+
+            } else {
+
+                $resource->getConnection()->delete($resource->getTable('panda_segments_prices'));
+                $this->messageManager->addSuccessMessage(__('All Segments Prices Removed Successfully'));
+
             }
-            $this->messageManager->addSuccessMessage(__('Segments Prices Removed Successfully'));
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }

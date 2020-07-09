@@ -24,7 +24,7 @@ namespace Licentia\Equity\Block\Adminhtml\System\Config\Form\Field;
  *
  * @package Licentia\Panda\Block\Adminhtml\System\Config\Form\Field
  */
-class Prices extends \Magento\Config\Block\System\Config\Form\Field
+class PricesCustomer extends \Magento\Config\Block\System\Config\Form\Field
 {
 
     /**
@@ -35,13 +35,13 @@ class Prices extends \Magento\Config\Block\System\Config\Form\Field
     protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
 
-        $url = $this->getUrl('pandae/segments/prices');
+        $url = $this->getUrl('pandae/segments/prices', ['op' => 'customers']);
         $message = __('Are you sure?');
 
-        return '<style type="text/css">#row_panda_prices_clear_clear_prices > td.label > label  {display:none;}</style><br><br>' .
-               '<button  onclick="if(!confirm(\'' . $message . '\')){return false;}' .
-               'window.location=\'' . $url . '\'" class="scalable" type="button" >' .
-               '<span><span><span>' . __('Clear Segment Prices') .
+        return '<style type="text/css">#row_panda_prices_clear_clear_customer_prices > td.label > label ' .
+               '{display:none;}</style><br><br><button  onclick="if(!confirm(\'' . $message . '\'))' .
+               '{return false;} window.location=\'' . $url . '\'" class="scalable" type="button" >' .
+               '<span><span><span>' . __('Clear Customer Prices') .
                '</span></span></span></button>';
     }
 }
