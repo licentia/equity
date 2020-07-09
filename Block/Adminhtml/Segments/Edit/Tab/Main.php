@@ -109,6 +109,7 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
                         if($("#manual").val() == "1" ){
                                 $("div.admin__field.field.field-type").hide();
                                 $("div.admin__field.field.field-cron").hide();
+                                $("div.admin__field.field.field-build_after_event").hide();
                                 $("div.admin__field.field.field-websites_ids").hide();
                                 $("#websites_ids").removeClass("required-entry");
                                 $("div.admin__field.field.field-code").show();
@@ -116,6 +117,7 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
                          }else{
                                 $("div.admin__field.field.field-type").show();
                                 $("div.admin__field.field.field-cron").show();
+                                $("div.admin__field.field.field-build_after_event").show();
                                 $("div.admin__field.field.field-websites_ids").show();
                                 $("#websites_ids").addClass("required-entry");
                                 $("div.admin__field.field.field-code").hide();

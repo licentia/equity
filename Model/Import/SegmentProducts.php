@@ -368,9 +368,8 @@ class SegmentProducts extends ImportAbstract
 
         $select = $this->_connection->fetchPairs(
             $this->_connection->select()
-                              ->from(self::PANDA_TABLE_NAME,
-                                  self::AVAILABLE_IMPORT_FIELDS)
-                              ->columns(['segment_id', 'total' => 'COUNT(*)'])
+                              ->from(self::PANDA_TABLE_NAME, [])
+                              ->columns(['segment_id', 'COUNT(*)'])
                               ->group('segment_id')
         );
 

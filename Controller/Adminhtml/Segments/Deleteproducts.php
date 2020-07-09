@@ -35,7 +35,12 @@ class Deleteproducts extends \Licentia\Equity\Controller\Adminhtml\Segments
     protected $productsFactory;
 
     /**
-     * Deleteevo constructor.
+     * @var \Licentia\Panda\Model\Import\SegmentProducts
+     */
+    protected $segmentProducts;
+
+    /**
+     * Deleteproducts constructor.
      *
      * @param Action\Context                                    $context
      * @param \Magento\Framework\View\Result\PageFactory        $resultPageFactory
@@ -45,6 +50,7 @@ class Deleteproducts extends \Licentia\Equity\Controller\Adminhtml\Segments
      * @param \Magento\Framework\View\Result\LayoutFactory      $resultLayoutFactory
      * @param \Magento\Framework\App\Response\Http\FileFactory  $fileFactory
      * @param \Licentia\Equity\Model\Segments\ProductsFactory   $productsFactory
+     * @param \Licentia\Equity\Model\Import\SegmentProducts     $segmentProducts
      */
     public function __construct(
         Action\Context $context,
@@ -54,7 +60,8 @@ class Deleteproducts extends \Licentia\Equity\Controller\Adminhtml\Segments
         \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory,
         \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory,
         \Magento\Framework\App\Response\Http\FileFactory $fileFactory,
-        \Licentia\Equity\Model\Segments\ProductsFactory $productsFactory
+        \Licentia\Equity\Model\Segments\ProductsFactory $productsFactory,
+        \Licentia\Equity\Model\Import\SegmentProducts $segmentProducts
     ) {
 
         parent::__construct(
@@ -68,6 +75,7 @@ class Deleteproducts extends \Licentia\Equity\Controller\Adminhtml\Segments
         );
 
         $this->productsFactory = $productsFactory;
+        $this->segmentProducts = $segmentProducts;
     }
 
     /**
@@ -81,20 +89,24 @@ class Deleteproducts extends \Licentia\Equity\Controller\Adminhtml\Segments
         $ids = $this->getRequest()->getParam('ids');
 
         if (!is_array($ids)) {
+
             $this->messageManager->addErrorMessage(__('Please select one or more Records.'));
+
         } else {
+
             try {
+
                 foreach ($ids as $record) {
                     $this->productsFactory->create()
                                           ->load($record)
                                           ->delete();
                 }
                 $this->messageManager->addSuccessMessage(
-                    __(
-                        'Total of %1 record(s) were deleted.',
-                        count($ids)
-                    )
+                    __('Total of %1 record(s) were deleted.', count($ids))
                 );
+
+                $this->segmentProducts->updateTotals();
+
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
             } catch (\RuntimeException $e) {
@@ -110,8 +122,7 @@ class Deleteproducts extends \Licentia\Equity\Controller\Adminhtml\Segments
         return $resultRedirect->setPath(
             'pandae/segments/edit',
             [
-                'id'     => $this->registry->registry('panda_segment')
-                                           ->getId(),
+                'id'     => $this->registry->registry('panda_segment')->getId(),
                 'tab_id' => 'products_section',
             ]
         );

@@ -238,7 +238,7 @@ class Prices extends \Magento\Backend\Block\Widget\Grid\Extended
         $this->getMassactionBlock()->setTemplate('Licentia_Equity::widget/grid/massaction_extended.phtml');
 
         $this->getMassactionBlock()->setFormFieldName('ids');
-        $this->setMassactionIdField('record_id');
+        $this->setMassactionIdField('entity_id');
 
         $this->getMassactionBlock()
              ->addItem(

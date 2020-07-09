@@ -118,20 +118,6 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     protected function _prepareColumns()
     {
 
-        if (!$this->registry->registry('panda_segment')) {
-            $this->addColumn(
-                'segment_id',
-                [
-                    'header'  => __('Segment Name'),
-                    'align'   => 'left',
-                    'index'   => 'segment_id',
-                    'type'    => 'options',
-                    'options' => $this->segmentsFactory->create()
-                                                       ->toFormValues(),
-                ]
-            );
-        }
-
         $this->addColumn(
             'name',
             [
@@ -171,7 +157,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         $this->getMassactionBlock()->setTemplate('Licentia_Equity::widget/grid/massaction_extended.phtml');
 
         $this->getMassactionBlock()->setFormFieldName('ids');
-        $this->setMassactionIdField('record_id');
+        $this->setMassactionIdField('entity_id');
 
         $this->getMassactionBlock()
              ->addItem(
