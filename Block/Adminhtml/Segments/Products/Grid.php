@@ -119,7 +119,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     {
 
         $this->addColumn(
-            'name',
+            'name_products',
             [
                 'header' => __('Name'),
                 'align'  => 'left',
@@ -128,7 +128,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
         );
 
         $this->addColumn(
-            'sku',
+            'sku_products',
             [
                 'header' => __('SKU'),
                 'align'  => 'left',

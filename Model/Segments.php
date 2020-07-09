@@ -779,7 +779,7 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
 
         parent::beforeSave();
 
-        if (!$this->getUseAsCatalog() == 0 && $this->getOrigData('use_as_catalog') == 1 && $this->getId()) {
+        if ($this->getUseAsCatalog() == 0 && $this->getOrigData('use_as_catalog') == 1 && $this->getId()) {
             $this->getResource()
                  ->getConnection()
                  ->delete(
