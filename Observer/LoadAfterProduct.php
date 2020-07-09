@@ -61,20 +61,20 @@ class LoadAfterProduct implements ObserverInterface
     protected $productsFactory;
 
     /**
-     * @var \Magento\Framework\App\Action\Action
+     * @var \Magento\Framework\Controller\Result\ForwardFactory
      */
-    protected $controllerAction;
+    protected $_forwardFactory;
 
     /**
      * LoadAfter constructor.
      *
-     * @param \Licentia\Panda\Helper\Data                        $pandaHelper
-     * @param \Magento\Framework\App\RequestInterface            $request
-     * @param \Magento\Store\Model\StoreManagerInterface         $storeManagerInterface
-     * @param \Licentia\Equity\Model\AccessFactory               $accessFactory
-     * @param \Licentia\Equity\Model\Segments\ProductsFactory    $productsFactory
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface
-     * @param \Magento\Framework\App\Action\Action               $action
+     * @param \Licentia\Panda\Helper\Data                         $pandaHelper
+     * @param \Magento\Framework\App\RequestInterface             $request
+     * @param \Magento\Store\Model\StoreManagerInterface          $storeManagerInterface
+     * @param \Licentia\Equity\Model\AccessFactory                $accessFactory
+     * @param \Licentia\Equity\Model\Segments\ProductsFactory     $productsFactory
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface  $scopeConfigInterface
+     * @param \Magento\Framework\Controller\Result\ForwardFactory $forwardFactory
      */
     public function __construct(
         \Licentia\Panda\Helper\Data $pandaHelper,
@@ -83,7 +83,7 @@ class LoadAfterProduct implements ObserverInterface
         \Licentia\Equity\Model\AccessFactory $accessFactory,
         \Licentia\Equity\Model\Segments\ProductsFactory $productsFactory,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface,
-        \Magento\Framework\App\Action\Action $action
+        \Magento\Framework\Controller\Result\ForwardFactory $forwardFactory
     ) {
 
         $this->scopeConfig = $scopeConfigInterface;
@@ -92,13 +92,13 @@ class LoadAfterProduct implements ObserverInterface
         $this->request = $request;
         $this->pandaHelper = $pandaHelper;
         $this->productsFactory = $productsFactory;
-        $this->controllerAction = $action;
+        $this->_forwardFactory = $forwardFactory;
     }
 
     /**
      * @param \Magento\Framework\Event\Observer $event
      *
-     * @return $this|void
+     * @return \Magento\Framework\Controller\Result\Forward
      */
     public function execute(\Magento\Framework\Event\Observer $event)
     {
@@ -132,11 +132,7 @@ class LoadAfterProduct implements ObserverInterface
                 $ok = $access->checkAccess($model->getSku(), 'product');
 
                 if (!$ok || !$okCat || !$okProd) {
-
-                    $baseUrl = $this->storeManager->getStore()->getBaseUrl();
-                    $this->controllerAction->getResponse()->setRedirect($baseUrl);
-
-                    return $this;
+                    return $this->_forwardFactory->create()->forward('defaultNoRoute');
                 } elseif (!$ok) {
                     $model->setData([]);
                 }

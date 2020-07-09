@@ -3,12 +3,12 @@
  * Copyright (C) Licentia, Unipessoal LDA
  *
  * NOTICE OF LICENSE
- *  
+ *
  *  This source file is subject to the EULA
  *  that is bundled with this package in the file LICENSE.txt.
  *  It is also available through the world-wide-web at this URL:
  *  https://www.greenflyingpanda.com/panda-license.txt
- *  
+ *
  *  @title      Licentia Panda - Magento® Sales Automation Extension
  *  @package    Licentia
  *  @author     Bento Vilas Boas <bento@licentia.pt>
@@ -51,36 +51,44 @@ class LoadAfter implements ObserverInterface
     protected $scopeConfig;
 
     /**
+     * @var \Magento\Framework\Controller\Result\ForwardFactory
+     */
+    protected $_forwardFactory;
+
+    /**
      * LoadAfter constructor.
      *
-     * @param \Licentia\Panda\Helper\Data                        $pandaHelper
-     * @param \Magento\Store\Model\StoreManagerInterface         $storeManagerInterface
-     * @param \Licentia\Equity\Model\AccessFactory               $accessFactory
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface
+     * @param \Licentia\Panda\Helper\Data                         $pandaHelper
+     * @param \Magento\Store\Model\StoreManagerInterface          $storeManagerInterface
+     * @param \Licentia\Equity\Model\AccessFactory                $accessFactory
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface  $scopeConfigInterface
+     * @param \Magento\Framework\Controller\Result\ForwardFactory $forwardFactory
      */
     public function __construct(
         \Licentia\Panda\Helper\Data $pandaHelper,
         \Magento\Store\Model\StoreManagerInterface $storeManagerInterface,
         \Licentia\Equity\Model\AccessFactory $accessFactory,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface,
+        \Magento\Framework\Controller\Result\ForwardFactory $forwardFactory
     ) {
 
         $this->scopeConfig = $scopeConfigInterface;
         $this->accessFactory = $accessFactory;
         $this->storeManager = $storeManagerInterface;
         $this->pandaHelper = $pandaHelper;
+        $this->_forwardFactory = $forwardFactory;
     }
 
     /**
      * @param \Magento\Framework\Event\Observer $event
      *
-     * @return bool|void
+     * @return \Magento\Framework\Controller\Result\Forward|bool
      */
     public function execute(\Magento\Framework\Event\Observer $event)
     {
 
         if (!$this->scopeConfig->isSetFlag('panda_magna/segments/acl', ScopeInterface::SCOPE_WEBSITE)) {
-            return;
+            return true;
         }
 
         try {
@@ -104,11 +112,7 @@ class LoadAfter implements ObserverInterface
             }
 
             if (!$ok && $type != 'block_id') {
-                $baseUrl = $this->storeManager->getStore()->getBaseUrl();
-
-                header('LOCATION: ' . $baseUrl);
-
-                return true;
+                return $this->_forwardFactory->create()->forward('defaultNoRoute');
             } elseif (!$ok) {
                 $model->setData([]);
             }

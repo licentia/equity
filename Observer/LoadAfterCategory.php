@@ -50,38 +50,38 @@ class LoadAfterCategory implements ObserverInterface
     protected $scopeConfig;
 
     /**
-     * @var \Magento\Framework\App\ResponseFactory
+     * @var \Magento\Framework\Controller\Result\ForwardFactory
      */
-    private $responseFactory;
+    protected $_forwardFactory;
 
     /**
      * LoadAfterCategory constructor.
      *
-     * @param \Magento\Framework\App\ResponseFactory             $responseFactory
-     * @param \Licentia\Panda\Helper\Data                        $pandaHelper
-     * @param \Magento\Store\Model\StoreManagerInterface         $storeManagerInterface
-     * @param \Licentia\Equity\Model\AccessFactory               $accessFactory
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface
+     * @param \Licentia\Panda\Helper\Data                         $pandaHelper
+     * @param \Magento\Store\Model\StoreManagerInterface          $storeManagerInterface
+     * @param \Licentia\Equity\Model\AccessFactory                $accessFactory
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface  $scopeConfigInterface
+     * @param \Magento\Framework\Controller\Result\ForwardFactory $forwardFactory
      */
     public function __construct(
-        \Magento\Framework\App\ResponseFactory $responseFactory,
         \Licentia\Panda\Helper\Data $pandaHelper,
         \Magento\Store\Model\StoreManagerInterface $storeManagerInterface,
         \Licentia\Equity\Model\AccessFactory $accessFactory,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface,
+        \Magento\Framework\Controller\Result\ForwardFactory $forwardFactory
     ) {
 
         $this->scopeConfig = $scopeConfigInterface;
         $this->accessFactory = $accessFactory;
         $this->storeManager = $storeManagerInterface;
         $this->pandaHelper = $pandaHelper;
-        $this->responseFactory = $responseFactory;
+        $this->_forwardFactory = $forwardFactory;
     }
 
     /**
      * @param \Magento\Framework\Event\Observer $event
      *
-     * @return $this
+     * @return \Magento\Framework\Controller\Result\Forward
      */
     public function execute(\Magento\Framework\Event\Observer $event)
     {
@@ -96,11 +96,7 @@ class LoadAfterCategory implements ObserverInterface
                 $categoryAccess = $this->accessFactory->create()->checkAccess($model->getId(), 'category');
 
                 if (!$categoryAccess) {
-                    $this->responseFactory->create()
-                                          ->setRedirect($this->storeManager->getStore()->getBaseUrl())
-                                          ->sendResponse();
-
-                    return $this;
+                    return $this->_forwardFactory->create()->forward('defaultNoRoute');
                 } elseif (!$categoryAccess) {
                     $model->setData([]);
                 }
