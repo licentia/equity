@@ -221,7 +221,7 @@
                     <comment>Log customer activity information related with these attributes</comment>
                 </field>
             </group>
-            <group id="catalog" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="10">
+            <group id="catalogs" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="10">
                 <label>Product Catalogs</label>
                 <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
                     <label>Segments Catalogs</label>

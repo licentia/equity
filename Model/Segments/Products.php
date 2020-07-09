@@ -105,6 +105,40 @@ class Products extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
+     * @param $productId
+     *
+     * @return bool
+     */
+    public function canAccessProductCatalog($productId)
+    {
+
+        $customerSegments = $this->pandaHelper->getCustomerSegmentsIds();
+
+        $connection = $this->getResource()->getConnection();
+
+        $exists = $connection->fetchCol(
+            $connection->select()
+                       ->from($this->getResource()->getTable('panda_segments_products'), 'segment_id')
+                       ->where('product_id=?', $productId)
+        );
+
+        if (!$exists) {
+            return true;
+        }
+
+        if ($exists && !$customerSegments) {
+            return false;
+        }
+
+        if (array_intersect($customerSegments, $exists)) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
      * @param string $products
      *
      * @return array

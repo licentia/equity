@@ -40,6 +40,19 @@
     </type>
     -->
 
+    <type name="\Magento\Elasticsearch\Model\Client\Elasticsearch">
+      <plugin name="panda_segments_products" type="Licentia\Equity\Plugin\ElasticSearchFilter" sortOrder="1"/>
+    </type>
+    <type name="\Magento\Elasticsearch6\Model\Client\Elasticsearch">
+      <plugin name="panda_segments_products6" type="Licentia\Equity\Plugin\ElasticSearchFilter" sortOrder="1"/>
+    </type>
+    <type name="\Magento\Elasticsearch\Elasticsearch5\Model\Client\Elasticsearch">
+      <plugin name="panda_segments_products6" type="Licentia\Equity\Plugin\ElasticSearchFilter" sortOrder="1"/>
+    </type>
+    <type name="\Magento\Elasticsearch7\Model\Client\Elasticsearch">
+      <plugin name="panda_segments_products6" type="Licentia\Equity\Plugin\ElasticSearchFilter" sortOrder="1"/>
+    </type>
+
     <type name="Magento\Framework\App\Http\Context">
       <plugin name="panda_segments_page_cache" type="Licentia\Equity\Block\Plugin\PricesHttpContext" sortOrder="1000"/>
     </type>

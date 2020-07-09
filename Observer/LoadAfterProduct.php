@@ -3,12 +3,12 @@
  * Copyright (C) Licentia, Unipessoal LDA
  *
  * NOTICE OF LICENSE
- *  
+ *
  *  This source file is subject to the EULA
  *  that is bundled with this package in the file LICENSE.txt.
  *  It is also available through the world-wide-web at this URL:
  *  https://www.greenflyingpanda.com/panda-license.txt
- *  
+ *
  *  @title      Licentia Panda - Magento® Sales Automation Extension
  *  @package    Licentia
  *  @author     Bento Vilas Boas <bento@licentia.pt>
@@ -20,6 +20,7 @@
 namespace Licentia\Equity\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
+use \Magento\Store\Model\ScopeInterface;
 
 /**
  * Class LoadAfter
@@ -55,20 +56,34 @@ class LoadAfterProduct implements ObserverInterface
     protected $scopeConfig;
 
     /**
+     * @var \Licentia\Equity\Model\Segments\ProductsFactory
+     */
+    protected $productsFactory;
+
+    /**
+     * @var \Magento\Framework\App\Action\Action
+     */
+    protected $controllerAction;
+
+    /**
      * LoadAfter constructor.
      *
      * @param \Licentia\Panda\Helper\Data                        $pandaHelper
      * @param \Magento\Framework\App\RequestInterface            $request
      * @param \Magento\Store\Model\StoreManagerInterface         $storeManagerInterface
      * @param \Licentia\Equity\Model\AccessFactory               $accessFactory
+     * @param \Licentia\Equity\Model\Segments\ProductsFactory    $productsFactory
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface
+     * @param \Magento\Framework\App\Action\Action               $action
      */
     public function __construct(
         \Licentia\Panda\Helper\Data $pandaHelper,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Store\Model\StoreManagerInterface $storeManagerInterface,
         \Licentia\Equity\Model\AccessFactory $accessFactory,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface
+        \Licentia\Equity\Model\Segments\ProductsFactory $productsFactory,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfigInterface,
+        \Magento\Framework\App\Action\Action $action
     ) {
 
         $this->scopeConfig = $scopeConfigInterface;
@@ -76,40 +91,57 @@ class LoadAfterProduct implements ObserverInterface
         $this->accessFactory = $accessFactory;
         $this->request = $request;
         $this->pandaHelper = $pandaHelper;
+        $this->productsFactory = $productsFactory;
+        $this->controllerAction = $action;
     }
 
     /**
      * @param \Magento\Framework\Event\Observer $event
+     *
+     * @return $this|void
      */
     public function execute(\Magento\Framework\Event\Observer $event)
     {
 
-        if (!$this->scopeConfig->getValue(
-            'panda_magna/segments/acl',
-            \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE
-        )) {
+        if (!$this->scopeConfig->getValue('panda_magna/segments/acl', ScopeInterface::SCOPE_WEBSITE) &&
+            !$this->scopeConfig->getValue('panda_magna/catalogs/enabled', ScopeInterface::SCOPE_WEBSITE)) {
             return;
         }
         try {
-            $model = $event->getEvent()->getDataObject();
-            $access = $this->accessFactory->create();
 
-            $okCat = true;
-            if ($this->request->getModuleName() != 'customer' && $this->request->getModuleName() != 'sales') {
-                $okCat = $access->checkAccess($model->getCategoryIds(), 'category');
+            if ($this->scopeConfig->getValue('panda_magna/segments/acl', ScopeInterface::SCOPE_WEBSITE)) {
+
+                $model = $event->getEvent()->getDataObject();
+                $access = $this->accessFactory->create();
+
+                $okCat = true;
+                $okProd = true;
+                if ($this->request->getModuleName() != 'customer' &&
+                    $this->request->getModuleName() != 'sales') {
+
+                    $okCat = $access->checkAccess($model->getCategoryIds(), 'category');
+
+                    if ($this->scopeConfig->isSetFlag('panda_magna/catalogs/enabled', ScopeInterface::SCOPE_WEBSITE)) {
+
+                        $okProd = $this->productsFactory->create()
+                                                        ->canAccessProductCatalog($model->getId());
+                    }
+
+                }
+
+                $ok = $access->checkAccess($model->getSku(), 'product');
+
+                if (!$ok || !$okCat || !$okProd) {
+
+                    $baseUrl = $this->storeManager->getStore()->getBaseUrl();
+                    $this->controllerAction->getResponse()->setRedirect($baseUrl);
+
+                    return $this;
+                } elseif (!$ok) {
+                    $model->setData([]);
+                }
             }
 
-            $ok = $access->checkAccess($model->getSku(), 'product');
-
-            if (!$ok || !$okCat) {
-                $baseUrl = $this->storeManager->getStore()->getBaseUrl();
-
-                header('LOCATION: ' . $baseUrl);
-
-                return;
-            } elseif (!$ok) {
-                $model->setData([]);
-            }
         } catch (\Exception $e) {
             $this->pandaHelper->logWarning($e);
         }
