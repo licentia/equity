@@ -19,8 +19,6 @@
 
 namespace Licentia\Equity\Block\Adminhtml;
 
-use Magento\Framework\View\Element\Template;
-
 /**
  * Class TwoFactorAdmin
  *

@@ -41,7 +41,6 @@ class Save extends \Licentia\Equity\Controller\TwoFactor
 
         $code = $this->getRequest()->getParam('sms_code');
         $allowRemember = $this->getRequest()->getParam('sms_remember_browser');
-        $agent = $this->getRequest()->getServer('HTTP_USER_AGENT');
 
         $customer = $this->customerSession->getCustomer();
         $customerId = $customer->getId();

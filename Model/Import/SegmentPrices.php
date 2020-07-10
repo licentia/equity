@@ -19,9 +19,7 @@
 
 namespace Licentia\Equity\Model\Import;
 
-use Magento\CatalogImportExport\Model\Import\Product as ImportProduct;
 use Magento\CatalogImportExport\Model\Import\Product\RowValidatorInterface as ValidatorInterface;
-use Magento\ImportExport\Model\Import\ErrorProcessing\ProcessingErrorAggregatorInterface;
 use \Licentia\Equity\Model\Import\Validator\Segments;
 
 class SegmentPrices extends ImportAbstract
@@ -320,14 +318,12 @@ class SegmentPrices extends ImportAbstract
     {
 
         $oldPrices = $this->retrieveOldPrices();
-        $existProductIds = array_intersect_key($oldPrices, $newPrices);
 
         if (!count($oldPrices)) {
             return $this;
         }
 
         $tableName = $this->_resourceFactory->getTable($table);
-        $productEntityLinkField = $this->getProductsTablePrimaryKey();
 
         $select = $this->_connection->select()
                                     ->from($tableName, self::AVAILABLE_IMPORT_FIELDS);

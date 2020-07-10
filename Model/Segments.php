@@ -293,11 +293,9 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     }
 
     /**
-     * @param string $includeNone
-     *
      * @return array
      */
-    public function toOptionArrayAutoManaged($includeNone = 'None')
+    public function toOptionArrayAutoManaged()
     {
 
         $lists = $this->segmentsCollection->create()
@@ -955,7 +953,7 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
         );
 
         foreach ($segments as $segment) {
-            $this->updateSegmentRecords($customerId);
+            $this->load($segment)->updateSegmentRecords($customerId);
         }
 
     }

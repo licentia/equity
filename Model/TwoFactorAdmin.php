@@ -179,9 +179,6 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
             return true;
         }
 
-        /** @var \Magento\User\Model\User $user */
-        $user = $event->getUser();
-
         $data = $this->scopeConfig->getValue(
             'panda_customer/twofactor_admin',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE

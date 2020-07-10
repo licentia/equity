@@ -20,7 +20,6 @@
 namespace Licentia\Equity\Block\Adminhtml\Customer\Edit\Tab;
 
 use Magento\Customer\Controller\RegistryConstants;
-use Magento\Ui\Component\Layout\Tabs\TabInterface;
 
 /**
  *

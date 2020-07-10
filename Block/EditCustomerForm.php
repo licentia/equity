@@ -20,7 +20,6 @@
 namespace Licentia\Equity\Block;
 
 use Magento\Framework\View\Element\Template;
-use \Magento\Store\Model\ScopeInterface;
 
 /**
  * Class TwoFactor

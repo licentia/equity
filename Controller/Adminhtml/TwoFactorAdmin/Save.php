@@ -43,7 +43,6 @@ class Save extends \Licentia\Equity\Controller\Adminhtml\TwoFactorAdmin
         $allowRemember = $this->getRequest()->getParam('sms_remember_browser');
 
         $user = $this->userSession->getUser();
-        $userId = $user->getId();
 
         $smsNumber = $this->getRequest()->getParam('cellphone');
 
@@ -85,8 +84,6 @@ class Save extends \Licentia\Equity\Controller\Adminhtml\TwoFactorAdmin
 
             if ($auth) {
                 $this->userSession->setData('panda_twofactor_required', false);
-
-                $url = $this->userSession->getData('panda_twofactor_referer');
 
                 if ($allowRemember) {
                     $allow = $this->scopeConfig->isSetFlag('panda_customer/twofactor_admin/allow_remember');

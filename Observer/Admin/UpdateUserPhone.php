@@ -3,12 +3,12 @@
  * Copyright (C) Licentia, Unipessoal LDA
  *
  * NOTICE OF LICENSE
- *  
+ *
  *  This source file is subject to the EULA
  *  that is bundled with this package in the file LICENSE.txt.
  *  It is also available through the world-wide-web at this URL:
  *  https://www.greenflyingpanda.com/panda-license.txt
- *  
+ *
  *  @title      Licentia Panda - Magento® Sales Automation Extension
  *  @package    Licentia
  *  @author     Bento Vilas Boas <bento@licentia.pt>
@@ -47,16 +47,12 @@ class UpdateUserPhone implements ObserverInterface
     /**
      * UpdateUserPhone constructor.
      *
-     * @param \Magento\Backend\Model\Auth\Session        $userSession
-     * @param \Magento\Checkout\Model\Session            $checkoutSession
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Licentia\Equity\Helper\Data               $pandaHelper
-     * @param \Magento\Framework\App\Action\Context      $context
+     * @param \Magento\Backend\Model\Auth\Session   $userSession
+     * @param \Licentia\Equity\Helper\Data          $pandaHelper
+     * @param \Magento\Framework\App\Action\Context $context
      */
     public function __construct(
         \Magento\Backend\Model\Auth\Session $userSession,
-        \Magento\Checkout\Model\Session $checkoutSession,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Licentia\Equity\Helper\Data $pandaHelper,
         \Magento\Framework\App\Action\Context $context
     ) {

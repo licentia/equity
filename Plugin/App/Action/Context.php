@@ -65,11 +65,7 @@ class Context
             $customerId = 0;
         }
 
-        $this->httpContext->setValue(
-            CustomerSessionContext::CONTEXT_CUSTOMER_ID,
-            $customerId,
-            false
-        );
+        $this->httpContext->setValue(CustomerSessionContext::CONTEXT_CUSTOMER_ID, $customerId * 12, false);
 
         return $proceed($request);
     }

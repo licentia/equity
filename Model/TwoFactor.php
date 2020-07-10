@@ -189,28 +189,6 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
             return true;
         }
 
-        /** @var \Magento\Customer\Model\Customer $customer */
-        $customer = $event->getCustomer();
-
-        $data = $this->scopeConfig->getValue('panda_customer/twofactor', ScopeInterface::SCOPE_STORE);
-
-        $groups = explode(',', $this->scopeConfig->getValue(
-            'panda_customer/twofactor/customer_groups_optional',
-            ScopeInterface::SCOPE_STORE
-        ));
-        $groupsOptional = explode(',', $this->scopeConfig->getValue(
-            'panda_customer/twofactor/customer_groups',
-            ScopeInterface::SCOPE_STORE
-        ));
-        $segments = explode(',', $this->scopeConfig->getValue(
-            'panda_customer/twofactor/segments',
-            ScopeInterface::SCOPE_STORE
-        ));
-        $segmentsOptional = explode(',', $this->scopeConfig->getValue(
-            'panda_customer/twofactor/segments_optional',
-            ScopeInterface::SCOPE_STORE
-        ));
-
         $allowRemember = $this->scopeConfig->isSetFlag(
             'panda_customer/twofactor/allow_remember',
             ScopeInterface::SCOPE_STORE
@@ -368,7 +346,6 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
             throw  new \Magento\Framework\Exception\LocalizedException(__('Error Sending SMS'));
         }
 
-        return false;
     }
 
     /**

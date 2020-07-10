@@ -436,7 +436,7 @@ class Activity extends AbstractCondition
         if ($dbAttrName == 'presence_segment') {
             $select = $this->resource->getConnection()
                                      ->select()
-                                     ->from($this->resource->getTable('panda_segments_records', ['record_id']))
+                                     ->from($this->resource->getTable('panda_segments_records'), ['record_id'])
                                      ->where('email=?', $object->getEmail())
                                      ->where('segment_id = ?', $this->getValue());
 

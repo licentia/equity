@@ -19,7 +19,6 @@
 
 namespace Licentia\Equity\Model\Import\Validator;
 
-use Magento\AdvancedPricingImportExport\Model\Import\AdvancedPricing;
 use Magento\CatalogImportExport\Model\Import\Product\Validator\AbstractImportValidator;
 use Magento\CatalogImportExport\Model\Import\Product\RowValidatorInterface;
 use Magento\Framework\App\ResourceConnection;

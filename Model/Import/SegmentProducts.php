@@ -19,9 +19,7 @@
 
 namespace Licentia\Equity\Model\Import;
 
-use Magento\CatalogImportExport\Model\Import\Product as ImportProduct;
 use Magento\CatalogImportExport\Model\Import\Product\RowValidatorInterface as ValidatorInterface;
-use Magento\ImportExport\Model\Import\ErrorProcessing\ProcessingErrorAggregatorInterface;
 use \Licentia\Equity\Model\Import\Validator\Segments;
 
 class SegmentProducts extends ImportAbstract
@@ -169,7 +167,6 @@ class SegmentProducts extends ImportAbstract
         if (\Magento\ImportExport\Model\Import::BEHAVIOR_REPLACE == $behavior) {
             $this->cachedPricesToDelete = null;
         }
-        $listPrices = [];
         $prices = [];
         while ($bunch = $this->_dataSourceModel->getNextBunch()) {
             foreach ($bunch as $rowNum => $rowData) {
@@ -307,7 +304,6 @@ class SegmentProducts extends ImportAbstract
     {
 
         $oldPrices = $this->retrieveOldPrices();
-        $existProductIds = array_intersect_key($oldPrices, $newPrices);
 
         if (!count($oldPrices)) {
             return $this;

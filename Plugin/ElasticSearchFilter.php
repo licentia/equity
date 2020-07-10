@@ -54,24 +54,26 @@ class ElasticSearchFilter
     {
 
         $customerSegments = $this->pandaHelper->getCustomerSegmentsIds();
+        $connection = $this->pandaHelper->getConnection();
+        $resource = $this->pandaHelper->getResource();
 
         $allIds = [];
         if (!$customerSegments) {
-            $allIds = $this->pandaHelper->getConnection()->fetchCol(
-                $this->pandaHelper->getConnection()
-                                  ->select()
-                                  ->from($this->pandaHelper->getResource()->getTable('panda_segments_products'),
-                                      ['product_id'])
+            $allIds = $connection->fetchCol(
+                $connection
+                    ->select()
+                    ->from($resource->getTable('panda_segments_products'),
+                        ['product_id'])
             );
         }
 
         if ($customerSegments) {
-            $allIds = $this->pandaHelper->getConnection()->fetchCol(
-                $this->pandaHelper->getConnection()
-                                  ->select()
-                                  ->from($this->pandaHelper->getResource()->getTable('panda_segments_products'),
-                                      ['product_id'])
-                                  ->where('segment_id NOT IN (?)', $customerSegments)
+            $allIds = $connection->fetchCol(
+                $connection
+                    ->select()
+                    ->from($resource->getTable('panda_segments_products'),
+                        ['product_id'])
+                    ->where('segment_id NOT IN (?)', $customerSegments)
             );
         }
 
@@ -79,6 +81,10 @@ class ElasticSearchFilter
             $allIds = array_unique($allIds);
             $query['body']['query']['bool']['must_not']['terms']['_id'] = $allIds;
         }
+
+        #unset($query['body']['query']['bool']['should']);
+        #unset($query['body']['query']['bool']['minimum_should_match']);
+        #$query['body']['query']['bool']['must'][]['term']['color'] = 53;
 
         return [$query];
     }

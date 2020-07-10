@@ -20,7 +20,6 @@
 namespace Licentia\Equity\Model\Import;
 
 use Magento\CatalogImportExport\Model\Import\Product as ImportProduct;
-use Magento\CatalogImportExport\Model\Import\Product\RowValidatorInterface as ValidatorInterface;
 use Magento\ImportExport\Model\Import\ErrorProcessing\ProcessingErrorAggregatorInterface;
 use \Licentia\Equity\Model\Import\Validator\Segments;
 
@@ -109,14 +108,10 @@ abstract class ImportAbstract extends \Magento\ImportExport\Model\Import\Entity\
      */
     protected $segmentsValidator;
 
-    protected $customers;
-
     /**
-     * Product entity link field
-     *
-     * @var string
+     * @var
      */
-    private $subscribersTablePrimaryKey;
+    protected $customers;
 
     /**
      * SegmentPrices constructor.
@@ -126,7 +121,6 @@ abstract class ImportAbstract extends \Magento\ImportExport\Model\Import\Entity\
      * @param \Magento\ImportExport\Model\ResourceModel\Import\Data $importData
      * @param \Magento\Framework\App\ResourceConnection             $resource
      * @param \Magento\ImportExport\Model\ResourceModel\Helper      $resourceHelper
-     * @param \Magento\Framework\Stdlib\StringUtils                 $string
      * @param ProcessingErrorAggregatorInterface                    $errorAggregator
      * @param \Magento\Framework\Stdlib\DateTime\DateTime           $dateTime
      * @param ImportProduct\StoreResolver                           $storeResolver
@@ -139,7 +133,6 @@ abstract class ImportAbstract extends \Magento\ImportExport\Model\Import\Entity\
         \Magento\ImportExport\Model\ResourceModel\Import\Data $importData,
         \Magento\Framework\App\ResourceConnection $resource,
         \Magento\ImportExport\Model\ResourceModel\Helper $resourceHelper,
-        \Magento\Framework\Stdlib\StringUtils $string,
         ProcessingErrorAggregatorInterface $errorAggregator,
         \Magento\Framework\Stdlib\DateTime\DateTime $dateTime,
         \Magento\CatalogImportExport\Model\Import\Product\StoreResolver $storeResolver,

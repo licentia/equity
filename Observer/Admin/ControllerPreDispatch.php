@@ -53,16 +53,12 @@ class ControllerPreDispatch implements ObserverInterface
      * ControllerPreDispatch constructor.
      *
      * @param \Magento\Backend\Model\Auth\Session        $userSession
-     * @param \Magento\Checkout\Model\Session            $checkoutSession
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Licentia\Equity\Helper\Data               $helper
      * @param \Licentia\Panda\Helper\Data                $pandaHelper
      * @param \Magento\Framework\App\Action\Context      $context
      */
     public function __construct(
         \Magento\Backend\Model\Auth\Session $userSession,
-        \Magento\Checkout\Model\Session $checkoutSession,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Licentia\Equity\Helper\Data $helper,
         \Licentia\Panda\Helper\Data $pandaHelper,
         \Magento\Framework\App\Action\Context $context
