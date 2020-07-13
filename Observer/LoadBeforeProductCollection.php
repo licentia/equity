@@ -98,7 +98,7 @@ class LoadBeforeProductCollection implements ObserverInterface
                 $this->accessFactory->create()->getLockedEntities($model, 'product');
             }
 
-            if (!$this->scopeConfig->getValue('panda_magna/catalogs/enabled', ScopeInterface::SCOPE_WEBSITE)) {
+            if ($this->scopeConfig->getValue('panda_magna/catalogs/enabled', ScopeInterface::SCOPE_WEBSITE)) {
                 $this->productsFactory->create()->addToCollection($model);
             }
 

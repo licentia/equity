@@ -113,6 +113,21 @@ class SegmentProducts extends ImportAbstract
     }
 
     /**
+     * Create Subscribers data from raw data.
+     *
+     * @return bool Result of operation.
+     * @throws \Exception
+     */
+    protected function _importData()
+    {
+
+        parent::_importData();
+        $this->updateTotals();
+
+        return true;
+    }
+
+    /**
      * Deletes Subscribers data from raw data.
      *
      * @return $this
@@ -364,8 +379,7 @@ class SegmentProducts extends ImportAbstract
 
         $select = $this->_connection->fetchPairs(
             $this->_connection->select()
-                              ->from(self::PANDA_TABLE_NAME, [])
-                              ->columns(['segment_id', 'COUNT(*)'])
+                              ->from(self::PANDA_TABLE_NAME, ['segment_id', 'COUNT(*)'])
                               ->group('segment_id')
         );
 
