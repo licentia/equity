@@ -94,7 +94,7 @@ class LoadBeforeProductCollection implements ObserverInterface
             /** @var \Magento\Framework\Data\Collection\AbstractDb $model */
             $model = $event->getEvent()->getCollection();
 
-            if (!$this->scopeConfig->getValue('panda_magna/segments/acl', ScopeInterface::SCOPE_WEBSITE)) {
+            if ($this->scopeConfig->getValue('panda_magna/segments/acl', ScopeInterface::SCOPE_WEBSITE)) {
                 $this->accessFactory->create()->getLockedEntities($model, 'product');
             }
 
