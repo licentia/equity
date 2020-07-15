@@ -1770,6 +1770,8 @@ class Metadata
                     $this->formulasFactory->create()->run(false, $email);
                 }
             }
+
+            $this->pandaHelper->getCustomerSegmentsIds($customerId, true);
         }
 
         return $this;

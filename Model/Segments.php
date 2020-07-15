@@ -777,7 +777,10 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
 
         parent::beforeSave();
 
-        if ($this->getUseAsCatalog() == 0 && $this->getOrigData('use_as_catalog') == 1 && $this->getId()) {
+        if ($this->getUseAsCatalog() == 0 &&
+            $this->getOrigData('use_as_catalog') == 1 &&
+            $this->getId()) {
+
             $this->getResource()
                  ->getConnection()
                  ->delete(
@@ -906,13 +909,16 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     {
 
         $records = $this->connection->fetchAssoc(
-            $this->connection->select()->from(
-                $this->resource->getTable('panda_segments_update_queue')
-            )
+            $this->connection->select()
+                             ->from(
+                                 $this->resource->getTable('panda_segments_update_queue')
+                             )
         );
 
         $distinctCustomerIds = $this->connection->fetchCol(
-            $this->connection->select()->from($this->resource->getTable('panda_segments_update_queue'))->distinct()
+            $this->connection->select()
+                             ->from($this->resource->getTable('panda_segments_update_queue'))
+                             ->distinct()
         );
 
         $this->connection->delete(
@@ -954,6 +960,7 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
 
         foreach ($segments as $segment) {
             $this->load($segment)->updateSegmentRecords($customerId);
+            $this->pandaHelper->getCustomerSegmentsIds(false, true);
         }
 
     }
