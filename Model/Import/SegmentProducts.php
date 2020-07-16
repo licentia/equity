@@ -113,21 +113,6 @@ class SegmentProducts extends ImportAbstract
     }
 
     /**
-     * Create Subscribers data from raw data.
-     *
-     * @return bool Result of operation.
-     * @throws \Exception
-     */
-    protected function _importData()
-    {
-
-        parent::_importData();
-        $this->updateTotals();
-
-        return true;
-    }
-
-    /**
      * Deletes Subscribers data from raw data.
      *
      * @return $this
@@ -209,7 +194,6 @@ class SegmentProducts extends ImportAbstract
                 $this->processCountExistingPrices($prices, self::PANDA_TABLE_NAME)
                      ->processCountNewPrices($prices);
 
-                $this->updateTotals();
                 $this->savePricesExecute($prices, self::PANDA_TABLE_NAME);
             }
 
@@ -220,10 +204,8 @@ class SegmentProducts extends ImportAbstract
             if ($prices) {
                 $this->processCountNewPrices($prices);
                 if ($this->deletePricesFinal($prices, self::PANDA_TABLE_NAME)) {
-                    $this->updateTotals();
                     $this->savePricesExecute($prices, self::PANDA_TABLE_NAME);
                 }
-                $this->updateTotals();
             }
         }
 
@@ -271,16 +253,10 @@ class SegmentProducts extends ImportAbstract
                             $this->cachedPricesToDelete)
                     );
 
-                    $this->updateTotals();
-
                     return true;
                 } catch (\Exception $e) {
                     return false;
                 }
-            } else {
-                $this->addRowError('Product is Empty', 0);
-
-                return false;
             }
         }
 
@@ -382,6 +358,11 @@ class SegmentProducts extends ImportAbstract
                               ->from(self::PANDA_TABLE_NAME, ['segment_id', 'COUNT(*)'])
                               ->group('segment_id')
         );
+
+        $this->_connection->update($this->_resourceFactory->getTable('panda_segments'),
+            [
+                'number_products' => 0,
+            ]);
 
         foreach ($select as $segmentId => $total) {
             $this->_connection->update($this->_resourceFactory->getTable('panda_segments'),
