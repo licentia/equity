@@ -31,6 +31,6 @@
         <plugin name="panda_user_form" type="Licentia\Equity\Plugin\UserEdit" sortOrder="1"/>
     </type>
         <type name="Magento\ImportExport\Model\Import">
-        <plugin name="pandaAfterImportProducts" type="Licentia\Equity\Plugin\Import" />
+        <plugin name="pandaAfterImportProducts" type="Licentia\Equity\Plugin\Import"/>
     </type>
 </config>

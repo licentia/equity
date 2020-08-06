@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Copyright (C) Licentia, Unipessoal LDA
  *
  * NOTICE OF LICENSE
@@ -19,9 +19,9 @@
 
 namespace Licentia\Equity\Model\Customer;
 
-
 class Context
 {
+
     /**
      * Customer authorization cache context
      */

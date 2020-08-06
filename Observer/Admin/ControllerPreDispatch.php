@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Copyright (C) Licentia, Unipessoal LDA
  *
  * NOTICE OF LICENSE
@@ -52,10 +52,10 @@ class ControllerPreDispatch implements ObserverInterface
     /**
      * ControllerPreDispatch constructor.
      *
-     * @param \Magento\Backend\Model\Auth\Session        $userSession
-     * @param \Licentia\Equity\Helper\Data               $helper
-     * @param \Licentia\Panda\Helper\Data                $pandaHelper
-     * @param \Magento\Framework\App\Action\Context      $context
+     * @param \Magento\Backend\Model\Auth\Session   $userSession
+     * @param \Licentia\Equity\Helper\Data          $helper
+     * @param \Licentia\Panda\Helper\Data           $pandaHelper
+     * @param \Magento\Framework\App\Action\Context $context
      */
     public function __construct(
         \Magento\Backend\Model\Auth\Session $userSession,

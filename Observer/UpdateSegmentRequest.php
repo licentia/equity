@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Copyright (C) Licentia, Unipessoal LDA
  *
  * NOTICE OF LICENSE
@@ -35,15 +35,23 @@ class UpdateSegmentRequest implements ObserverInterface
     protected $segmentsFactory;
 
     /**
-     * InvoiceRegister constructor.
+     * @var \Licentia\Panda\Helper\Data
+     */
+    protected $pandaHelper;
+
+    /**
+     * UpdateSegmentRequest constructor.
      *
+     * @param \Licentia\Panda\Helper\Data            $pandaHelper
      * @param \Licentia\Equity\Model\SegmentsFactory $segmentsFactory
      */
     public function __construct(
+        \Licentia\Panda\Helper\Data $pandaHelper,
         \Licentia\Equity\Model\SegmentsFactory $segmentsFactory
     ) {
 
         $this->segmentsFactory = $segmentsFactory;
+        $this->pandaHelper = $pandaHelper;
     }
 
     /**
@@ -59,7 +67,6 @@ class UpdateSegmentRequest implements ObserverInterface
                 /** @var  \Magento\Sales\Model\Order $order */
                 $order = $event->getEvent()->getOrder();
                 $field = $order->getCustomerId() ? $order->getCustomerId() : $order->getCustomerEmail();
-
 
                 if ($order->getBaseGrandTotal() == $order->getBaseTotalInvoiced()) {
                     $this->segmentsFactory->create()->buildForEvent('order_complete', $field);
@@ -84,7 +91,7 @@ class UpdateSegmentRequest implements ObserverInterface
             }
 
         } catch (\Exception $e) {
-            $this->segmentsFactory->logWarning($e);
+            $this->pandaHelper->logWarning($e);
         }
     }
 }
