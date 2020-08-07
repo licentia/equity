@@ -51,7 +51,9 @@ class Import
     public function afterImportSource(\Magento\ImportExport\Model\Import $subject, $import)
     {
 
-        $this->segmentProducts->updateTotals();
+        if ($subject->getEntity() == 'panda_products') {
+            $this->segmentProducts->updateTotals();
+        }
 
         return $import;
     }
