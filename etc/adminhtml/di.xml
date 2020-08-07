@@ -30,7 +30,7 @@
      <type name="Magento\Backend\Block\System\Account\Edit\Form">
         <plugin name="panda_user_form" type="Licentia\Equity\Plugin\UserEdit" sortOrder="1"/>
     </type>
-        <type name="Magento\ImportExport\Model\Import">
+    <type name="Magento\ImportExport\Model\Import">
         <plugin name="pandaAfterImportProducts" type="Licentia\Equity\Plugin\Import"/>
     </type>
 </config>
