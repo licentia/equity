@@ -16,9 +16,6 @@
   ~
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-    <event name="catalog_controller_product_init_after">
-        <observer name="panda_segments_prod_init" instance="Licentia\Equity\Observer\ProductRelated"/>
-    </event>
     <event name="customer_login">
         <observer name="panda_new_login" instance="Licentia\Equity\Observer\NewLogin"/>
     </event>
@@ -38,7 +35,7 @@
         <observer name="panda_segments_access_check_product" instance="Licentia\Equity\Observer\LoadAfterProduct"/>
     </event>
     <event name="catalog_category_load_after">
-        <observer name="spanda_egments_access_check_category" instance="Licentia\Equity\Observer\LoadAfterCategory"/>
+        <observer name="panda_segments_access_check_category" instance="Licentia\Equity\Observer\LoadAfterCategory"/>
     </event>
     <event name="catalog_category_collection_load_before">
         <observer name="panda_segments_access_check_category_collection" instance="Licentia\Equity\Observer\LoadBeforeCategoryCollection"/>
