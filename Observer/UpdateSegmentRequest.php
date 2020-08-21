@@ -79,7 +79,17 @@ class UpdateSegmentRequest implements ObserverInterface
 
                 /** @var  \Magento\Sales\Model\Order $order */
                 $order = $event->getEvent()->getOrder();
-                $field = $order->getCustomerId() ? $order->getCustomerId() : $order->getCustomerEmail();
+                $orders = $event->getEvent()->getOrders();
+
+                if ($orders) {
+                    foreach ($orders as $order) {
+                        $field = $order->getCustomerId() ? $order->getCustomerId() : $order->getCustomerEmail();
+                    }
+                } else {
+                    $field = $order->getCustomerId() ? $order->getCustomerId() : $order->getCustomerEmail();
+
+                }
+
                 $this->segmentsFactory->create()->buildForEvent('order', $field);
             }
 
