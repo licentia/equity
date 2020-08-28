@@ -73,7 +73,6 @@ class Access extends \Magento\Backend\Block\Widget\Container
 
         foreach ($types as $key => $store) {
             $options[] = [
-                'id'      => 'edit-button',
                 'label'   => __($store),
                 'onclick' => "window.location='" . $this->getUrl(
                         '*/*/new',

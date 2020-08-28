@@ -69,15 +69,14 @@ class ExtraCosts extends \Magento\Backend\Block\Widget\Container
         $types = \Licentia\Equity\Model\Sales\ExtraCosts::getCostTypesHash();
 
         foreach ($types as $key => $store) {
-            $options[] = [
-                'id'      => 'edit-button',
+            $options[$key] = [
                 'label'   => __($store),
-                'onclick' => "window.location='" . $this->getUrl(
+                'onclick' => "setLocation('" . $this->getUrl(
                         '*/*/new',
                         [
                             'entity_type' => $key,
                         ]
-                    ) . "'",
+                    ) . "')",
                 'default' => false,
             ];
         }
