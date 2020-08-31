@@ -67,7 +67,6 @@ class ExtraCosts extends \Magento\Backend\Block\Widget\Container
         $options = [];
 
         $types = \Licentia\Equity\Model\Sales\ExtraCosts::getCostTypesHash();
-
         foreach ($types as $key => $store) {
             $options[$key] = [
                 'label'   => __($store),
@@ -77,7 +76,7 @@ class ExtraCosts extends \Magento\Backend\Block\Widget\Container
                             'entity_type' => $key,
                         ]
                     ) . "')",
-                'default' => false,
+                'default' => $key == 'other',
             ];
         }
 

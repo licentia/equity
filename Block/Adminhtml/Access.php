@@ -80,7 +80,7 @@ class Access extends \Magento\Backend\Block\Widget\Container
                             'entity_type' => $key,
                         ]
                     ) . "'",
-                'default' => false,
+                'default' => true,
             ];
         }
 
