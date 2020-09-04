@@ -123,7 +123,7 @@ class Deleteproducts extends \Licentia\Equity\Controller\Adminhtml\Segments
             'pandae/segments/edit',
             [
                 'id'     => $this->registry->registry('panda_segment')->getId(),
-                'tab_id' => 'products_section',
+                'active_tab' => 'products_section',
             ]
         );
     }

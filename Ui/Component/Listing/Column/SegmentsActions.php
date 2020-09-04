@@ -96,7 +96,7 @@ class SegmentsActions extends Column
                                 static::URL_PATH_EDIT,
                                 [
                                     'id'     => $item['segment_id'],
-                                    'tab_id' => 'records_section',
+                                    'active_tab' => 'records_section',
                                 ]
                             ),
                             'label' => __('View Records'),

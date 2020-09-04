@@ -108,7 +108,7 @@ class MassManualDelete extends \Licentia\Equity\Controller\Adminhtml\Segments
             [
                 'id'     => $this->registry->registry('panda_segment')
                                            ->getId(),
-                'tab_id' => 'records_section',
+                'active_tab' => 'records_section',
             ]
         );
     }

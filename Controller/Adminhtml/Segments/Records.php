@@ -127,7 +127,7 @@ class Records extends \Licentia\Equity\Controller\Adminhtml\Segments
             '*/*/edit',
             [
                 'id'     => $segment->getId(),
-                'tab_id' => 'records_section',
+                'active_tab' => 'records_section',
             ]
         );
     }

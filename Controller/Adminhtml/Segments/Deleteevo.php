@@ -112,7 +112,7 @@ class Deleteevo extends \Licentia\Equity\Controller\Adminhtml\Segments
             [
                 'id'     => $this->registry->registry('panda_segment')
                                            ->getId(),
-                'tab_id' => 'evolution_section',
+                'active_tab' => 'evolution_section',
             ]
         );
     }
