@@ -53,7 +53,7 @@ class Save extends \Licentia\Equity\Controller\TwoFactor
 
         $smsNumber = $this->getRequest()->getParam('cellphone');
 
-        if ($smsNumber) {
+        if ($smsNumber && $this->twofactorFactory->create()->getTwoFactorType() == 'sms') {
             if (!$smsNumber = $this->pandaHelper->isPhoneNumberValid($smsNumber)) {
                 $this->messageManager->addErrorMessage(
                     __(
@@ -75,6 +75,7 @@ class Save extends \Licentia\Equity\Controller\TwoFactor
                     } catch (\Magento\Framework\Exception\LocalizedException $exception) {
                         $this->messageManager->addExceptionMessage($exception);
                     } catch (\Exception $exception) {
+                        $this->pandaHelper->logException($exception);
                         $this->messageManager->addErrorMessage(__('Something went wrong while sending the code.'));
                     }
                 } else {
@@ -115,7 +116,7 @@ class Save extends \Licentia\Equity\Controller\TwoFactor
 
                     return $this->resultRedirectFactory->create()->setUrl($url);
                 } else {
-                    $this->messageManager->addErrorMessage(__('Invalid SMS Code. Please try again'));
+                    $this->messageManager->addErrorMessage(__('Invalid Auth Code. Please try again'));
 
                     return $this->_redirect('pandae/twofactor/auth');
                 }

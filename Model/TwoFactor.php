@@ -21,6 +21,10 @@
 namespace Licentia\Equity\Model;
 
 use Magento\Store\Model\ScopeInterface;
+use Laminas\Mail\Message;
+use Laminas\Mime\Message as MimeMessage;
+use Laminas\Mime\Mime;
+use Laminas\Mime\Part as MimePart;
 
 /**
  * Class TwoFactor
@@ -315,9 +319,29 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
 
         $message = str_replace('{code}', $code, __($data['message']));
 
-        $phone = $customer->getData('panda_twofactor_number');
+        $phone = '';
+        if ($this->getTwoFactorType() == 'sms') {
 
-        $send = $this->pandaHelper->getSmsTransport($data['sender'])->sendSMS($phone, $message);
+            $phone = $customer->getData('panda_twofactor_number');
+
+            $send = $this->pandaHelper->getSmsTransport($data['sender'])->sendSMS($phone, $message);
+
+        } else {
+
+            $sender = $this->pandaHelper->getSender($data['sender']);
+            $transport = $this->pandaHelper->getSmtpTransport($sender);
+
+            $mail = new Message();
+            $mail->setBody(\Licentia\Panda\Model\Service\Smtp::getMessageBody($message));
+            $contentTypeHeader = $mail->getHeaders()->get('Content-Type');
+            $contentTypeHeader->setType('multipart/alternative');
+
+            $mail->setFrom($sender->getData('email'), $sender->getData('name'))
+                 ->addTo($customer->getEmail())
+                 ->setSubject(__('Two Factor Auth Code'));
+
+            $transport->send($mail);
+        }
 
         if ($send) {
             $new = [];
@@ -343,7 +367,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
 
             return $this->setData([])->setData($new)->save();
         } else {
-            throw  new \Magento\Framework\Exception\LocalizedException(__('Error Sending SMS'));
+            throw  new \Magento\Framework\Exception\LocalizedException(__('Error Sending Auth Code'));
         }
 
     }
@@ -428,11 +452,11 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
         $customerEnable = $customer->getData(TwoFactor::ATTRIBUTE_PANDA_TWOFACTOR_ENABLED);
 
         $groups = explode(',', $this->scopeConfig->getValue(
-            'panda_customer/twofactor/customer_groups_optional',
+            'panda_customer/twofactor/customer_groups',
             ScopeInterface::SCOPE_STORE
         ));
         $groupsOptional = explode(',', $this->scopeConfig->getValue(
-            'panda_customer/twofactor/customer_groups',
+            'panda_customer/twofactor/customer_groups_optional',
             ScopeInterface::SCOPE_STORE
         ));
         $segments = explode(',', $this->scopeConfig->getValue(
@@ -468,11 +492,11 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
         $customer = $this->customerSession->getCustomer();
 
         $groups = explode(',', $this->scopeConfig->getValue(
-            'panda_customer/twofactor/customer_groups_optional',
+            'panda_customer/twofactor/customer_groups',
             ScopeInterface::SCOPE_STORE
         ));
         $groupsOptional = explode(',', $this->scopeConfig->getValue(
-            'panda_customer/twofactor/customer_groups',
+            'panda_customer/twofactor/customer_groups_optional',
             ScopeInterface::SCOPE_STORE
         ));
         $segments = explode(',', $this->scopeConfig->getValue(
@@ -492,6 +516,18 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
         }
 
         return false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTwoFactorType()
+    {
+
+        return $this->scopeConfig->getValue(
+            'panda_customer/twofactor/type',
+            ScopeInterface::SCOPE_STORE
+        );
     }
 
     /**

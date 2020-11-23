@@ -157,4 +157,24 @@ class TwoFactor extends Template
 
         return $this->logo->getLogoHeight();
     }
+
+    /**
+     * @return bool
+     */
+    public function isTwoFactorOptional()
+    {
+
+        return $this->twofactorFactory->create()->isTwoFactorOptionalForCustomer();
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTwoFactorType()
+    {
+
+        return $this->twofactorFactory->create()->getTwoFactorType();
+
+    }
 }

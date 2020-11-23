@@ -72,22 +72,41 @@ class EditCustomerForm extends Template
         $this->twofactorFactory = $twoFactorFactory;
     }
 
+    /**
+     * @return \Magento\Customer\Model\Customer
+     */
     public function getCustomer()
     {
 
         return $this->customerSession->getCustomer();
     }
 
+    /**
+     * @return bool
+     */
     public function isTwoFactorEnabled()
     {
 
         return $this->twofactorFactory->create()->isTwoFactorEnabledForCustomer();
     }
 
+    /**
+     * @return bool
+     */
     public function isTwoFactorOptional()
     {
 
         return $this->twofactorFactory->create()->isTwoFactorOptionalForCustomer();
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTwoFactorType()
+    {
+
+        return $this->twofactorFactory->create()->getTwoFactorType();
 
     }
 

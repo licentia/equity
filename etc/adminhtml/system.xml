@@ -27,10 +27,19 @@
             <resource>Licentia_Equity::config_magna</resource>
             <group id="twofactor" showInWebsite="1" showInStore="1" showInDefault="1" sortOrder="10">
                 <label>Two-Factor Authentication - Customers</label>
-                <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
+                <field id="enabled" sortOrder="0" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>Two-Factor Authentication</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                     <comment>Enable two-factor authentication for customers</comment>
+                </field>
+                <field id="type" sortOrder="2" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Authentication Type</label>
+                    <source_model>Licentia\Panda\Model\Source\TwoFactorType</source_model>
+                    <comment>Should the authentication be made using an SMS or Email?</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
                 </field>
                 <field id="sender" sortOrder="15" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>SMS Sender</label>
@@ -39,6 +48,17 @@
                     <validate>required-entry</validate>
                     <depends>
                         <field id="enabled">1</field>
+                        <field id="type">sms</field>
+                    </depends>
+                </field>
+                <field id="sender_email" sortOrder="15" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Email Sender</label>
+                    <source_model>Licentia\Panda\Model\Source\EmailSenders</source_model>
+                    <comment>Select the Email sender for the Code</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="type">email</field>
                     </depends>
                 </field>
                 <field id="customer_groups" sortOrder="20" showInDefault="1" type="multiselect" showInStore="1" showInWebsite="1" translate="label comment">
@@ -82,7 +102,7 @@
                     </depends>
                 </field>
                 <field id="max_resends" sortOrder="50" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
-                    <label>New SMS code (30 mins)</label>
+                    <label>New code (30 mins)</label>
                     <comment>Max Times the Customer can ask for a new Message for 30mins</comment>
                     <validate>required-entry validate-digits</validate>
                     <depends>
@@ -90,7 +110,7 @@
                     </depends>
                 </field>
                 <field id="max_resends_day" sortOrder="60" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
-                    <label>New SMS code (day)</label>
+                    <label>New code (day)</label>
                     <comment>Max Times the Customer can ask for a new Message in a day</comment>
                     <validate>required-entry validate-digits</validate>
                     <depends>
@@ -98,9 +118,9 @@
                     </depends>
                 </field>
                 <field id="message" sortOrder="70" showInDefault="1" type="textarea" showInStore="1" showInWebsite="1" translate="label comment">
-                    <label>SMS Message</label>
+                    <label>Message</label>
                     <validate>required-entry</validate>
-                    <comment>Variable {code} will be replaced with the actual code</comment>
+                    <comment><![CDATA[Variable &#123;code&#125; will be replaced with the actual code]]></comment>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
@@ -115,7 +135,7 @@
                 </field>
                 <field id="remember_days" sortOrder="90" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>Remember Days</label>
-                    <comment>How many days should the customer be allowed to login in the same device without asking for another SMS</comment>
+                    <comment>How many days should the customer be allowed to login in the same device without asking for another authentication</comment>
                     <validate>required-entry validate-digits</validate>
                     <depends>
                         <field id="enabled">1</field>
@@ -124,10 +144,19 @@
             </group>
             <group id="twofactor_admin" showInWebsite="1" showInStore="1" showInDefault="1" sortOrder="10">
                 <label>Two-Factor Authentication - Admins</label>
-                <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
+                <field id="enabled" sortOrder="0" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>Two-Factor Authentication</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                     <comment>Enable two-factor authentication for customers</comment>
+                </field>
+                <field id="type" sortOrder="2" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Authentication Type</label>
+                    <source_model>Licentia\Panda\Model\Source\TwoFactorType</source_model>
+                    <comment>Should the authentication be made using an SMS or Email?</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
                 </field>
                 <field id="sender" sortOrder="15" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>SMS Sender</label>
@@ -136,6 +165,17 @@
                     <validate>required-entry</validate>
                     <depends>
                         <field id="enabled">1</field>
+                        <field id="type">sms</field>
+                    </depends>
+                </field>
+                <field id="sender_email" sortOrder="15" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
+                    <label>Email Sender</label>
+                    <source_model>Licentia\Panda\Model\Source\EmailSenders</source_model>
+                    <comment>Select the Email sender for the Auth Code</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="type">email</field>
                     </depends>
                 </field>
                 <field id="length" sortOrder="40" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
@@ -147,7 +187,7 @@
                     </depends>
                 </field>
                 <field id="max_resends" sortOrder="50" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
-                    <label>New SMS code (30 mins)</label>
+                    <label>New code (30 mins)</label>
                     <comment>Max Times the Customer can ask for a new Message for 30mins</comment>
                     <validate>required-entry validate-digits</validate>
                     <depends>
@@ -155,7 +195,7 @@
                     </depends>
                 </field>
                 <field id="max_resends_day" sortOrder="60" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
-                    <label>New SMS code (day)</label>
+                    <label>New code (day)</label>
                     <comment>Max Times the Customer can ask for a new Message in a day</comment>
                     <validate>required-entry validate-digits</validate>
                     <depends>
@@ -163,9 +203,9 @@
                     </depends>
                 </field>
                 <field id="message" sortOrder="70" showInDefault="1" type="textarea" showInStore="1" showInWebsite="1" translate="label comment">
-                    <label>SMS Message</label>
+                    <label>Message</label>
                     <validate>required-entry</validate>
-                    <comment>Variable {code} will be replaced with the actual code</comment>
+                    <comment><![CDATA[Variable &#123;code&#125; will be replaced with the actual code]]></comment>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
@@ -180,7 +220,7 @@
                 </field>
                 <field id="remember_days" sortOrder="90" showInDefault="1" type="text" showInStore="1" showInWebsite="1" translate="label comment">
                     <label>Remember Days</label>
-                    <comment>How many days should the customer be allowed to login in the same device without asking for another SMS</comment>
+                    <comment>How many days should the customer be allowed to login in the same device without asking for another auth code</comment>
                     <validate>required-entry validate-digits</validate>
                     <depends>
                         <field id="enabled">1</field>
