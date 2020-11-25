@@ -122,7 +122,7 @@
                     <validate>required-entry</validate>
                     <comment><![CDATA[Variable &#123;code&#125; will be replaced with the actual code]]></comment>
                     <depends>
-                        <field id="enabled">1</field>
+                        <field id="type">sms</field>
                     </depends>
                 </field>
                 <field id="allow_remember" sortOrder="80" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
