@@ -1,0 +1,38 @@
+<!--
+  ~ Copyright (C) Licentia, Unipessoal LDA
+  ~
+  ~ NOTICE OF LICENSE
+  ~
+  ~  This source file is subject to the EULA
+  ~  that is bundled with this package in the file LICENSE.txt.
+  ~  It is also available through the world-wide-web at this URL:
+  ~  https://www.greenflyingpanda.com/panda-license.txt
+  ~
+  ~  @title      Licentia Panda - Magento® Sales Automation Extension
+  ~  @package    Licentia
+  ~  @author     Bento Vilas Boas <bento@licentia.pt>
+  ~  @copyright  Copyright (c) Licentia - https://licentia.pt
+  ~  @license    https://www.greenflyingpanda.com/panda-license.txt
+  ~
+  -->
+
+<!--@subject {{trans 'Validate your entry on %store' formName="$store"}} @--><!--@vars {
+"var $code":"Auth Code",
+"var $storeName":"Store Name",
+"var $storeUrl":"Store Url"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting"></p>
+            <p>{{trans 'A new login attempt has been made using your credentials has been made'}}.</p>
+            <p>{{trans 'Please use the following auth code %code' code="$code" |raw}}.</p>
+            <p>{{trans 'Regards'}}.</p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

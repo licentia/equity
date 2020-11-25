@@ -34,8 +34,19 @@ use Laminas\Mime\Part as MimePart;
 class TwoFactor extends \Magento\Framework\Model\AbstractModel
 {
 
+    /**
+     *
+     */
+    const XML_PATH_PANDA_FORMS_TEMPLATE = 'panda_equity/twofactor_/template';
+
+    /**
+     *
+     */
     const ATTRIBUTE_PANDA_TWOFACTOR_ENABLED = 'panda_twofactor_enabled';
 
+    /**
+     *
+     */
     const REMINDER_COOKIE_NAME = 'panda_auth';
 
     /**
@@ -85,6 +96,11 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     protected $url;
 
     /**
+     * @var \Magento\Framework\Mail\Template\TransportBuilder
+     */
+    protected $transportBuilder;
+
+    /**
      * Initialize resource model
      *
      * @return void
@@ -98,6 +114,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     /**
      * TwoFactor constructor.
      *
+     * @param \Magento\Framework\Mail\Template\TransportBuilder            $transportBuilder
      * @param \Magento\Framework\UrlInterface                              $url
      * @param \Magento\Store\Model\StoreManagerInterface                   $storeManager
      * @param \Magento\Customer\Model\Session                              $customerSession
@@ -111,6 +128,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
      * @param array                                                        $data
      */
     public function __construct(
+        \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder,
         \Magento\Framework\UrlInterface $url,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Customer\Model\Session $customerSession,
@@ -132,6 +150,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
         $this->pandaHelper = $helperData;
         $this->request = $request;
         $this->scopeConfig = $scopeConfig;
+        $this->transportBuilder = $transportBuilder;
     }
 
     /**
@@ -341,6 +360,33 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
                  ->setSubject(__('Two Factor Auth Code'));
 
             $transport->send($mail);
+
+            $email = $customer->getEmail();
+            $storeName = $this->storeManager->getStore()->getName();
+            $storeUrl = $this->storeManager->getStore()->getBaseUrl();
+            $transport = $this->transportBuilder
+                ->setTemplateIdentifier(
+                    $this->scopeConfig->getValue(
+                        self::XML_PATH_PANDA_FORMS_TEMPLATE,
+                        'store',
+                        $this->storeManager->getStore()
+                                           ->getId()
+                    )
+                )
+                ->setTemplateOptions(
+                    [
+                        'area'  => 'frontend',
+                        'store' => $this->storeManager->getStore()
+                                                      ->getId(),
+                    ]
+                )
+                ->setTemplateVars(['code' => $code, 'storeName' => $storeName, 'storeUrl' => $storeUrl])
+                ->setFrom('support')
+                ->addTo($email)
+                ->getTransport();
+
+            $transport->sendMessage();
+            $send = true;
         }
 
         if ($send) {
