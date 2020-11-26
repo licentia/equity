@@ -37,7 +37,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     /**
      *
      */
-    const XML_PATH_PANDA_FORMS_TEMPLATE = 'panda_equity/twofactor_/template';
+    const XML_PATH_PANDA_FORMS_TEMPLATE = 'panda_customer/twofactor/template';
 
     /**
      *
@@ -347,32 +347,22 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
 
         } else {
 
-            $sender = $this->pandaHelper->getSender($data['sender']);
+            $sender = $this->pandaHelper->getSender($data['sender_email']);
             $transport = $this->pandaHelper->getSmtpTransport($sender);
 
-            $mail = new Message();
-            $mail->setBody(\Licentia\Panda\Model\Service\Smtp::getMessageBody($message));
-            $contentTypeHeader = $mail->getHeaders()->get('Content-Type');
-            $contentTypeHeader->setType('multipart/alternative');
-
-            $mail->setFrom($sender->getData('email'), $sender->getData('name'))
-                 ->addTo($customer->getEmail())
-                 ->setSubject(__('Two Factor Auth Code'));
-
-            $transport->send($mail);
+            $template = 'panda_customer_twofactor_template';
+            $template = $this->scopeConfig->getValue(
+                self::XML_PATH_PANDA_FORMS_TEMPLATE,
+                'store',
+                $this->storeManager->getStore()
+                                   ->getId()
+            );
 
             $email = $customer->getEmail();
             $storeName = $this->storeManager->getStore()->getName();
             $storeUrl = $this->storeManager->getStore()->getBaseUrl();
             $transport = $this->transportBuilder
-                ->setTemplateIdentifier(
-                    $this->scopeConfig->getValue(
-                        self::XML_PATH_PANDA_FORMS_TEMPLATE,
-                        'store',
-                        $this->storeManager->getStore()
-                                           ->getId()
-                    )
-                )
+                ->setTemplateIdentifier($template)
                 ->setTemplateOptions(
                     [
                         'area'  => 'frontend',
@@ -385,7 +375,8 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
                 ->addTo($email)
                 ->getTransport();
 
-            $transport->sendMessage();
+            $result = $transport->sendMessage();
+
             $send = true;
         }
 

@@ -46,7 +46,7 @@ class Auth extends \Licentia\Equity\Controller\TwoFactor
             } catch (\Magento\Framework\Exception\LocalizedException $exception) {
                 $this->messageManager->addExceptionMessage($exception);
             } catch (\Exception $e) {
-                $this->messageManager->addErrorMessage(__('Error sending the code'));
+                $this->messageManager->addErrorMessage(__('Error sending the code'.$e->getMessage()));
             }
 
             return $resultRedirect->setPath('*/*/*');
