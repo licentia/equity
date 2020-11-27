@@ -16,14 +16,13 @@
   ~
   -->
 
-<!--@subject {{trans 'Validate your login on %store' store="$storeName"}} @--><!--@vars {
+<!--@subject {{trans 'Validate your login for %store' store="$storeName"}} @--><!--@vars {
 "var code":"Auth Code",
+"var username":"Admin User Name",
 "var storeName":"Store Name",
-"var username":"Customer Name",
 "var storeUrl":"Store Url"
 } @-->
 
-{{template config_path="design/email/header_template"}}
 
 <table>
     <tr class="email-intro">
@@ -35,5 +34,3 @@
         </td>
     </tr>
 </table>
-
-{{template config_path="design/email/footer_template"}}

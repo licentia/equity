@@ -61,7 +61,9 @@ class NewLogin implements ObserverInterface
     {
 
         try {
-            $this->twoFactorFactory->create()->checkLogin($event);
+            if (!$this->pandaHelper->getRegistry()->registry('panda_registration_occurred')) {
+                $this->twoFactorFactory->create()->checkLogin($event);
+            }
         } catch (\Exception $e) {
             $this->pandaHelper->logWarning($e);
         }

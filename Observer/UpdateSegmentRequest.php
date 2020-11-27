@@ -62,6 +62,8 @@ class UpdateSegmentRequest implements ObserverInterface
 
         try {
 
+            $this->pandaHelper->getRegistry()->register('panda_registration_occurred', true, true);
+
             if ($event->getEvent()->getName() == 'sales_order_invoice_register') {
 
                 /** @var  \Magento\Sales\Model\Order $order */

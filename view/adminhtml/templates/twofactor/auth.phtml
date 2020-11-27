@@ -58,7 +58,71 @@
 <div class="container">
     <img src="<?= $block->escapeHtmlAttr($block->getLogoSrc()) ?>"
          alt="<?= $block->escapeHtmlAttr($block->getLogoAlt()) ?>"/>
-    <?php if ($block->hasCellphone()) : ?>
+    <?php if ($block->getTwoFactorType() == 'email') : ?>
+        <form class=" form form-twofactor-manage" data-mage-init='{"validation":{}}'
+              action="<?= /* @noEscape */
+              $block->getUrl('pandae/twofactoradmin/save') ?>" method="post"
+              id="form-validate">
+            <fieldset class="fieldset">
+                <?= $block->getBlockHtml('formkey') ?>
+                <legend class="legend"><span><?= /* @noEscape */
+                        __('Two-Factor Authentication Required') ?></span>
+                </legend>
+                <br>
+
+                <div class="field choice">
+                    <input type="text" name="sms_code" data-validate="{required:true}" id="sms_code">
+                    <label for="subscription" class="label"> <span><?= /* @noEscape */
+                            __(
+                                'Please insert the code you received in your email'
+                            ) ?></span>
+                    </label>
+                </div>
+                <?php if ($block->getAllowRemember()): ?>
+                    <div class="field choice">
+                        <input type="checkbox" name="sms_remember_browser" id="sms_remember_browser">
+                        <label for="sms_remember_browser" class="label"> <span><?= /* @noEscape */
+                                __(
+                                    'Do not ask again for this browser for the next %1 days',
+                                    $block->getDaysToRemember()
+                                ) ?></span>
+                        </label>
+                    </div>
+                <?php endif; ?>
+            </fieldset>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="submit" title="<?= $block->escapeHtmlAttr(__('Continue')) ?>"
+                            class="action save primary">
+                        <span><?= /* @noEscape */
+                            __('Continue') ?></span>
+                    </button>
+                </div>
+                <?php if ($block->canGenerateCode()): ?>
+                    <div class="secondary">
+                        <a href="<?= /* @noEscape */
+                        $block->getUrl('pandae/twofactoradmin/auth', ['resend' => 1]) ?>"
+                           title="<?= $block->escapeHtmlAttr(__('Resend Email')) ?>" class="action  secondary">
+                            <span><?= /* @noEscape */
+                                __('Resend Email') ?></span>
+                        </a>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="actions-toolbar">
+                <div class="secondary" style="float: right;">
+                    <a href="<?= /* @noEscape */
+                    $block->getUrl('customer/account/logout', []) ?>"
+                       title="<?= $block->escapeHtmlAttr(__('Logout')) ?>" class="action  secondary">
+                        <span><?= /* @noEscape */
+                            __('Logout') ?></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    <?php endif; ?>
+
+    <?php if ($block->hasCellphone() && $block->getTwoFactorType() == 'sms') : ?>
         <form class=" form form-twofactor-manage" data-mage-init='{"validation":{}}'
               action="<?= /* @noEscape */
               $block->getUrl('pandae/twofactoradmin/save') ?>" method="post"
@@ -121,7 +185,7 @@
             </div>
         </form>
     <?php endif; ?>
-    <?php if (!$block->hasCellphone()): ?>
+    <?php if (!$block->hasCellphone() && $block->getTwoFactorType() == 'sms'): ?>
         <form class="form form-twofactor-manage" data-mage-init='{"validation":{}}'
               action="<?= /* @noEscape */
               $block->getUrl('pandae/twofactoradmin/save') ?>" method="post"

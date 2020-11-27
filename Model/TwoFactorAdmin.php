@@ -20,6 +20,12 @@
 
 namespace Licentia\Equity\Model;
 
+use Magento\Store\Model\ScopeInterface;
+use Laminas\Mail\Message;
+use Laminas\Mime\Message as MimeMessage;
+use Laminas\Mime\Mime;
+use Laminas\Mime\Part as MimePart;
+
 /**
  * Class TwoFactorAdmin
  *
@@ -28,7 +34,20 @@ namespace Licentia\Equity\Model;
 class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
 {
 
-    const REMINDER_COOKIE_NAME = 'panda_auth_admin';
+    /**
+     *
+     */
+    const XML_PATH_PANDA_FORMS_TEMPLATE = 'panda_customer/twofactor_admin/template';
+
+    /**
+     *
+     */
+    const ATTRIBUTE_PANDA_TWOFACTOR_ENABLED = 'panda_twofactor_enabled';
+
+    /**
+     *
+     */
+    const REMINDER_COOKIE_NAME = 'panda_auth';
 
     /**
      * Prefix of model events names
@@ -67,9 +86,19 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
     protected $pandaHelper;
 
     /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
      * @var \Magento\Framework\UrlInterface
      */
     protected $url;
+
+    /**
+     * @var \Magento\Framework\Mail\Template\TransportBuilder
+     */
+    protected $transportBuilder;
 
     /**
      * Initialize resource model
@@ -85,8 +114,10 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
     /**
      * TwoFactorAdmin constructor.
      *
+     * @param \Magento\Framework\Mail\Template\TransportBuilder            $transportBuilder
      * @param \Magento\Framework\UrlInterface                              $url
-     * @param \Magento\Backend\Model\Auth\Session                          $userSession
+     * @param \Magento\Store\Model\StoreManagerInterface                   $storeManager
+     * @param \Magento\Customer\Model\Session                              $customerSession
      * @param \Licentia\Equity\Helper\Data                                 $helperData
      * @param \Magento\Framework\App\RequestInterface                      $request
      * @param \Magento\Framework\App\Config\ScopeConfigInterface           $scopeConfig
@@ -97,7 +128,9 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
      * @param array                                                        $data
      */
     public function __construct(
+        \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder,
         \Magento\Framework\UrlInterface $url,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Backend\Model\Auth\Session $userSession,
         \Licentia\Equity\Helper\Data $helperData,
         \Magento\Framework\App\RequestInterface $request,
@@ -112,10 +145,12 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
 
         $this->url = $url;
+        $this->storeManager = $storeManager;
         $this->userSession = $userSession;
         $this->pandaHelper = $helperData;
         $this->request = $request;
         $this->scopeConfig = $scopeConfig;
+        $this->transportBuilder = $transportBuilder;
     }
 
     /**
@@ -181,7 +216,7 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
 
         $data = $this->scopeConfig->getValue(
             'panda_customer/twofactor_admin',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            ScopeInterface::SCOPE_STORE
         );
 
         if (isset($data['allow_remember']) && $data['allow_remember'] == 1) {
@@ -214,7 +249,7 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
 
         $data = $this->scopeConfig->getValue(
             'panda_customer/twofactor_admin',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            ScopeInterface::SCOPE_STORE
         );
 
         $resource = $this->getResource();
@@ -262,7 +297,7 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
     public function generateCode(\Magento\User\Model\User $user)
     {
 
-        if (!$user->getData('panda_twofactor_number')) {
+        if (!$user->getData('panda_twofactor_number') && $this->getTwoFactorType() == 'sms') {
             return false;
         }
         if (!$this->canGenerateCode($user)) {
@@ -270,7 +305,7 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
         }
         $data = $this->scopeConfig->getValue(
             'panda_customer/twofactor_admin',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            ScopeInterface::SCOPE_STORE
         );
 
         $i = 1;
@@ -299,10 +334,52 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
         }
 
         $message = str_replace('{code}', $code, __($data['message']));
+        $phone = '';
+        if ($this->getTwoFactorType() == 'sms') {
+            $phone = $user->getData('panda_twofactor_number');
 
-        $phone = $user->getData('panda_twofactor_number');
+            $send = $this->pandaHelper->getSmsTransport($data['sender'])->sendSMS($phone, $message);
 
-        $send = $this->pandaHelper->getSmsTransport($data['sender'])->sendSMS($phone, $message);
+        } else {
+
+            $sender = $this->pandaHelper->getSender($data['sender_email']);
+            $transport = $this->pandaHelper->getSmtpTransport($sender);
+
+            $template = $this->scopeConfig->getValue(
+                self::XML_PATH_PANDA_FORMS_TEMPLATE,
+                'store',
+                $this->storeManager->getStore()
+                                   ->getId()
+            );
+
+            $email = $user->getEmail();
+            $storeName = $this->storeManager->getWebsite()->getName() . ' / ' .
+                         $this->storeManager->getStore()->getName();
+            $storeUrl = $this->storeManager->getStore()->getBaseUrl();
+            $transport = $this->transportBuilder
+                ->setTemplateIdentifier($template)
+                ->setTemplateOptions(
+                    [
+                        'area'  => 'adminhtml',
+                        'store' => $this->storeManager->getStore()
+                                                      ->getId(),
+                    ]
+                )
+                ->setTemplateVars([
+                    'code'      => $code,
+                    'username'  => $user->getName(),
+                    'storeName' => $storeName,
+                    'storeUrl'  => $storeUrl,
+                ])
+                ->setFrom('support')
+                ->addTo($email)
+                ->getTransport();
+
+            $result = $transport->sendMessage();
+
+            $send = true;
+        }
+
         if ($send) {
             $new = [];
             $new['user_id'] = $user->getId();
@@ -397,6 +474,18 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
     {
 
         return $this->setData('code', $code);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTwoFactorType()
+    {
+
+        return $this->scopeConfig->getValue(
+            'panda_customer/twofactor/type',
+            ScopeInterface::SCOPE_STORE
+        );
     }
 
     /**

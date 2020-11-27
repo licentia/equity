@@ -100,9 +100,6 @@ class ControllerPreDispatch implements ObserverInterface
                         $this->userSession->getData('panda_twofactor_required') === true
                     ) {
 
-                        $controller->getActionFlag()
-                                   ->set('', \Magento\Framework\App\Action\Action::FLAG_NO_DISPATCH, true);
-
                         $this->redirect->redirect($controller->getResponse(), 'pandae/twofactoradmin/auth');
 
                         return $this;

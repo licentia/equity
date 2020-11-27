@@ -29,7 +29,7 @@ use Laminas\Mime\Part as MimePart;
 /**
  * Class TwoFactor
  *
- * @package Licentia\Panda\Model
+ * @package Licentia\Equity\Model
  */
 class TwoFactor extends \Magento\Framework\Model\AbstractModel
 {
@@ -293,7 +293,7 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
     public function generateCode(\Magento\Customer\Model\Customer $customer)
     {
 
-        if (!$customer->getData('panda_twofactor_number')) {
+        if (!$customer->getData('panda_twofactor_number') && $this->getTwoFactorType() == 'sms') {
 
             $customer->load($customer->getId())->getData();
 
@@ -350,7 +350,6 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
             $sender = $this->pandaHelper->getSender($data['sender_email']);
             $transport = $this->pandaHelper->getSmtpTransport($sender);
 
-            $template = 'panda_customer_twofactor_template';
             $template = $this->scopeConfig->getValue(
                 self::XML_PATH_PANDA_FORMS_TEMPLATE,
                 'store',
@@ -370,7 +369,11 @@ class TwoFactor extends \Magento\Framework\Model\AbstractModel
                                                       ->getId(),
                     ]
                 )
-                ->setTemplateVars(['code' => $code, 'storeName' => $storeName, 'storeUrl' => $storeUrl])
+                ->setTemplateVars(['code'      => $code,
+                                   'username'  => $customer->getName(),
+                                   'storeName' => $storeName,
+                                   'storeUrl'  => $storeUrl,
+                ])
                 ->setFrom('support')
                 ->addTo($email)
                 ->getTransport();

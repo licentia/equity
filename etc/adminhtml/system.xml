@@ -214,7 +214,14 @@
                     <validate>required-entry</validate>
                     <comment><![CDATA[Variable &#123;code&#125; will be replaced with the actual code]]></comment>
                     <depends>
-                        <field id="enabled">1</field>
+                        <field id="type">sms</field>
+                    </depends>
+                </field>
+                <field id="template" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Email Notification Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="type">email</field>
                     </depends>
                 </field>
                 <field id="allow_remember" sortOrder="80" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">

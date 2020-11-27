@@ -154,4 +154,14 @@ class TwoFactorAdmin extends \Magento\Backend\Block\Template
 
         return $this->logo->getLogoHeight();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTwoFactorType()
+    {
+
+        return $this->twofactorFactory->create()->getTwoFactorType();
+
+    }
 }
