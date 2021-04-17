@@ -33,12 +33,12 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var SegmentsFactory
      */
-    protected SegmentsFactory $segmentsFactory;
+    protected $segmentsFactory;
 
     /**
      * Form constructor.

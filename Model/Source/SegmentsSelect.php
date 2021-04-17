@@ -31,7 +31,7 @@ class SegmentsSelect extends \Magento\Eav\Model\Entity\Attribute\Source\Abstract
     /**
      * @var \Licentia\Equity\Model\SegmentsFactory
      */
-    protected \Licentia\Equity\Model\SegmentsFactory $segmentsFactory;
+    protected $segmentsFactory;
 
     /**
      * Segments constructor.

@@ -37,32 +37,32 @@ class Segments extends Action
      *
      * @var \Magento\Framework\Registry
      */
-    protected ?\Magento\Framework\Registry $registry = null;
+    protected $registry = null;
 
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
-    protected \Magento\Framework\View\Result\PageFactory $resultPageFactory;
+    protected $resultPageFactory;
 
     /**
      * @var \Magento\Backend\Model\View\Result\ForwardFactory
      */
-    protected \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory;
+    protected $resultForwardFactory;
 
     /**
      * @var \Magento\Framework\View\Result\LayoutFactory
      */
-    protected \Magento\Framework\View\Result\LayoutFactory $layoutFactory;
+    protected $layoutFactory;
 
     /**
      * @var \Magento\Framework\App\Response\Http\FileFactory
      */
-    protected \Magento\Framework\App\Response\Http\FileFactory $fileFactory;
+    protected $fileFactory;
 
     /**
      * @var  \Licentia\Equity\Model\SegmentsFactory
      */
-    protected \Licentia\Equity\Model\SegmentsFactory $segmentsFactory;
+    protected $segmentsFactory;
 
     /**
      * Segments constructor.

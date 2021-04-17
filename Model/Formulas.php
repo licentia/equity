@@ -74,7 +74,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
      *
      * @var string
      */
-    protected string $_eventPrefix = 'panda_formulas';
+    protected $_eventPrefix = 'panda_formulas';
 
     /**
      * @var \Magento\Framework\DB\Adapter\AdapterInterface
@@ -84,27 +84,27 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
     /**
      * @var SegmentsFactory
      */
-    protected SegmentsFactory $segmentsFactory;
+    protected $segmentsFactory;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
+    protected $scopeConfig;
 
     /**
      * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
      */
-    protected \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone;
+    protected $timezone;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * Initialize resource model

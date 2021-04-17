@@ -30,17 +30,17 @@ class PricesHttpContext
     /**
      * @var \Magento\Customer\Model\Session
      */
-    protected \Magento\Customer\Model\Session $customerSession;
+    protected $customerSession;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected \Magento\Framework\App\Config\ScopeConfigInterface $scope;
+    protected $scope;
 
     /**
      * @var Segments
      */
-    protected Segments $segments;
+    protected $segments;
 
     /**
      * PageCache constructor.

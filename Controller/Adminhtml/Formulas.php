@@ -39,42 +39,42 @@ class Formulas extends Action
      *
      * @var \Magento\Framework\Registry
      */
-    protected ?\Magento\Framework\Registry $registry = null;
+    protected $registry = null;
 
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
-    protected \Magento\Framework\View\Result\PageFactory $resultPageFactory;
+    protected $resultPageFactory;
 
     /**
      * @var \Magento\Backend\Model\View\Result\ForwardFactory
      */
-    protected \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory;
+    protected $resultForwardFactory;
 
     /**
      * @var \Magento\Framework\App\Response\Http\FileFactory
      */
-    protected \Magento\Framework\App\Response\Http\FileFactory $fileFactory;
+    protected $fileFactory;
 
     /**
      * @var \Magento\Framework\View\Result\LayoutFactory
      */
-    protected \Magento\Framework\View\Result\LayoutFactory $layoutFactory;
+    protected $layoutFactory;
 
     /**
      * @var \Licentia\Equity\Model\FormulasFactory
      */
-    protected \Licentia\Equity\Model\FormulasFactory $formulasFactory;
+    protected $formulasFactory;
 
     /**
      * @var \Licentia\Equity\Model\FormulasRepository
      */
-    protected \Licentia\Equity\Model\FormulasRepository $formulasRepository;
+    protected $formulasRepository;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     /**
      * Formulas constructor.

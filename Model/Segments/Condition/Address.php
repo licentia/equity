@@ -33,37 +33,37 @@ class Address extends AbstractCondition
     /**
      * @var \Magento\SalesRule\Model\RuleFactory
      */
-    protected \Magento\SalesRule\Model\RuleFactory $ruleFactory;
+    protected $ruleFactory;
 
     /**
      * @var \Magento\Sales\Model\ResourceModel\Order\Address\CollectionFactory
      */
-    protected \Magento\Sales\Model\ResourceModel\Order\Address\CollectionFactory $addressCollection;
+    protected $addressCollection;
 
     /**
      * @var \Magento\Sales\Model\ResourceModel\Order\Payment\CollectionFactory
      */
-    protected \Magento\Sales\Model\ResourceModel\Order\Payment\CollectionFactory $paymentCollection;
+    protected $paymentCollection;
 
     /**
      * @var \Magento\Directory\Model\Config\Source\CountryFactory
      */
-    protected \Magento\Directory\Model\Config\Source\CountryFactory $countryFactory;
+    protected $countryFactory;
 
     /**
      * @var \Magento\Directory\Model\Config\Source\Allregion
      */
-    protected \Magento\Directory\Model\Config\Source\Allregion $regionFactory;
+    protected $regionFactory;
 
     /**
      * @var \Magento\Payment\Model\Config\Source\AllmethodsFactory
      */
-    protected \Magento\Payment\Model\Config\Source\AllmethodsFactory $paymentFactory;
+    protected $paymentFactory;
 
     /**
      * @var \Magento\Shipping\Model\Config\Source\AllmethodsFactory
      */
-    protected \Magento\Shipping\Model\Config\Source\AllmethodsFactory $shippingFactory;
+    protected $shippingFactory;
 
     /**
      * Address constructor.

@@ -31,37 +31,37 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\Sales\ExtraCostsFactory
      */
-    protected \Licentia\Equity\Model\Sales\ExtraCostsFactory $extraCostsFactory;
+    protected $extraCostsFactory;
 
     /**
      * @var \Licentia\Equity\Model\Source\ExtraCosts
      */
-    protected \Licentia\Equity\Model\Source\ExtraCosts $extraCostsSource;
+    protected $extraCostsSource;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
+    protected $scopeConfig;
 
     /**
      * @var \Magento\Shipping\Model\Config
      */
-    protected \Magento\Shipping\Model\Config $shipconfig;
+    protected $shipconfig;
 
     /**
      * @var \Licentia\Panda\Model\Source\ShippingMethods
      */
-    protected \Licentia\Panda\Model\Source\ShippingMethods $shippingMethods;
+    protected $shippingMethods;
 
     /**
      * @var \Licentia\Panda\Model\Source\PaymentMethods
      */
-    protected \Licentia\Panda\Model\Source\PaymentMethods $paymentMethods;
+    protected $paymentMethods;
 
     /**
      * Main constructor.

@@ -32,12 +32,12 @@ class UserLogin implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected \Licentia\Panda\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\TwoFactorAdminFactory
      */
-    protected \Licentia\Equity\Model\TwoFactorAdminFactory $twoFactorFactory;
+    protected $twoFactorFactory;
 
     /**
      * UserLogin constructor.

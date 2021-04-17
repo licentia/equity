@@ -34,37 +34,37 @@ class Activity extends AbstractCondition
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var Session
      */
-    protected Session $customerSession;
+    protected $customerSession;
 
     /**
      * @var \Licentia\Equity\Model\KpisFactory
      */
-    protected \Licentia\Equity\Model\KpisFactory $kpisFactory;
+    protected $kpisFactory;
 
     /**
      * @var \Licentia\Equity\Model\FormulasFactory
      */
-    protected \Licentia\Equity\Model\FormulasFactory $formulasFactory;
+    protected $formulasFactory;
 
     /**
      * @var \Magento\Directory\Model\Config\Source\CountryFactory
      */
-    protected \Magento\Directory\Model\Config\Source\CountryFactory $countryFactory;
+    protected $countryFactory;
 
     /**
      * @var \Licentia\Equity\Model\SegmentsFactory
      */
-    protected \Licentia\Equity\Model\SegmentsFactory $segmentsFactory;
+    protected $segmentsFactory;
 
     /**
      * @var \Licentia\Equity\Model\Segments\ListSegmentsFactory
      */
-    protected \Licentia\Equity\Model\Segments\ListSegmentsFactory $listsegmentsFactory;
+    protected $listsegmentsFactory;
 
     /**
      * Activity constructor.

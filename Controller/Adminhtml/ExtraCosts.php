@@ -37,32 +37,32 @@ class ExtraCosts extends Action
      *
      * @var \Magento\Framework\Registry
      */
-    protected ?\Magento\Framework\Registry $registry = null;
+    protected $registry = null;
 
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
-    protected \Magento\Framework\View\Result\PageFactory $resultPageFactory;
+    protected $resultPageFactory;
 
     /**
      * @var \Magento\Backend\Model\View\Result\ForwardFactory
      */
-    protected \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory;
+    protected $resultForwardFactory;
 
     /**
      * @var \Magento\Framework\View\Result\LayoutFactory
      */
-    protected \Magento\Framework\View\Result\LayoutFactory $layoutFactory;
+    protected $layoutFactory;
 
     /**
      * @var \Licentia\Equity\Model\Sales\ExtraCostsFactory
      */
-    protected \Licentia\Equity\Model\Sales\ExtraCostsFactory $extraCostsFactory;
+    protected $extraCostsFactory;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @param Action\Context                                    $context

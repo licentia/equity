@@ -32,7 +32,7 @@ class MassManualAdd extends \Licentia\Equity\Controller\Adminhtml\Segments
     /**
      * @var \Licentia\Equity\Model\Segments\ListSegmentsFactory
      */
-    protected \Licentia\Equity\Model\Segments\ListSegmentsFactory $listSegmentsFactory;
+    protected $listSegmentsFactory;
 
     /**
      * @param Action\Context                                      $context

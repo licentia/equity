@@ -33,7 +33,7 @@ class Evolutions extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected string $_eventPrefix = 'panda_segments_evolutions';
+    protected $_eventPrefix = 'panda_segments_evolutions';
 
     /**
      * Initialize resource model

@@ -43,12 +43,12 @@ class RecordsRepository implements RecordsRepositoryInterface
     /**
      * @var DataObjectHelper
      */
-    protected DataObjectHelper $dataObjectHelper;
+    protected $dataObjectHelper;
 
     /**
      * @var RecordsInterfaceFactory
      */
-    protected RecordsInterfaceFactory $dataRecordsFactory;
+    protected $dataRecordsFactory;
 
     /**
      * @var
@@ -58,32 +58,32 @@ class RecordsRepository implements RecordsRepositoryInterface
     /**
      * @var RecordsSearchResultsInterfaceFactory
      */
-    protected RecordsSearchResultsInterfaceFactory $searchResultsFactory;
+    protected $searchResultsFactory;
 
     /**
      * @var RecordsFactory
      */
-    protected RecordsFactory $recordsFactory;
+    protected $recordsFactory;
 
     /**
      * @var RecordsCollectionFactory
      */
-    protected RecordsCollectionFactory $recordsCollectionFactory;
+    protected $recordsCollectionFactory;
 
     /**
      * @var StoreManagerInterface
      */
-    private StoreManagerInterface $storeManager;
+    private $storeManager;
 
     /**
      * @var ResourceRecords
      */
-    protected ResourceRecords $resource;
+    protected $resource;
 
     /**
      * @var DataObjectProcessor
      */
-    protected DataObjectProcessor $dataObjectProcessor;
+    protected $dataObjectProcessor;
 
     /**
      * @var

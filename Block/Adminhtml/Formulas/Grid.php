@@ -31,17 +31,17 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     /**
      * @var \Licentia\Equity\Model\ResourceModel\Formulas\CollectionFactory
      */
-    protected \Licentia\Equity\Model\ResourceModel\Formulas\CollectionFactory $collectionFactory;
+    protected $collectionFactory;
 
     /**
      * @var \Magento\Framework\View\Model\PageLayout\Config\BuilderInterface
      */
-    protected \Magento\Framework\View\Model\PageLayout\Config\BuilderInterface $pageLayoutBuilder;
+    protected $pageLayoutBuilder;
 
     /**
      * @var \Licentia\Equity\Model\FormulasFactory
      */
-    protected \Licentia\Equity\Model\FormulasFactory $formulasFactory;
+    protected $formulasFactory;
 
     /**
      * Grid constructor.
@@ -108,13 +108,13 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     }
 
     /**
-     * @param \Magento\Catalog\Model\Product|\Magento\Framework\DataObject $item
+     * @param \Magento\Catalog\Model\Product|\Magento\Framework\DataObject $row
      *
      * @return string
      */
-    public function getRowUrl($item)
+    public function getRowUrl($row)
     {
 
-        return $this->getUrl('*/*/edit', ['id' => $item->getId()]);
+        return $this->getUrl('*/*/edit', ['id' => $row->getId()]);
     }
 }

@@ -37,22 +37,22 @@ class CustomerPrices extends Action
      *
      * @var \Magento\Framework\Registry
      */
-    protected ?\Magento\Framework\Registry $registry = null;
+    protected $registry = null;
 
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
-    protected \Magento\Framework\View\Result\PageFactory $resultPageFactory;
+    protected $resultPageFactory;
 
     /**
      * @var \Magento\Backend\Model\View\Result\ForwardFactory
      */
-    protected \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory;
+    protected $resultForwardFactory;
 
     /**
      * @var \Magento\Framework\View\Result\LayoutFactory
      */
-    protected \Magento\Framework\View\Result\LayoutFactory $layoutFactory;
+    protected $layoutFactory;
 
     /**
      * @var \Licentia\Equity\Model\AccessFactory
@@ -62,18 +62,18 @@ class CustomerPrices extends Action
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     /**
      * @var \Magento\Framework\Stdlib\DateTime\Filter\Date
      */
 
-    protected \Magento\Framework\Stdlib\DateTime\Filter\Date $dateFilter;
+    protected $dateFilter;
 
     /**
      * Access constructor.

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (C) Licentia, Unipessoal LDA
  *
@@ -18,51 +17,29 @@
  *
  */
 
-namespace Licentia\Equity\Model;
+namespace Licentia\Equity\Model\Segments;
 
 /**
- * Class Access
+ * Class Records
  *
  * @package Licentia\Panda\Model
  */
-class CustomerPrices extends \Magento\Framework\Model\AbstractModel
-    implements \Licentia\Equity\Api\PricesRepositoryInterface
+class Products extends \Magento\Framework\Model\AbstractModel
 {
 
     /**
-     * Prefix of model events names
-     *
-     * @var string
-     */
-    protected $_eventPrefix = 'panda_customer_prices';
-
-    /**
-     * Parameter name in event
-     *
-     * In observe method you can use $observer->getEvent()->getObject() in this case
-     *
-     * @var string
-     */
-    protected $_eventObject = 'panda_customer_prices';
-
-    /**
-     * @var Import\Validator\Segments
+     * @var \Licentia\Equity\Model\Import\Validator\Segments
      */
     protected $validator;
 
     /**
-     * Initialize resource model
-     *
-     * @return void
+     * @var \Licentia\Panda\Helper\Data
      */
-    protected function _construct()
-    {
-
-        $this->_init(ResourceModel\CustomerPrices::class);
-    }
+    protected $pandaHelper;
 
     public function __construct(
         \Licentia\Equity\Model\Import\Validator\Segments $validator,
+        \Licentia\Panda\Helper\Data $pandaHelper,
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
@@ -71,28 +48,113 @@ class CustomerPrices extends \Magento\Framework\Model\AbstractModel
     ) {
 
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
-
+        $this->pandaHelper = $pandaHelper;
         $this->validator = $validator;
     }
 
     /**
-     * @param string $prices
-     *
-     * @return array
-     * @throws \Exception
+     * @return void
      */
-    public function import($prices)
+    protected function _construct()
     {
 
-        $prices = json_decode($prices, true);
-        if (!is_array($prices)) {
+        $this->_init(\Licentia\Equity\Model\ResourceModel\Segments\Products::class);
+    }
+
+    /**
+     * @param \Magento\Framework\Data\Collection\AbstractDb $collection
+     *
+     * @return \Magento\Framework\Data\Collection\AbstractDb
+     */
+    public function addToCollection(\Magento\Framework\Data\Collection\AbstractDb $collection)
+    {
+
+        $customerSegments = $this->pandaHelper->getCustomerSegmentsIds();
+        $connection = $collection->getResource()->getConnection();
+
+        $parts = $collection->getSelect()->getPart('from');
+
+        if (!isset($parts['panda_s']['tableName']) &&
+            isset($parts['e']['tableName']) &&
+            isset($parts['e']['tableName']) == $collection->getResource()->getTable('catalog_product_entity')) {
+
+            $allCatalogs = $connection->fetchCol(
+                $connection->select()
+                           ->from($collection->getResource()->getTable('panda_segments'), ['segment_id'])
+                           ->where('manual=?', 1)
+            );
+
+            $collection->getSelect()
+                       ->joinLeft(
+                           ['panda_s' => $collection->getResource()->getTable('panda_segments_products')],
+                           'e.entity_id = panda_s.product_id'
+                           , ['segment_id']
+                       );
+
+            if ($customerSegments) {
+                $collection->getSelect()
+                           ->where('panda_s.segment_id IS NULL OR panda_s.segment_id IN (?)', $customerSegments);
+            } else {
+                $collection->getSelect()
+                           ->where('panda_s.segment_id IS NULL OR panda_s.segment_id NOT IN (?)', $allCatalogs);
+            }
+
+        }
+
+        return $collection;
+    }
+
+    /**
+     * @param $productId
+     *
+     * @return bool
+     */
+    public function canAccessProductCatalog($productId)
+    {
+
+        $customerSegments = $this->pandaHelper->getCustomerSegmentsIds();
+
+        $connection = $this->getResource()->getConnection();
+
+        $exists = $connection->fetchCol(
+            $connection->select()
+                       ->from($this->getResource()->getTable('panda_segments_products'), 'segment_id')
+                       ->where('product_id=?', $productId)
+        );
+
+        if (!$exists) {
+            return true;
+        }
+
+        if ($exists && !$customerSegments) {
+            return false;
+        }
+
+        if (array_intersect($customerSegments, $exists)) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * @param string $products
+     *
+     * @return array
+     */
+    public function saveProducts($products)
+    {
+
+        $products = json_decode($products, true);
+        if (!is_array($products)) {
             throw new \Exception(__('Input must be a valid json string convertible into array'));
         }
 
-        $validFields = Import\CustomerPrices::VALID_FIELDS;
-        $saveFields = Import\CustomerPrices::AVAILABLE_IMPORT_FIELDS;
+        $validFields = \Licentia\Equity\Model\Import\SegmentProducts::VALID_FIELDS;
+        $saveFields = \Licentia\Equity\Model\Import\SegmentProducts::AVAILABLE_IMPORT_FIELDS;
         $valid = [];
-        foreach ($prices as $index => $price) {
+        foreach ($products as $index => $price) {
 
             if (!is_array($price)) {
                 throw new \Exception(__('Input must be a valid json string convertible into array'));
@@ -106,10 +168,8 @@ class CustomerPrices extends \Magento\Framework\Model\AbstractModel
                 $valid[$index] = $price;
 
                 $productId = $this->validator->getProductId($price['sku']);
-                $valid[$index]['website_id'] = $this->validator->getWebsiteId($price['website']);
                 $valid[$index]['product_id'] = $productId;
-                $valid[$index]['price'] = $price['price'];
-                $valid[$index]['customer_id'] = $this->validator->getCustomerId($price['email'], $price);
+                $valid[$index]['segment_id'] = $this->validator->getSegmentId($price['segment']);
 
                 $valid[$index] = array_intersect_key($valid[$index], array_flip($saveFields));
 
@@ -120,7 +180,6 @@ class CustomerPrices extends \Magento\Framework\Model\AbstractModel
             }
 
         }
-
         if ($valid) {
             $tableName = $this->getResource()->getMainTable();
 
@@ -135,25 +194,24 @@ class CustomerPrices extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
-     * @param string $prices
+     * @param string $products
      *
      * @return array
      * @throws \Exception
      */
-    public function remove($prices)
+    public function removeProducts($products)
     {
 
-        $prices = json_decode($prices, true);
-        if (!is_array($prices)) {
+        $products = json_decode($products, true);
+        if (!is_array($products)) {
             throw new \Exception(__('Input must be a valid json string convertible into array'));
         }
 
-        $validFields = Import\CustomerPrices::VALID_FIELDS;
-        unset($validFields['price']);
-        $saveFields = Import\CustomerPrices::AVAILABLE_IMPORT_FIELDS;
+        $validFields = \Licentia\Equity\Model\Import\SegmentProducts::VALID_FIELDS;
+        $saveFields = \Licentia\Equity\Model\Import\SegmentProducts::AVAILABLE_IMPORT_FIELDS;
         $valid = [];
 
-        foreach ($prices as $index => $price) {
+        foreach ($products as $index => $price) {
 
             if (!is_array($price)) {
                 throw new \Exception(__('Input must be a valid json string convertible into array'));
@@ -165,9 +223,8 @@ class CustomerPrices extends \Magento\Framework\Model\AbstractModel
 
             $valid[$index] = $price;
             $productId = $this->validator->getProductId($price['sku']);
-            $valid[$index]['website_id'] = $this->validator->getWebsiteId($price['website']);
             $valid[$index]['product_id'] = $productId;
-            $valid[$index]['customer_id'] = $this->validator->getCustomerId($price['email'], $price);
+            $valid[$index]['segment_id'] = $this->validator->getSegmentId($price['segment']);
 
             $valid[$index] = array_intersect_key($valid[$index], array_flip($saveFields));
 
@@ -184,8 +241,7 @@ class CustomerPrices extends \Magento\Framework\Model\AbstractModel
             foreach ($valid as $item) {
                 $sql = '';
                 $sql .= $connection->quoteInto(' product_id=? ', $item['product_id']);
-                $sql .= $connection->quoteInto(' AND website_id=? ', $item['website_id']);
-                $sql .= $connection->quoteInto(' AND customer_id=? ', $item['customer_id']);
+                $sql .= $connection->quoteInto(' AND segment_id=? ', $item['segment_id']);
 
                 $select->orWhere($sql);
             }

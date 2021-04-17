@@ -32,22 +32,22 @@ class NotifyBuild implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected \Licentia\Panda\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\ResourceModel\Segments\CollectionFactory
      */
-    protected \Licentia\Equity\Model\ResourceModel\Segments\CollectionFactory $segmentsCollection;
+    protected $segmentsCollection;
 
     /**
      * @var \Magento\Backend\Model\Auth\Session
      */
-    protected \Magento\Backend\Model\Auth\Session $session;
+    protected $session;
 
     /**
      * @var \Magento\Framework\Message\ManagerInterface
      */
-    protected \Magento\Framework\Message\ManagerInterface $messageManagerInterface;
+    protected $messageManagerInterface;
 
     /**
      * NotifyBuild constructor.

@@ -33,62 +33,62 @@ class Metadata
     /**
      * @var \Magento\Framework\Filesystem
      */
-    protected \Magento\Framework\Filesystem $filesystem;
+    protected $filesystem;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory
      */
-    protected \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollection;
+    protected $orderCollection;
 
     /**
      * @var \Magento\Reports\Model\ResourceModel\Order\CollectionFactory
      */
-    protected \Magento\Reports\Model\ResourceModel\Order\CollectionFactory $reportsOrderCollection;
+    protected $reportsOrderCollection;
 
     /**
      * @var \Magento\Customer\Model\CustomerFactory
      */
-    protected \Magento\Customer\Model\CustomerFactory $customerFactory;
+    protected $customerFactory;
 
     /**
      * @var \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory
      */
-    protected \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerCollection;
+    protected $customerCollection;
 
     /**
      * @var \Magento\Catalog\Model\ProductFactory
      */
-    protected \Magento\Catalog\Model\ProductFactory $productFactory;
+    protected $productFactory;
 
     /**
      * @var \Magento\Reports\Model\ResourceModel\Event\CollectionFactory
      */
-    protected \Magento\Reports\Model\ResourceModel\Event\CollectionFactory $reportsEventCollection;
+    protected $reportsEventCollection;
 
     /**
      * @var \Magento\Review\Model\ResourceModel\Review\CollectionFactory
      */
-    protected \Magento\Review\Model\ResourceModel\Review\CollectionFactory $reviewCollection;
+    protected $reviewCollection;
 
     /**
      * @var SegmentsFactory
      */
-    protected SegmentsFactory $segmentsFactory;
+    protected $segmentsFactory;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
+    protected $scopeConfig;
 
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected \Licentia\Panda\Helper\Data $logger;
+    protected $logger;
 
     /**
      * @var
@@ -98,47 +98,47 @@ class Metadata
     /**
      * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
      */
-    protected \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone;
+    protected $timezone;
 
     /**
      * @var ResourceModel\SegmentsFactory
      */
-    protected ResourceModel\SegmentsFactory $segmentsResourceFactory;
+    protected $segmentsResourceFactory;
 
     /**
      * @var KpisFactory
      */
-    protected KpisFactory $kpisFactory;
+    protected $kpisFactory;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     /**
      * @var FormulasFactory
      */
-    protected FormulasFactory $formulasFactory;
+    protected $formulasFactory;
 
     /**
      * @var \Magento\Eav\Model\Entity\Attribute\OptionFactory
      */
-    protected \Magento\Eav\Model\Entity\Attribute\OptionFactory $eavOptionFactory;
+    protected $eavOptionFactory;
 
     /**
      * @var \Magento\Quote\Model\ResourceModel\Quote\CollectionFactory
      */
-    protected \Magento\Quote\Model\ResourceModel\Quote\CollectionFactory $quoteCollection;
+    protected $quoteCollection;
 
     /**
      * @var \Magento\Framework\Registry
      */
-    protected \Magento\Framework\Registry $registry;
+    protected $registry;
 
     /**
      * @var Indexer
      */
-    protected Indexer $indexer;
+    protected $indexer;
 
     /**
      * Metadata constructor.

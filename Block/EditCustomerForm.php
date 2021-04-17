@@ -32,22 +32,22 @@ class EditCustomerForm extends Template
     /**
      * @var \Magento\Customer\Model\Session
      */
-    protected \Magento\Customer\Model\Session $customerSession;
+    protected $customerSession;
 
     /**
      * @var \Magento\Framework\Registry
      */
-    protected \Magento\Framework\Registry $registry;
+    protected $registry;
 
     /**
      * @var \Licentia\Equity\Model\TwoFactorFactory
      */
-    protected \Licentia\Equity\Model\TwoFactorFactory $twofactorFactory;
+    protected $twofactorFactory;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * EditCustomerForm constructor.

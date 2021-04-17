@@ -36,7 +36,7 @@ class KpisActions extends Column
     /**
      * @var \Magento\Framework\UrlInterface
      */
-    protected \Magento\Framework\UrlInterface $urlInterface;
+    protected $urlInterface;
 
     /**
      * Campaigns constructor.

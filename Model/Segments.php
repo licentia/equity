@@ -40,12 +40,12 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     /**
      * @var string
      */
-    protected string $_eventPrefix = 'panda_segments';
+    protected $_eventPrefix = 'panda_segments';
 
     /**
      * @var string
      */
-    protected string $_eventObject = 'rule';
+    protected $_eventObject = 'rule';
 
     /**
      * @var
@@ -65,72 +65,72 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     /**
      * @var Segments\Action\CollectionFactory
      */
-    protected Segments\Action\CollectionFactory $collectionFactory;
+    protected $collectionFactory;
 
     /**
      * @var Segments\Condition\CombineFactory
      */
-    protected Segments\Condition\CombineFactory $combineFactory;
+    protected $combineFactory;
 
     /**
      * @var ResourceModel\Segments\CollectionFactory
      */
-    protected ResourceModel\Segments\CollectionFactory $segmentsCollection;
+    protected $segmentsCollection;
 
     /**
      * @var \Magento\Customer\Model\CustomerFactory
      */
-    protected \Magento\Customer\Model\CustomerFactory $customerFactory;
+    protected $customerFactory;
 
     /**
      * @var \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory
      */
-    protected \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerCollection;
+    protected $customerCollection;
 
     /**
      * @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory
      */
-    protected \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollection;
+    protected $orderCollection;
 
     /**
      * @var Segments\ListSegmentsFactory
      */
-    protected Segments\ListSegmentsFactory $listSegmentsFactory;
+    protected $listSegmentsFactory;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     /**
      * @var ResourceModel\Segments\ListSegments\CollectionFactory
      */
-    protected ResourceModel\Segments\ListSegments\CollectionFactory $listSegmentsCollection;
+    protected $listSegmentsCollection;
 
     /**
      * @var \Magento\Quote\Model\ResourceModel\Quote\CollectionFactory
      */
-    protected \Magento\Quote\Model\ResourceModel\Quote\CollectionFactory $quoteCollection;
+    protected $quoteCollection;
 
     /**
      * @var \Magento\Customer\Model\ResourceModel\Group\CollectionFactory
      */
-    protected \Magento\Customer\Model\ResourceModel\Group\CollectionFactory $groupCollection;
+    protected $groupCollection;
 
     /**
      * @var \Magento\Quote\Model\QuoteFactory
      */
-    protected \Magento\Quote\Model\QuoteFactory $quoteFactory;
+    protected $quoteFactory;
 
     /**
      * @var \Magento\Sales\Model\OrderFactory
      */
-    protected \Magento\Sales\Model\OrderFactory $orderFactory;
+    protected $orderFactory;
 
     /**
      * @var \Magento\Framework\Model\ResourceModel\Iterator
      */
-    protected \Magento\Framework\Model\ResourceModel\Iterator $resourceInterator;
+    protected $resourceInterator;
 
     /**
      * @var
@@ -140,27 +140,27 @@ class Segments extends \Magento\Rule\Model\AbstractModel implements SegmentsInte
     /**
      * @var \Licentia\Panda\Model\SubscribersFactory
      */
-    protected \Licentia\Panda\Model\SubscribersFactory $subscribersFactory;
+    protected $subscribersFactory;
 
     /**
      * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
      */
-    protected \Magento\Framework\Stdlib\DateTime\TimezoneInterface $timezone;
+    protected $timezone;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var FormulasFactory
      */
-    protected FormulasFactory $formulasFactory;
+    protected $formulasFactory;
 
     /**
      * @var Indexer
      */
-    protected Indexer $indexer;
+    protected $indexer;
 
     /**
      * @var false|\Magento\Framework\DB\Adapter\AdapterInterface

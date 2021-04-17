@@ -33,47 +33,47 @@ class Combine extends \Magento\Rule\Model\Condition\Combine
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Magento\Framework\Registry
      */
-    protected \Magento\Framework\Registry $registry;
+    protected $registry;
 
     /**
      * @var ActivityFactory
      */
-    protected ActivityFactory $activityFactory;
+    protected $activityFactory;
 
     /**
      * @var AddressFactory
      */
-    protected AddressFactory $addressFactory;
+    protected $addressFactory;
 
     /**
      * @var CustomerFactory
      */
-    protected CustomerFactory $customerFactory;
+    protected $customerFactory;
 
     /**
      * @var SkuFactory
      */
-    protected SkuFactory $skuFactory;
+    protected $skuFactory;
 
     /**
      * @var SubscriberFactory
      */
-    protected SubscriberFactory $subscribersFactory;
+    protected $subscribersFactory;
 
     /**
      * @var SearchFactory
      */
-    protected SearchFactory $searchFactory;
+    protected $searchFactory;
 
     /**
      * @var DefaultAddressFactory
      */
-    protected DefaultAddressFactory $defaultAddressFactory;
+    protected $defaultAddressFactory;
 
     /**
      * @param \Magento\Framework\Registry  $registry

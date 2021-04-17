@@ -32,17 +32,17 @@ class PageIdentities
     /**
      * @var Session
      */
-    protected Session $customerSession;
+    protected $customerSession;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected \Magento\Framework\App\Config\ScopeConfigInterface $scope;
+    protected $scope;
 
     /**
      * PriceBoxTags constructor.

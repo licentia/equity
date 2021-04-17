@@ -32,7 +32,7 @@ class Collection extends SegmentsCollection implements SearchResultInterface
     /**
      * @var AggregationInterface
      */
-    protected AggregationInterface $aggregations;
+    protected $aggregations;
 
     /**
      * Collection constructor.

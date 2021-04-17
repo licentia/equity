@@ -37,7 +37,7 @@ class UpdateSegmentRequest implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected \Licentia\Panda\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * UpdateSegmentRequest constructor.

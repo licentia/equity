@@ -60,7 +60,7 @@ class SegmentPrices extends ImportAbstract
      *
      * @var array
      */
-    protected array $_messageTemplates = [
+    protected $_messageTemplates = [
         Segments::ERROR_INVALID_SEGMENT => 'Invalid Segment ID',
         Segments::ERROR_INVALID_SKU     => 'Invalid SKU',
         Segments::ERROR_INVALID_WEBSITE => 'Invalid Website code',
@@ -72,7 +72,7 @@ class SegmentPrices extends ImportAbstract
      *
      * @var string[]
      */
-    protected array $_permanentAttributes = [self::COL_PRODUCT_SKU, self::COL_WEBSITE, self::COL_SEGMENT];
+    protected $_permanentAttributes = [self::COL_PRODUCT_SKU, self::COL_WEBSITE, self::COL_SEGMENT];
 
     /**
      * Entity type code getter.

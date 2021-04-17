@@ -32,7 +32,7 @@ class Records extends \Magento\Backend\Block\Widget\Grid\Container
      *
      * @var \Magento\Framework\Registry
      */
-    protected ?\Magento\Framework\Registry $registry = null;
+    protected $registry = null;
 
     /**
      * @param \Magento\Backend\Block\Widget\Context $context

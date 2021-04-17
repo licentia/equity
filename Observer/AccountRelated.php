@@ -32,12 +32,12 @@ class AccountRelated implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected \Licentia\Panda\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\MetadataFactory
      */
-    protected \Licentia\Equity\Model\MetadataFactory $metadataFactory;
+    protected $metadataFactory;
 
     /**
      * AccountRelated constructor.

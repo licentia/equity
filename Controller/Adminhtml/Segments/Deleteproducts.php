@@ -32,7 +32,7 @@ class Deleteproducts extends \Licentia\Equity\Controller\Adminhtml\Segments
     /**
      * @var \Licentia\Equity\Model\Segments\ProductsFactory
      */
-    protected \Licentia\Equity\Model\Segments\ProductsFactory $productsFactory;
+    protected $productsFactory;
 
     /**
      * @var \Licentia\Panda\Model\Import\SegmentProducts

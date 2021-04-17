@@ -31,32 +31,32 @@ class Evolutions extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     /**
      * @var \Licentia\Equity\Model\ResourceModel\Segments\CollectionFactory
      */
-    protected Segments\CollectionFactory $segmentsCollection;
+    protected $segmentsCollection;
 
     /**
      * @var \Licentia\Equity\Model\Segments\ListSegmentsFactory
      */
-    protected \Licentia\Equity\Model\Segments\ListSegmentsFactory $listSegmentsFactory;
+    protected $listSegmentsFactory;
 
     /**
      * @var \Licentia\Equity\Model\ResourceModel\Segments\ListSegments\CollectionFactory
      */
-    protected Segments\ListSegments\CollectionFactory $listSegmentsCollection;
+    protected $listSegmentsCollection;
 
     /**
      * @var \Licentia\Equity\Model\EvolutionsFactory
      */
-    protected \Licentia\Equity\Model\EvolutionsFactory $evolutionsFactory;
+    protected $evolutionsFactory;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\ResourceModel\Evolutions\CollectionFactory
      */
-    protected Evolutions\CollectionFactory $evolutionsCollection;
+    protected $evolutionsCollection;
 
     /**
      * Evolutions constructor.

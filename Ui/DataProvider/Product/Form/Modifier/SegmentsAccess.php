@@ -39,37 +39,37 @@ class SegmentsAccess extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modif
     /**
      * @var Data
      */
-    protected Data $directoryHelper;
+    protected $directoryHelper;
 
     /**
      * @var LocatorInterface
      */
-    protected LocatorInterface $locator;
+    protected $locator;
 
     /**
      * @var StoreManagerInterface
      */
-    protected StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     /**
      * @var ArrayManager
      */
-    protected ArrayManager $arrayManager;
+    protected $arrayManager;
 
     /**
      * @var string
      */
-    protected string $scopeName;
+    protected $scopeName;
 
     /**
      * @var array
      */
-    protected array $meta = [];
+    protected $meta = [];
 
     /**
      * @var \Licentia\Equity\Model\ResourceModel\Segments\CollectionFactory
      */
-    protected \Licentia\Equity\Model\ResourceModel\Segments\CollectionFactory $segmentsCollection;
+    protected $segmentsCollection;
 
     /**
      * @param \Licentia\Equity\Model\ResourceModel\Segments\CollectionFactory $segmentsCollection

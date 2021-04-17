@@ -30,7 +30,7 @@ class Segments
     /**
      * @var \Licentia\Equity\Model\ResourceModel\SegmentsFactory
      */
-    protected \Licentia\Equity\Model\ResourceModel\SegmentsFactory $resource;
+    protected $resource;
 
     /**
      * Segments constructor.

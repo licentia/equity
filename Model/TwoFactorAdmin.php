@@ -54,7 +54,7 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected string $_eventPrefix = 'panda_two_factor_admin';
+    protected $_eventPrefix = 'panda_two_factor_admin';
 
     /**
      * Parameter name in event
@@ -63,42 +63,42 @@ class TwoFactorAdmin extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected string $_eventObject = 'panda_two_factor_admin';
+    protected $_eventObject = 'panda_two_factor_admin';
 
     /**
      * @var \Magento\Framework\App\RequestInterface
      */
-    protected \Magento\Framework\App\RequestInterface $request;
+    protected $request;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
+    protected $scopeConfig;
 
     /**
      * @var \Magento\Backend\Model\Auth\Session
      */
-    protected \Magento\Backend\Model\Auth\Session $userSession;
+    protected $userSession;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     /**
      * @var \Magento\Framework\UrlInterface
      */
-    protected \Magento\Framework\UrlInterface $url;
+    protected $url;
 
     /**
      * @var \Magento\Framework\Mail\Template\TransportBuilder
      */
-    protected \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder;
+    protected $transportBuilder;
 
     /**
      * Initialize resource model

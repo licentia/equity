@@ -35,7 +35,7 @@ class TwoFactor extends Action
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
-    protected \Magento\Framework\View\Result\PageFactory $resultPageFactory;
+    protected $resultPageFactory;
 
     /**
      * TwoFactor constructor.

@@ -48,47 +48,47 @@ class SegmentsRepository implements SegmentsRepositoryInterface
     /**
      * @var DataObjectHelper
      */
-    protected DataObjectHelper $dataObjectHelper;
+    protected $dataObjectHelper;
 
     /**
      * @var SegmentsSearchResultsInterfaceFactory
      */
-    protected SegmentsSearchResultsInterfaceFactory $searchResultsFactory;
+    protected $searchResultsFactory;
 
     /**
      * @var SegmentsFactory
      */
-    protected SegmentsFactory $segmentsFactory;
+    protected $segmentsFactory;
 
     /**
      * @var SegmentsCollectionFactory
      */
-    protected SegmentsCollectionFactory $segmentsCollectionFactory;
+    protected $segmentsCollectionFactory;
 
     /**
      * @var Segments\ProductsFactory
      */
-    protected Segments\ProductsFactory $productsFactory;
+    protected $productsFactory;
 
     /**
      * @var StoreManagerInterface
      */
-    private StoreManagerInterface $storeManager;
+    private $storeManager;
 
     /**
      * @var SegmentsInterfaceFactory
      */
-    protected SegmentsInterfaceFactory $dataSegmentsFactory;
+    protected $dataSegmentsFactory;
 
     /**
      * @var ResourceSegments
      */
-    protected ResourceSegments $resource;
+    protected $resource;
 
     /**
      * @var DataObjectProcessor
      */
-    protected DataObjectProcessor $dataObjectProcessor;
+    protected $dataObjectProcessor;
 
     /**
      * @var

@@ -31,17 +31,17 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     /**
      * @var  \Licentia\Equity\Model\ResourceModel\Segments\ListSegments\CollectionFactory
      */
-    protected \Licentia\Equity\Model\ResourceModel\Segments\ListSegments\CollectionFactory $collectionFactory;
+    protected $collectionFactory;
 
     /**
      * @var \Magento\Framework\Registry
      */
-    protected \Magento\Framework\Registry $registry;
+    protected $registry;
 
     /**
      * @var \Magento\Directory\Model\ResourceModel\Country\Collection
      */
-    protected \Magento\Directory\Model\ResourceModel\Country\Collection $countryCollection;
+    protected $countryCollection;
 
     /**
      * @var \Magento\Directory\Model\Config\Source\AllregionFactory
@@ -51,7 +51,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     /**
      * @var \Magento\Directory\Model\Config\Source\AllregionFactory
      */
-    protected \Magento\Directory\Model\Config\Source\AllregionFactory $regionFactory;
+    protected $regionFactory;
 
     /**
      * @var \Magento\Directory\Model\Config\Source\AllregionFactory
@@ -320,11 +320,11 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     }
 
     /**
-     * @param \Magento\Catalog\Model\Product|\Magento\Framework\DataObject $item
+     * @param \Magento\Catalog\Model\Product|\Magento\Framework\DataObject $row
      *
      * @return bool
      */
-    public function getRowUrl($item)
+    public function getRowUrl($row)
     {
 
         return false;

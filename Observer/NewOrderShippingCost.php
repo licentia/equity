@@ -32,12 +32,12 @@ class NewOrderShippingCost implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected \Licentia\Panda\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Magento\Checkout\Model\Session
      */
-    protected \Magento\Checkout\Model\Session $checkoutSession;
+    protected $checkoutSession;
 
     /**
      * NewOrder constructor.

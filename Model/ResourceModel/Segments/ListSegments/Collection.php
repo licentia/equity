@@ -31,7 +31,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     /**
      * @var \Magento\Framework\Indexer\IndexerRegistry
      */
-    protected \Magento\Framework\Indexer\IndexerRegistry $indexerRegistry;
+    protected $indexerRegistry;
 
     /**
      * Collection constructor.

@@ -33,22 +33,22 @@ class DefaultAddress extends AbstractCondition
     /**
      * @var \Magento\Sales\Model\ResourceModel\Order\Address\CollectionFactory
      */
-    protected \Magento\Sales\Model\ResourceModel\Order\Address\CollectionFactory $addressCollection;
+    protected $addressCollection;
 
     /**
      * @var \Magento\Directory\Model\Config\Source\CountryFactory
      */
-    protected \Magento\Directory\Model\Config\Source\CountryFactory $countryFactory;
+    protected $countryFactory;
 
     /**
      * @var \Magento\Directory\Model\Config\Source\Allregion
      */
-    protected \Magento\Directory\Model\Config\Source\Allregion $regionFactory;
+    protected $regionFactory;
 
     /**
      * @var \Magento\Customer\Model\CustomerFactory
      */
-    protected \Magento\Customer\Model\CustomerFactory $customerFactory;
+    protected $customerFactory;
 
     /**
      * @param \Magento\Customer\Model\CustomerFactory                                                $customerFactory

@@ -33,27 +33,27 @@ class LoadBeforeProductCollection implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected \Licentia\Panda\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     /**
      * @var \Licentia\Equity\Model\AccessFactory
      */
-    protected \Licentia\Equity\Model\AccessFactory $accessFactory;
+    protected $accessFactory;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
+    protected $scopeConfig;
 
     /**
      * @var \Licentia\Equity\Model\Segments\ProductsFactory
      */
-    protected \Licentia\Equity\Model\Segments\ProductsFactory $productsFactory;
+    protected $productsFactory;
 
     /**
      * LoadBeforeProductCollection constructor.
@@ -96,6 +96,10 @@ class LoadBeforeProductCollection implements ObserverInterface
 
             if ($this->scopeConfig->getValue('panda_magna/segments/acl', ScopeInterface::SCOPE_WEBSITE)) {
                 $this->accessFactory->create()->getLockedEntities($model, 'product');
+            }
+
+            if ($this->scopeConfig->getValue('panda_magna/catalogs/enabled', ScopeInterface::SCOPE_WEBSITE)) {
+                $this->productsFactory->create()->addToCollection($model);
             }
 
         } catch (\Exception $e) {

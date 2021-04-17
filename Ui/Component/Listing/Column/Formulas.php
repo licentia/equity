@@ -35,17 +35,17 @@ class Formulas extends Column
     /**
      * @var PriceCurrencyInterface
      */
-    protected PriceCurrencyInterface $priceFormatter;
+    protected $priceFormatter;
 
     /**
      * @var \Magento\Framework\UrlInterface
      */
-    protected \Magento\Framework\UrlInterface $urlInterface;
+    protected $urlInterface;
 
     /**
      * @var \Licentia\Equity\Model\FormulasFactory
      */
-    protected \Licentia\Equity\Model\FormulasFactory $formulasFactory;
+    protected $formulasFactory;
 
     /**
      * Formula constructor.

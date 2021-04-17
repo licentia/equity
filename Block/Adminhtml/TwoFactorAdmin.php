@@ -30,22 +30,22 @@ class TwoFactorAdmin extends \Magento\Backend\Block\Template
     /**
      * @var \Magento\Theme\Block\Html\Header\Logo
      */
-    protected \Magento\Theme\Block\Html\Header\Logo $logo;
+    protected $logo;
 
     /**
      * @var \Magento\Framework\Registry
      */
-    protected \Magento\Framework\Registry $registry;
+    protected $registry;
 
     /**
      * @var \Licentia\Equity\Model\TwoFactorAdminFactory
      */
-    protected \Licentia\Equity\Model\TwoFactorAdminFactory $twofactorFactory;
+    protected $twofactorFactory;
 
     /**
      * @var \Magento\Backend\Model\Auth\Session
      */
-    protected \Magento\Backend\Model\Auth\Session $userSession;
+    protected $userSession;
 
     /**
      * TwoFactorAdmin constructor.

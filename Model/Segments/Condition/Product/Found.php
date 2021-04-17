@@ -30,7 +30,7 @@ class Found extends Combine
     /**
      * @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory
      */
-    protected \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollection;
+    protected $orderCollection;
 
     /**
      * Found constructor.

@@ -30,62 +30,62 @@ class TwoFactor extends \Magento\Framework\App\Action\Action
     /**
      * @var \Magento\Framework\Data\Form\FormKey\Validator
      */
-    protected \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator;
+    protected $formKeyValidator;
 
     /**
      * @var \Magento\Customer\Api\CustomerRepositoryInterface
      */
-    protected \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository;
+    protected $customerRepository;
 
     /**
      * @var \Magento\Framework\Registry
      */
-    protected \Magento\Framework\Registry $registry;
+    protected $registry;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Magento\Customer\Model\Session
      */
-    protected \Magento\Customer\Model\Session $customerSession;
+    protected $customerSession;
 
     /**
      * @var \Magento\Framework\Controller\Result\ForwardFactory
      */
-    protected \Magento\Framework\Controller\Result\ForwardFactory $resultForwardFactory;
+    protected $resultForwardFactory;
 
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
-    protected \Magento\Framework\View\Result\PageFactory $resultPageFactory;
+    protected $resultPageFactory;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     /**
      * @var \Licentia\Equity\Model\TwoFactorFactory
      */
-    protected \Licentia\Equity\Model\TwoFactorFactory $twofactorFactory;
+    protected $twofactorFactory;
 
     /**
      * @var \Magento\Framework\Stdlib\CookieManagerInterface
      */
-    protected \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager;
+    protected $cookieManager;
 
     /**
      * @var \Magento\Framework\Stdlib\Cookie\PublicCookieMetadata
      */
-    protected \Magento\Framework\Stdlib\Cookie\PublicCookieMetadata $cookieMetadataFactory;
+    protected $cookieMetadataFactory;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
+    protected $scopeConfig;
 
     /**
      * TwoFactor constructor.

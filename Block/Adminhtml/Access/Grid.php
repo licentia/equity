@@ -36,7 +36,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     /**
      * @var \Magento\Framework\View\Model\PageLayout\Config\BuilderInterface
      */
-    protected \Magento\Framework\View\Model\PageLayout\Config\BuilderInterface $pageLayoutBuilder;
+    protected $pageLayoutBuilder;
 
     /**
      * @var \Licentia\Panda\Model\CampaignsFactory
@@ -71,14 +71,14 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     /**
      * Row click url
      *
-     * @param \Magento\Framework\DataObject $item
+     * @param \Magento\Framework\DataObject $row
      *
      * @return string
      */
-    public function getRowUrl($item)
+    public function getRowUrl($row)
     {
 
-        return $this->getUrl('*/*/edit', ['id' => $item->getId()]);
+        return $this->getUrl('*/*/edit', ['id' => $row->getId()]);
     }
 
     /**

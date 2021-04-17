@@ -35,22 +35,22 @@ class Math extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * @var \Magento\Framework\App\CacheInterface
      */
-    protected \Magento\Framework\App\CacheInterface $cacheManager;
+    protected $cacheManager;
 
     /**
      * @var bool
      */
-    protected bool $evaluate = false;
+    protected $evaluate = false;
 
     /**
      * @var \Licentia\Equity\Model\KpisFactory
      */
-    protected \Licentia\Equity\Model\KpisFactory $kpisFactory;
+    protected $kpisFactory;
 
     /**
      * @var \Magento\Framework\Stdlib\DateTime\DateTimeFactory
      */
-    protected \Magento\Framework\Stdlib\DateTime\DateTimeFactory $dateFactory;
+    protected $dateFactory;
 
     /**
      * Math constructor.

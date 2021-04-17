@@ -40,22 +40,22 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
     /**
      * @var array
      */
-    protected array $skus;
+    protected $skus;
 
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected \Licentia\Panda\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var array
      */
-    protected array $segments;
+    protected $segments;
 
     /**
      * @var array
      */
-    protected array $websites;
+    protected $websites;
 
     protected $customers;
 
@@ -64,17 +64,17 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
     /**
      * @var ResourceConnection
      */
-    private ResourceConnection $resourceConnection;
+    private $resourceConnection;
 
     /**
      * @var AdapterInterface
      */
-    private AdapterInterface $connection;
+    private $connection;
 
     /**
      * @var \Magento\CatalogImportExport\Model\Import\Product\StoreResolver
      */
-    protected \Magento\CatalogImportExport\Model\Import\Product\StoreResolver $_storeResolver;
+    protected $_storeResolver;
 
     public $caller = null;
 

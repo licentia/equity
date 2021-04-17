@@ -33,7 +33,7 @@ class Access extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected string $_eventPrefix = 'panda_segments_access';
+    protected $_eventPrefix = 'panda_segments_access';
 
     /**
      * Parameter name in event
@@ -42,17 +42,17 @@ class Access extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected string $_eventObject = 'segments_access';
+    protected $_eventObject = 'segments_access';
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\ResourceModel\Access\CollectionFactory
      */
-    protected ResourceModel\Access\CollectionFactory $accessCollection;
+    protected $accessCollection;
 
     /**
      * @param \Magento\Framework\Model\Context                             $context

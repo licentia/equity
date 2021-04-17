@@ -30,7 +30,7 @@ class ElasticSearchFilter
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected \Licentia\Equity\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * ElasticSearchFilter constructor.

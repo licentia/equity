@@ -33,27 +33,27 @@ class LoadAfter implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected \Licentia\Panda\Helper\Data $pandaHelper;
+    protected $pandaHelper;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     /**
      * @var \Licentia\Equity\Model\AccessFactory
      */
-    protected \Licentia\Equity\Model\AccessFactory $accessFactory;
+    protected $accessFactory;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
+    protected $scopeConfig;
 
     /**
      * @var \Magento\Framework\Controller\Result\ForwardFactory
      */
-    protected \Magento\Framework\Controller\Result\ForwardFactory $_forwardFactory;
+    protected $_forwardFactory;
 
     /**
      * LoadAfter constructor.

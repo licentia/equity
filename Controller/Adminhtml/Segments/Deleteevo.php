@@ -32,7 +32,7 @@ class Deleteevo extends \Licentia\Equity\Controller\Adminhtml\Segments
     /**
      * @var \Licentia\Equity\Model\EvolutionsFactory
      */
-    protected \Licentia\Equity\Model\EvolutionsFactory $evolutionsFactory;
+    protected $evolutionsFactory;
 
     /**
      * Deleteevo constructor.

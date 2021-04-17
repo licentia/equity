@@ -32,7 +32,7 @@ class Prices extends \Licentia\Equity\Controller\Adminhtml\Segments
     /**
      * @var \Licentia\Equity\Model\PricesFactory
      */
-    protected \Licentia\Equity\Model\PricesFactory $pricesFactory;
+    protected $pricesFactory;
 
     /**
      * Prices constructor.
