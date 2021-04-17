@@ -32,12 +32,12 @@ class QuoteRelated implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Panda\Helper\Data $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\MetadataFactory
      */
-    protected $metadataFactory;
+    protected \Licentia\Equity\Model\MetadataFactory $metadataFactory;
 
     /**
      * QuoteRelated constructor.

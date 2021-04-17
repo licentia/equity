@@ -43,32 +43,32 @@ class FormulasRepository implements FormulasRepositoryInterface
     /**
      * @var DataObjectHelper
      */
-    protected $dataObjectHelper;
+    protected DataObjectHelper $dataObjectHelper;
 
     /**
      * @var FormulasSearchResultsInterfaceFactory
      */
-    protected $searchResultsFactory;
+    protected FormulasSearchResultsInterfaceFactory $searchResultsFactory;
 
     /**
      * @var FormulasFactory
      */
-    protected $formulasFactory;
+    protected FormulasFactory $formulasFactory;
 
     /**
      * @var FormulasCollectionFactory
      */
-    protected $formulasCollectionFactory;
+    protected FormulasCollectionFactory $formulasCollectionFactory;
 
     /**
      * @var StoreManagerInterface
      */
-    private $storeManager;
+    private StoreManagerInterface $storeManager;
 
     /**
      * @var ResourceFormulas
      */
-    protected $resource;
+    protected ResourceFormulas $resource;
 
     /**
      * @var
@@ -83,12 +83,12 @@ class FormulasRepository implements FormulasRepositoryInterface
     /**
      * @var DataObjectProcessor
      */
-    protected $dataObjectProcessor;
+    protected DataObjectProcessor $dataObjectProcessor;
 
     /**
      * @var FormulasInterfaceFactory
      */
-    protected $dataFormulasFactory;
+    protected FormulasInterfaceFactory $dataFormulasFactory;
 
     /**
      * @param ResourceFormulas                      $resource

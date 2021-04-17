@@ -35,18 +35,18 @@ class MassManualAddCustomer extends \Licentia\Equity\Controller\Adminhtml\Segmen
     /**
      * @var \Licentia\Equity\Model\Segments\ListSegmentsFactory
      */
-    protected $listSegmentsFactory;
+    protected \Licentia\Equity\Model\Segments\ListSegmentsFactory $listSegmentsFactory;
 
     /**
      * @var CollectionFactory
      */
-    protected $collectionFactory;
+    protected CollectionFactory $collectionFactory;
 
     /**
      * @var Filter
      */
 
-    protected $filter;
+    protected Filter $filter;
 
     /**
      * @param Action\Context                                      $context

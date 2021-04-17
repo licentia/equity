@@ -27,12 +27,12 @@ class Context
     /**
      * @var \Magento\Customer\Model\Session
      */
-    protected $customerSession;
+    protected \Magento\Customer\Model\Session $customerSession;
 
     /**
      * @var \Magento\Framework\App\Http\Context
      */
-    protected $httpContext;
+    protected \Magento\Framework\App\Http\Context $httpContext;
 
     /**
      * @param \Magento\Customer\Model\Session     $customerSession

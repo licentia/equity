@@ -32,12 +32,12 @@ class Rebuild extends \Licentia\Equity\Controller\Adminhtml\Segments
     /**
      * @var \Licentia\Equity\Model\MetadataFactory
      */
-    protected $metadataFactory;
+    protected \Licentia\Equity\Model\MetadataFactory $metadataFactory;
 
     /**
      * @var \Magento\Framework\Filesystem
      */
-    protected $filesystem;
+    protected \Magento\Framework\Filesystem $filesystem;
 
     /**
      * Rebuild constructor.

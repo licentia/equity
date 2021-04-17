@@ -33,59 +33,59 @@ class AbstractCondition extends \Magento\Rule\Model\Condition\AbstractCondition
     /**
      * @var \Magento\Quote\Model\ResourceModel\Quote\CollectionFactory
      */
-    protected $quoteCollection;
+    protected \Magento\Quote\Model\ResourceModel\Quote\CollectionFactory $quoteCollection;
 
     /**
      * @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory
      */
-    protected $orderCollection;
+    protected \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollection;
 
     /**
      * @var \Licentia\Equity\Model\ResourceModel\Segments
      */
-    protected $resource;
+    protected \Licentia\Equity\Model\ResourceModel\Segments $resource;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected $scopeConfig;
+    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
 
     /**
      * @var \Magento\Framework\Registry
      */
-    protected $registry;
+    protected \Magento\Framework\Registry $registry;
 
     /**
      * @var \Magento\Catalog\Model\CategoryFactory
      */
-    protected $categoryFactory;
+    protected \Magento\Catalog\Model\CategoryFactory $categoryFactory;
 
     /**
      * @var \Magento\Catalog\Model\ProductFactory
      */
-    protected $productFactory;
+    protected \Magento\Catalog\Model\ProductFactory $productFactory;
 
     /**
      * Adminhtml data
      *
      * @var \Magento\Backend\Helper\Data
      */
-    protected $backendData;
+    protected \Magento\Backend\Helper\Data $backendData;
 
     /**
      * @var \Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory
      */
-    protected $itemCollection;
+    protected \Magento\Sales\Model\ResourceModel\Order\Item\CollectionFactory $itemCollection;
 
     /**
      * @var \Magento\Catalog\Model\ProductFactory
      */
-    protected $productCollection;
+    protected \Magento\Catalog\Model\ProductFactory $productCollection;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Equity\Helper\Data $pandaHelper;
 
     /**
      * @param Context                                                         $context

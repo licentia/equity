@@ -30,12 +30,12 @@ class UpdateSegmentsEvolutions
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Panda\Helper\Data $pandaHelper;
 
     /**
      * @var  \Licentia\Equity\Model\ResourceModel\Evolutions
      */
-    protected $evolutionsResource;
+    protected \Licentia\Equity\Model\ResourceModel\Evolutions $evolutionsResource;
 
     /**
      * UpdateSegmentsEvolutions constructor.

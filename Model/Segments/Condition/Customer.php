@@ -38,22 +38,22 @@ class Customer extends AbstractCondition
     /**
      * @var
      */
-    protected $customerFactory;
+    protected \Magento\Customer\Model\CustomerFactory $customerFactory;
 
     /**
      * @var
      */
-    protected $eavConfig;
+    protected \Magento\Eav\Model\Config $eavConfig;
 
     /**
      * @var \Magento\Customer\Model\ResourceModel\CustomerFactory
      */
-    protected $customerResource;
+    protected \Magento\Customer\Model\ResourceModel\CustomerFactory $customerResource;
 
     /**
      * @var \Magento\Customer\Model\Session
      */
-    protected $customerSession;
+    protected \Magento\Customer\Model\Session $customerSession;
 
     /**
      * @param Context                                                         $context

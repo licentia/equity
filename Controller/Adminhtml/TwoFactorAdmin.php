@@ -32,37 +32,37 @@ class TwoFactorAdmin extends Action
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
-    protected $resultPageFactory;
+    protected \Magento\Framework\View\Result\PageFactory $resultPageFactory;
 
     /**
      * @var \Magento\Framework\Stdlib\CookieManagerInterface
      */
-    protected $cookieManager;
+    protected \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager;
 
     /**
      * @var \Magento\Framework\Stdlib\Cookie\PublicCookieMetadata
      */
-    protected $cookieMetadataFactory;
+    protected \Magento\Framework\Stdlib\Cookie\PublicCookieMetadata $cookieMetadataFactory;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected $scopeConfig;
+    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
 
     /**
      * @var \Magento\Backend\Model\Auth\Session
      */
-    protected $userSession;
+    protected \Magento\Backend\Model\Auth\Session $userSession;
 
     /**
      * @var \Licentia\Equity\Model\TwoFactorAdminFactory
      */
-    protected $twofactorFactory;
+    protected \Licentia\Equity\Model\TwoFactorAdminFactory $twofactorFactory;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Equity\Helper\Data $pandaHelper;
 
     /**
      * TwoFactorAdmin constructor.

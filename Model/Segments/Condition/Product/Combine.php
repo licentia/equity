@@ -32,7 +32,7 @@ class Combine extends \Magento\Rule\Model\Condition\Combine
     /**
      * @var \Magento\SalesRule\Model\Rule\Condition\Product
      */
-    protected $ruleConditionProduct;
+    protected \Magento\SalesRule\Model\Rule\Condition\Product $ruleConditionProduct;
 
     /**
      * @param \Magento\Rule\Model\Condition\Context           $context

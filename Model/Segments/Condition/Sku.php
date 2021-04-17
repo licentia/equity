@@ -31,7 +31,7 @@ class Sku extends \Magento\CatalogRule\Model\Rule\Condition\Product
     /**
      * @var \Magento\Framework\Registry
      */
-    protected $registry;
+    protected \Magento\Framework\Registry $registry;
 
     /**
      * Sku constructor.

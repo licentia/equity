@@ -32,7 +32,7 @@ class AdminConfigPricingPanda implements ObserverInterface
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected $scopeConfig;
+    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
 
     /**
      * AdminConfigPricingPanda constructor.

@@ -32,12 +32,12 @@ class NewLogin implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Panda\Helper\Data $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\TwoFactorFactory
      */
-    protected $twoFactorFactory;
+    protected \Licentia\Equity\Model\TwoFactorFactory $twoFactorFactory;
 
     /**
      * NewLogin constructor.

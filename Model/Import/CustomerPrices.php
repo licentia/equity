@@ -60,7 +60,7 @@ class CustomerPrices extends ImportAbstract
      *
      * @var array
      */
-    protected $_messageTemplates = [
+    protected array $_messageTemplates = [
         Segments::ERROR_INVALID_SKU     => 'Invalid SKU',
         Segments::ERROR_INVALID_WEBSITE => 'Invalid Website code',
         Segments::ERROR_INVALID_PRICE   => 'Invalid Price Format',
@@ -71,7 +71,7 @@ class CustomerPrices extends ImportAbstract
      *
      * @var string[]
      */
-    protected $_permanentAttributes = [
+    protected array $_permanentAttributes = [
         self::COL_PRODUCT_SKU,
         self::COL_WEBSITE,
         self::COL_CUSTOMER_EMAIL,

@@ -33,12 +33,12 @@ class Segment extends \Magento\Rule\Model\Condition\AbstractCondition
     /**
      * @var \Licentia\Equity\Model\SegmentsFactory
      */
-    protected $segmentsFactory;
+    protected \Licentia\Equity\Model\SegmentsFactory $segmentsFactory;
 
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Panda\Helper\Data $pandaHelper;
 
     /**
      * @param \Licentia\Panda\Helper\Data            $pandaHelper

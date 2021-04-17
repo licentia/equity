@@ -32,17 +32,17 @@ class SetOrderAttributes implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Panda\Helper\Data $pandaHelper;
 
     /**
      * @var \Licentia\Panda\Model\Session
      */
-    protected $pandaSession;
+    protected \Licentia\Panda\Model\Session $pandaSession;
 
     /**
      * @var \Magento\Checkout\Model\Session
      */
-    protected $checkoutSession;
+    protected \Magento\Checkout\Model\Session $checkoutSession;
 
     /**
      * SetOrderAttributes constructor.

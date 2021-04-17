@@ -32,12 +32,12 @@ class UpdateSalesExtraCosts implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Panda\Helper\Data $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\Sales\ExtraCostsFactory
      */
-    protected $extraCostsFactory;
+    protected \Licentia\Equity\Model\Sales\ExtraCostsFactory $extraCostsFactory;
 
     /**
      * ConvertOrder constructor.

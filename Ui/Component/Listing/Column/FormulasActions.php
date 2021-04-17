@@ -38,7 +38,7 @@ class FormulasActions extends Column
     /**
      * @var UrlInterface
      */
-    protected $urlBuilder;
+    protected UrlInterface $urlBuilder;
 
     /**
      * Constructor

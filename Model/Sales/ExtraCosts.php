@@ -33,7 +33,7 @@ class ExtraCosts extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected $_eventPrefix = 'panda_sales_extra_costs';
+    protected string $_eventPrefix = 'panda_sales_extra_costs';
 
     /**
      * Parameter name in event
@@ -42,12 +42,12 @@ class ExtraCosts extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected $_eventObject = 'panda_sales_extra_costs';
+    protected string $_eventObject = 'panda_sales_extra_costs';
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Equity\Helper\Data $pandaHelper;
 
     /**
      * Initialize resource model

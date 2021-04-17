@@ -32,12 +32,12 @@ class Records extends \Licentia\Equity\Controller\Adminhtml\Segments
     /**
      * @var \Magento\Cron\Model\ScheduleFactory
      */
-    protected $cronFactory;
+    protected \Magento\Cron\Model\ScheduleFactory $cronFactory;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Equity\Helper\Data $pandaHelper;
 
     /**
      * @param Action\Context                                    $context

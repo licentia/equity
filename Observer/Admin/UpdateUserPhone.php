@@ -37,12 +37,12 @@ class UpdateUserPhone implements ObserverInterface
     /**
      * @var \Magento\Framework\App\Response\RedirectInterface
      */
-    protected $redirect;
+    protected \Magento\Framework\App\Response\RedirectInterface $redirect;
 
     /**
      * @var \Magento\Backend\Model\Auth\Session
      */
-    protected $userSession;
+    protected \Magento\Backend\Model\Auth\Session $userSession;
 
     /**
      * UpdateUserPhone constructor.

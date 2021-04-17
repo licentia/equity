@@ -31,22 +31,16 @@ class ListSegments extends \Magento\Framework\Model\AbstractModel
     /**
      * @var \Licentia\Equity\Model\ResourceModel\Segments\ListSegments\CollectionFactory
      */
-    protected $listSegmentsCollection;
+    protected \Licentia\Equity\Model\ResourceModel\Segments\ListSegments\CollectionFactory $listSegmentsCollection;
 
     /**
      * @var \Licentia\Equity\Model\SegmentsFactory
      */
-    protected $segmentsFactory;
+    protected \Licentia\Equity\Model\SegmentsFactory $segmentsFactory;
 
-    /**
-     * @var \Magento\Customer\Model\CustomerFactory
-     */
-    protected $customerFactory;
+    protected \Magento\Customer\Model\CustomerFactory $customerFactory;
 
-    /**
-     * @var \Licentia\Panda\Model\SubscribersFactory
-     */
-    protected $subscribersFactory;
+    protected \Licentia\Panda\Model\SubscribersFactory $subscribersFactory;
 
     /**
      * @param \Licentia\Panda\Model\SubscribersFactory                                     $subscribersFactory
@@ -55,8 +49,8 @@ class ListSegments extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Customer\Model\CustomerFactory                                      $customerFactory
      * @param \Magento\Framework\Model\Context                                             $context
      * @param \Magento\Framework\Registry                                                  $registry
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource                      $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb                                $resourceCollection
+     * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null                 $resource
+     * @param \Magento\Framework\Data\Collection\AbstractDb|null                           $resourceCollection
      * @param array                                                                        $data
      */
     public function __construct(
@@ -90,7 +84,7 @@ class ListSegments extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected $_eventPrefix = 'panda_segments_records';
+    protected string $_eventPrefix = 'panda_segments_records';
 
     /**
      * Initialize resource model
@@ -136,7 +130,7 @@ class ListSegments extends \Magento\Framework\Model\AbstractModel
     public function addRecordToSegment($identifier, $segmentId, $field = 'customer_id')
     {
 
-        if ($field == 'subscriber_id') {
+        if ($field === 'subscriber_id') {
             $model = $this->subscribersFactory->create()->load($identifier);
             $customerId = null;
             $subscriberId = $identifier;
@@ -175,20 +169,20 @@ class ListSegments extends \Magento\Framework\Model\AbstractModel
             }
 
             return $record;
-        } else {
-            if ($item->getFirstItem()->getData('manual') == 0) {
-
-                $segment = $this->segmentsFactory->create()->load($segmentId);
-                $segment->setManuallyAdded($segment->getManuallyAdded() + 1)
-                        ->save();
-
-                return $item->getFirstItem()
-                            ->setData('manual', 1)
-                            ->save();
-            }
-
-            return false;
         }
+
+        if ($item->getFirstItem()->getData('manual') == 0) {
+
+            $segment = $this->segmentsFactory->create()->load($segmentId);
+            $segment->setManuallyAdded($segment->getManuallyAdded() + 1)
+                    ->save();
+
+            return $item->getFirstItem()
+                        ->setData('manual', 1)
+                        ->save();
+        }
+
+        return false;
     }
 
     /**
@@ -228,7 +222,7 @@ class ListSegments extends \Magento\Framework\Model\AbstractModel
     /**
      * @param $subscriberId
      */
-    public function clearSubscriberSegments($subscriberId)
+    public function clearSubscriberSegments($subscriberId): void
     {
 
         $ids = $this->getSubscriberSegments($subscriberId)->toOptionHash();
@@ -271,7 +265,7 @@ class ListSegments extends \Magento\Framework\Model\AbstractModel
      * @return $this
      * @throws \Exception
      */
-    public function saveRecord($data)
+    public function saveRecord($data): ListSegments
     {
 
         $item = $this->listSegmentsCollection->create()
@@ -282,11 +276,11 @@ class ListSegments extends \Magento\Framework\Model\AbstractModel
         if ($item->getSize() == 0) {
             return $this->setData($data)
                         ->save();
-        } else {
-            return $item->getFirstItem()
-                        ->addData($data)
-                        ->save();
         }
+
+        return $item->getFirstItem()
+                    ->addData($data)
+                    ->save();
     }
 
     /**
@@ -332,7 +326,7 @@ class ListSegments extends \Magento\Framework\Model\AbstractModel
      *
      * @return $this
      */
-    public function setSegmentId($segmentId)
+    public function setSegmentId($segmentId): ListSegments
     {
 
         return $this->setData('segment_id', $segmentId);

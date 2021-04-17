@@ -37,17 +37,17 @@ class Equity extends Command
     /**
      * @var \Licentia\Equity\Model\MetadataFactory
      */
-    protected $metadataFactory;
+    protected \Licentia\Equity\Model\MetadataFactory $metadataFactory;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Equity\Helper\Data $pandaHelper;
 
     /**
      * @var \Magento\Framework\App\State
      */
-    protected $appState;
+    protected \Magento\Framework\App\State $appState;
 
     /**
      * Equity constructor.

@@ -40,7 +40,7 @@ class KpisRepository implements KpisRepositoryInterface
     /**
      * @var DataObjectHelper
      */
-    protected $dataObjectHelper;
+    protected DataObjectHelper $dataObjectHelper;
 
     /**
      * @var
@@ -50,37 +50,37 @@ class KpisRepository implements KpisRepositoryInterface
     /**
      * @var KpisSearchResultsInterfaceFactory
      */
-    protected $searchResultsFactory;
+    protected KpisSearchResultsInterfaceFactory $searchResultsFactory;
 
     /**
      * @var KpisInterfaceFactory
      */
-    protected $dataKpisFactory;
+    protected KpisInterfaceFactory $dataKpisFactory;
 
     /**
      * @var KpisFactory
      */
-    protected $kpisFactory;
+    protected KpisFactory $kpisFactory;
 
     /**
      * @var KpisCollectionFactory
      */
-    protected $kpisCollectionFactory;
+    protected KpisCollectionFactory $kpisCollectionFactory;
 
     /**
      * @var StoreManagerInterface
      */
-    private $storeManager;
+    private StoreManagerInterface $storeManager;
 
     /**
      * @var ResourceKpis
      */
-    protected $resource;
+    protected ResourceKpis $resource;
 
     /**
      * @var DataObjectProcessor
      */
-    protected $dataObjectProcessor;
+    protected DataObjectProcessor $dataObjectProcessor;
 
     /**
      * @var

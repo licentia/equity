@@ -31,7 +31,7 @@ class Coupons extends \Magento\Backend\Block\Widget\Form\Generic implements TabI
     /**
      * @var \Licentia\Panda\Model\CouponsFactory
      */
-    protected $couponsFactory;
+    protected \Licentia\Panda\Model\CouponsFactory $couponsFactory;
 
     /**
      * Constructor

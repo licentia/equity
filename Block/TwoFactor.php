@@ -32,22 +32,22 @@ class TwoFactor extends Template
     /**
      * @var \Magento\Theme\Block\Html\Header\Logo
      */
-    protected $logo;
+    protected \Magento\Theme\Block\Html\Header\Logo $logo;
 
     /**
      * @var \Magento\Customer\Model\Session
      */
-    protected $customerSession;
+    protected \Magento\Customer\Model\Session $customerSession;
 
     /**
      * @var \Magento\Framework\Registry
      */
-    protected $registry;
+    protected \Magento\Framework\Registry $registry;
 
     /**
      * @var \Licentia\Equity\Model\TwoFactorFactory
      */
-    protected $twofactorFactory;
+    protected \Licentia\Equity\Model\TwoFactorFactory $twofactorFactory;
 
     /**
      * TwoFactor constructor.

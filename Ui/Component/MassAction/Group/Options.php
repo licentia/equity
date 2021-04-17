@@ -38,7 +38,7 @@ class Options implements \JsonSerializable
     /**
      * @var SegmentsFactory
      */
-    protected $segmentsFactory;
+    protected SegmentsFactory $segmentsFactory;
 
     /**
      * @var
@@ -48,17 +48,17 @@ class Options implements \JsonSerializable
     /**
      * @var array
      */
-    protected $additionalData = [];
+    protected array $additionalData = [];
 
     /**
      * @var array
      */
-    protected $data;
+    protected array $data;
 
     /**
      * @var UrlInterface
      */
-    protected $urlBuilder;
+    protected UrlInterface $urlBuilder;
 
     /**
      * @var

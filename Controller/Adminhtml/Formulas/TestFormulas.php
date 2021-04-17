@@ -33,27 +33,27 @@ class TestFormulas extends \Licentia\Equity\Controller\Adminhtml\Formulas
     /**
      * @var \Licentia\Equity\Helper\Math
      */
-    protected $mathHelper;
+    protected \Licentia\Equity\Helper\Math $mathHelper;
 
     /**
      * @var \Magento\Catalog\Api\ProductRepositoryInterface
      */
-    protected $productRepository;
+    protected \Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
 
     /**
      * @var \Magento\Customer\Model\CustomerFactory
      */
-    protected $customerFactory;
+    protected \Magento\Customer\Model\CustomerFactory $customerFactory;
 
     /**
      * @var \Licentia\Equity\Model\KpisFactory
      */
-    protected $kpisFactory;
+    protected \Licentia\Equity\Model\KpisFactory $kpisFactory;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected $storeManager;
+    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
 
     /**
      * TestFormulas constructor.

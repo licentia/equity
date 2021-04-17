@@ -28,7 +28,7 @@ class Customer extends \Magento\Framework\View\Element\Template
     /**
      * @var \Magento\Framework\App\Http\Context
      */
-    protected $httpContext;
+    protected \Magento\Framework\App\Http\Context $httpContext;
 
     /**
      * @param Context                             $context

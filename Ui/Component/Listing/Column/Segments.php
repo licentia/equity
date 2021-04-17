@@ -32,7 +32,7 @@ class Segments implements OptionSourceInterface
     /**
      * @var \Licentia\Equity\Model\SegmentsFactory
      */
-    protected $segmentsFactory;
+    protected \Licentia\Equity\Model\SegmentsFactory $segmentsFactory;
 
     /**
      * Segments constructor.

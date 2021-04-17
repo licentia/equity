@@ -33,17 +33,17 @@ class Kpis extends \Magento\Framework\Model\AbstractModel implements KpisInterfa
     /**
      * @var string
      */
-    protected $_eventPrefix = 'panda_customers_kpis';
+    protected string $_eventPrefix = 'panda_customers_kpis';
 
     /**
      * @var string
      */
-    protected $_eventObject = 'kpis';
+    protected string $_eventObject = 'kpis';
 
     /**
      * @var
      */
-    protected $kpiDescription = [
+    protected array $kpiDescription = [
         'email_meta'                      => ['title' => 'Email', 'type' => 'string'],
         'abandoned'                       => ['title' => 'Number of days with an abandoned cart', 'type' => 'number'],
         'abandoned_date'                  => ['title' => 'Abandoned Cart Date', 'type' => 'string'],

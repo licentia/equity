@@ -32,7 +32,7 @@ class Collection extends ListSegmentsCollection implements SearchResultInterface
     /**
      * @var AggregationInterface
      */
-    protected $aggregations;
+    protected AggregationInterface $aggregations;
 
     /**
      * @param \Magento\Framework\Indexer\IndexerRegistry                   $indexer

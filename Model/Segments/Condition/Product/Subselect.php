@@ -30,7 +30,7 @@ class Subselect extends Combine
     /**
      * @var \Magento\Sales\Model\ResourceModel\Order\CollectionFactory
      */
-    protected $orderCollection;
+    protected \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollection;
 
     /**
      * Subselect constructor.

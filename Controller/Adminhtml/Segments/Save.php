@@ -33,17 +33,17 @@ class Save extends \Licentia\Equity\Controller\Adminhtml\Segments
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected $scopeConfig;
+    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
 
     /**
      * @var Data
      */
-    protected $pandaHelper;
+    protected Data $pandaHelper;
 
     /**
      * @var \Magento\Cron\Model\ScheduleFactory
      */
-    protected $scheduleFactory;
+    protected \Magento\Cron\Model\ScheduleFactory $scheduleFactory;
 
     /**
      * @param \Magento\Cron\Model\ScheduleFactory                $scheduleFactory

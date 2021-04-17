@@ -30,12 +30,12 @@ class BuildCustomerAttributesPredictions
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Panda\Helper\Data $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\KpisFactory
      */
-    protected $kpisFactory;
+    protected \Licentia\Equity\Model\KpisFactory $kpisFactory;
 
     /**
      * BuildCustomerAttributesPredictions constructor.

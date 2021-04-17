@@ -30,22 +30,22 @@ class Segments extends \Magento\Backend\Block\Template
     /**
      * @var \Licentia\Equity\Model\Segments\ListSegmentsFactory
      */
-    protected $listSegmentsFactory;
+    protected \Licentia\Equity\Model\Segments\ListSegmentsFactory $listSegmentsFactory;
 
     /**
      * @var \Licentia\Equity\Model\SegmentsFactory
      */
-    protected $segmentsFactory;
+    protected \Licentia\Equity\Model\SegmentsFactory $segmentsFactory;
 
     /**
      * @var \Magento\Framework\Registry
      */
-    protected $registry;
+    protected \Magento\Framework\Registry $registry;
 
     /**
      * @var \Licentia\Equity\Model\KpisFactory
      */
-    protected $kpisFactory;
+    protected \Licentia\Equity\Model\KpisFactory $kpisFactory;
 
     /**
      * @param \Magento\Backend\Block\Template\Context             $context

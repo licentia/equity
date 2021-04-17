@@ -33,7 +33,7 @@ class Prices extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected $_eventPrefix = 'panda_segments_prices';
+    protected string $_eventPrefix = 'panda_segments_prices';
 
     /**
      * Initialize resource model

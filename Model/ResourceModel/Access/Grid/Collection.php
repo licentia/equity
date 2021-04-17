@@ -32,12 +32,12 @@ class Collection extends AccessCollection implements SearchResultInterface
     /**
      * @var AggregationInterface
      */
-    protected $aggregations;
+    protected AggregationInterface $aggregations;
 
     /**
      * @var \Magento\Framework\Registry
      */
-    protected $_coreRegistry;
+    protected \Magento\Framework\Registry $_coreRegistry;
 
     /**
      * @param \Magento\Framework\Registry                                  $registry

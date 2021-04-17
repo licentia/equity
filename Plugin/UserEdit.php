@@ -30,7 +30,7 @@ class UserEdit
     /**
      * @var \Magento\Backend\Model\Auth\Session
      */
-    protected $userSession;
+    protected \Magento\Backend\Model\Auth\Session $userSession;
 
     /**
      * UserEdit constructor.

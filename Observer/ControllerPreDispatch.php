@@ -32,17 +32,17 @@ class ControllerPreDispatch implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Panda\Helper\Data $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected $helper;
+    protected \Licentia\Equity\Helper\Data $helper;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected $storeManager;
+    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
 
     /**
      * @var \Magento\Customer\Model\Session
@@ -52,17 +52,17 @@ class ControllerPreDispatch implements ObserverInterface
     /**
      * @var \Licentia\Panda\Model\AutorespondersFactory
      */
-    protected $autorespondersFactory;
+    protected \Licentia\Panda\Model\AutorespondersFactory $autorespondersFactory;
 
     /**
      * @var \Magento\Customer\Model\Session
      */
-    protected $customerSession;
+    protected \Magento\Customer\Model\Session $customerSession;
 
     /**
      * @var \Magento\Framework\App\Response\RedirectInterface
      */
-    protected $redirect;
+    protected \Magento\Framework\App\Response\RedirectInterface $redirect;
 
     /**
      * ControllerPreDispatch constructor.

@@ -31,7 +31,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     /**
      * @var  \Licentia\Equity\Model\ResourceModel\Segments\CollectionFactory
      */
-    protected $collectionFactory;
+    protected \Licentia\Equity\Model\ResourceModel\Segments\CollectionFactory $collectionFactory;
 
     /**
      * @param \Magento\Backend\Block\Template\Context                         $context
@@ -202,13 +202,13 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
     }
 
     /**
-     * @param \Magento\Catalog\Model\Product|\Magento\Framework\DataObject $row
+     * @param \Magento\Catalog\Model\Product|\Magento\Framework\DataObject $item
      *
      * @return string
      */
-    public function getRowUrl($row)
+    public function getRowUrl($item)
     {
 
-        return $this->getUrl('*/*/edit', ['id' => $row->getId()]);
+        return $this->getUrl('*/*/edit', ['id' => $item->getId()]);
     }
 }

@@ -31,7 +31,7 @@ abstract class ImportAbstract extends \Magento\ImportExport\Model\Import\Entity\
      *
      * @var array
      */
-    protected $_messageTemplates = [
+    protected array $_messageTemplates = [
         Segments::ERROR_INVALID_SKU     => 'Invalid SKU',
         Segments::ERROR_INVALID_WEBSITE => 'Invalid Website code',
         Segments::ERROR_INVALID_PRICE   => 'Invalid Price Format',
@@ -42,14 +42,14 @@ abstract class ImportAbstract extends \Magento\ImportExport\Model\Import\Entity\
      *
      * @var bool
      */
-    protected $needColumnCheck = true;
+    protected bool $needColumnCheck = true;
 
     /**
      * Need to log in import history
      *
      * @var bool
      */
-    protected $logInHistory = true;
+    protected bool $logInHistory = true;
 
     /**
      * @var \Magento\CatalogImportExport\Model\Import\Proxy\Product\ResourceModelFactory
@@ -59,37 +59,37 @@ abstract class ImportAbstract extends \Magento\ImportExport\Model\Import\Entity\
     /**
      * @var \Magento\Catalog\Helper\Data
      */
-    protected $_catalogData;
+    protected \Magento\Catalog\Helper\Data $_catalogData;
 
     /**
      * @var \Magento\Catalog\Model\Product
      */
-    protected $_productModel;
+    protected \Magento\Catalog\Model\Product $_productModel;
 
     /**
      * @var \Magento\CatalogImportExport\Model\Import\Product\StoreResolver
      */
-    protected $_storeResolver;
+    protected ImportProduct\StoreResolver $_storeResolver;
 
     /**
      * @var ImportProduct
      */
-    protected $_importProduct;
+    protected ImportProduct $_importProduct;
 
     /**
      * @var array
      */
-    protected $_validators = [];
+    protected array $_validators = [];
 
     /**
      * @var array
      */
-    protected $cachedPricesToDelete;
+    protected array $cachedPricesToDelete;
 
     /**
      * @var array
      */
-    protected $oldPrices = null;
+    protected ?array $oldPrices = null;
 
     /**
      * Catalog product entity
@@ -101,12 +101,12 @@ abstract class ImportAbstract extends \Magento\ImportExport\Model\Import\Entity\
     /**
      * @var \Magento\Framework\Stdlib\DateTime\DateTime
      */
-    protected $dateTime;
+    protected \Magento\Framework\Stdlib\DateTime\DateTime $dateTime;
 
     /**
      * @var Validator\Segments
      */
-    protected $segmentsValidator;
+    protected Segments $segmentsValidator;
 
     /**
      * @var

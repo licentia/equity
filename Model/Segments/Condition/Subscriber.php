@@ -33,32 +33,32 @@ class Subscriber extends \Magento\Rule\Model\Condition\AbstractCondition
     /**
      * @var \Magento\Store\Model\System\Store
      */
-    protected $systemStore;
+    protected \Magento\Store\Model\System\Store $systemStore;
 
     /**
      * @var \Magento\Framework\Registry
      */
-    protected $registry;
+    protected \Magento\Framework\Registry $registry;
 
     /**
      * @var \Licentia\Panda\Model\ExtraFieldsFactory
      */
-    protected $extraFieldsFactory;
+    protected \Licentia\Panda\Model\ExtraFieldsFactory $extraFieldsFactory;
 
     /**
      * @var \Licentia\Forms\Model\FormEntriesFactory
      */
-    protected $formEntriesFactory;
+    protected \Licentia\Forms\Model\FormEntriesFactory $formEntriesFactory;
 
     /**
      * @var \Licentia\Forms\Model\FormsFactory
      */
-    protected $formsFactory;
+    protected \Licentia\Forms\Model\FormsFactory $formsFactory;
 
     /**
      * @var \Licentia\Forms\Model\FormElementsFactory
      */
-    protected $formElementsFactory;
+    protected \Licentia\Forms\Model\FormElementsFactory $formElementsFactory;
 
     /**
      * Subscriber constructor.

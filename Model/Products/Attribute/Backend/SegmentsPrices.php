@@ -33,22 +33,22 @@ class SegmentsPrices extends \Magento\Eav\Model\Entity\Attribute\Backend\Abstrac
     /**
      * @var StoreManagerInterface
      */
-    protected $storeManager;
+    protected StoreManagerInterface $storeManager;
 
     /**
      * @var \Licentia\Equity\Model\ResourceModel\Prices\CollectionFactory
      */
-    protected $pricesCollection;
+    protected \Licentia\Equity\Model\ResourceModel\Prices\CollectionFactory $pricesCollection;
 
     /**
      * @var \Licentia\Equity\Model\PricesFactory
      */
-    protected $pricesFactory;
+    protected \Licentia\Equity\Model\PricesFactory $pricesFactory;
 
     /**
      * @var \Magento\Framework\App\RequestInterface
      */
-    protected $request;
+    protected \Magento\Framework\App\RequestInterface $request;
 
     /**
      * SegmentsPrices constructor.

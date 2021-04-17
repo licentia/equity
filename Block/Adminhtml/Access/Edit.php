@@ -32,12 +32,12 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      *
      * @var \Magento\Framework\Registry
      */
-    protected $registry = null;
+    protected ?\Magento\Framework\Registry $registry = null;
 
     /**
      * @var \Licentia\Equity\Model\AccessFactory
      */
-    protected $accessFactory;
+    protected \Licentia\Equity\Model\AccessFactory $accessFactory;
 
     /**
      * @param \Licentia\Equity\Model\AccessFactory  $accessFactory

@@ -32,12 +32,12 @@ class UserLogout implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Panda\Helper\Data $pandaHelper;
 
     /**
      * @var \Licentia\Equity\Model\TwoFactorAdminFactory
      */
-    protected $twoFactorFactory;
+    protected \Licentia\Equity\Model\TwoFactorAdminFactory $twoFactorFactory;
 
     /**
      * UserLogin constructor.

@@ -33,17 +33,17 @@ class FinalPrice
     /**
      * @var Session
      */
-    protected $customerSession;
+    protected Session $customerSession;
 
     /**
      * @var \Licentia\Equity\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Equity\Helper\Data $pandaHelper;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected $scope;
+    protected \Magento\Framework\App\Config\ScopeConfigInterface $scope;
 
     /**
      * @var \Licentia\Panda\Helper\Math

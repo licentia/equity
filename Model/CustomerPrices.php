@@ -34,7 +34,7 @@ class CustomerPrices extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected $_eventPrefix = 'panda_customer_prices';
+    protected string $_eventPrefix = 'panda_customer_prices';
 
     /**
      * Parameter name in event
@@ -43,12 +43,12 @@ class CustomerPrices extends \Magento\Framework\Model\AbstractModel
      *
      * @var string
      */
-    protected $_eventObject = 'panda_customer_prices';
+    protected string $_eventObject = 'panda_customer_prices';
 
     /**
      * @var Import\Validator\Segments
      */
-    protected $validator;
+    protected Import\Validator\Segments $validator;
 
     /**
      * Initialize resource model

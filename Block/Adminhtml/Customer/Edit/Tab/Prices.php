@@ -35,12 +35,12 @@ class Prices extends \Magento\Backend\Block\Widget\Grid\Extended
     /**
      * @var \Magento\Framework\Registry
      */
-    protected $registry;
+    protected \Magento\Framework\Registry $registry;
 
     /**
      * @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory
      */
-    protected $productCollection;
+    protected \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollection;
 
     /**
      * Prices constructor.
@@ -253,11 +253,11 @@ class Prices extends \Magento\Backend\Block\Widget\Grid\Extended
     }
 
     /**
-     * @param \Magento\Catalog\Model\Product|\Magento\Framework\DataObject $row
+     * @param \Magento\Catalog\Model\Product|\Magento\Framework\DataObject $item
      *
      * @return bool
      */
-    public function getRowUrl($row)
+    public function getRowUrl($item)
     {
 
         return false;

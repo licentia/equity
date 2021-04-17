@@ -32,27 +32,27 @@ class AdminConfigPanda implements ObserverInterface
     /**
      * @var \Licentia\Panda\Helper\Data
      */
-    protected $pandaHelper;
+    protected \Licentia\Panda\Helper\Data $pandaHelper;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected $scopeConfig;
+    protected \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig;
 
     /**
      * @var \Magento\Framework\App\RequestInterface
      */
-    protected $request;
+    protected \Magento\Framework\App\RequestInterface $request;
 
     /**
      * @var \Licentia\Panda\Helper\DomHelper
      */
-    protected $domHelper;
+    protected \Licentia\Panda\Helper\DomHelper $domHelper;
 
     /**
      * @var \Magento\Eav\Model\Entity\AttributeFactory
      */
-    protected $attributeFactory;
+    protected \Magento\Eav\Model\Entity\AttributeFactory $attributeFactory;
 
     /**
      * AdminConfigPanda constructor.
