@@ -76,7 +76,7 @@ class Products extends \Magento\Framework\Model\AbstractModel
 
         if (!isset($parts['panda_s']['tableName']) &&
             isset($parts['e']['tableName']) &&
-            isset($parts['e']['tableName']) == $collection->getResource()->getTable('catalog_product_entity')) {
+            $parts['e']['tableName'] == $collection->getResource()->getTable('catalog_product_entity')) {
 
             $allCatalogs = $connection->fetchCol(
                 $connection->select()
