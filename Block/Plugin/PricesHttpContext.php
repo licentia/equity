@@ -69,7 +69,7 @@ class PricesHttpContext
     {
 
         $customerId = $this->customerSession->getId();
-        $customerGroupId = $this->customerSession->getCustomerGroupId();
+        $customerGroupId = $this->customerSession->getCustomerGroupId() . '-1';
 
         if (!$this->scope->isSetFlag('panda_prices/segments/enabled') &&
             !$this->scope->isSetFlag('panda_magna/segments/acl') &&
@@ -94,7 +94,7 @@ class PricesHttpContext
 
         if ($this->scope->isSetFlag('panda_prices/customers/enabled') ||
             $this->scope->isSetFlag('panda_prices/import/enabled')) {
-            $cacheKey[] = sha1($customerId);
+            $cacheKey[] = sha1($customerId . '-1');
         }
 
         $result = implode(',', $cacheKey);

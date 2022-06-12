@@ -104,7 +104,7 @@ class Options implements \JsonSerializable
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize():array
     {
 
         if ($this->options === null) {
