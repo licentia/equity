@@ -89,7 +89,7 @@ class MassDelete extends \Licentia\Equity\Controller\Adminhtml\Segments
                 }
                 $this->messageManager->addSuccessMessage(
                     __(
-                        'Total of %1 record(s) were removed.',
+                        'A total of %1 record(s) were removed.',
                         count($ids)
                     )
                 );

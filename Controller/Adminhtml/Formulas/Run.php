@@ -44,7 +44,7 @@ class Run extends \Licentia\Equity\Controller\Adminhtml\Formulas
         try {
             $model->run();
             $this->messageManager->addSuccessMessage(
-                __("Formulas Results Updated. Check the Customers Kpi's for the updated records")
+                __("Formulas Results Updated. Check the Customers KPI's for the updated records")
             );
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());

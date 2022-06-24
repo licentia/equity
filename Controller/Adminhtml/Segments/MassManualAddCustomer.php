@@ -119,7 +119,7 @@ class MassManualAddCustomer extends \Licentia\Equity\Controller\Adminhtml\Segmen
                 $changesNum++;
             }
 
-            $this->messageManager->addSuccessMessage(__('Total of %1 record(s) were changed.', $changesNum));
+            $this->messageManager->addSuccessMessage(__('A total of %1 record(s) were changed.', $changesNum));
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         } catch (\RuntimeException $e) {

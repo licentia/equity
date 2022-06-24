@@ -280,7 +280,7 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
                 "cron",
                 "select",
                 [
-                    "label"    => __("Auto Update Options"),
+                    "label"    => __("Auto-Update Options"),
                     "options"  => [
                         '0' => __('No Update'),
                         'd' => __('Update Daily'),
