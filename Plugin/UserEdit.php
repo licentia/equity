@@ -57,7 +57,7 @@ class UserEdit
 
         $form = $subject->getForm();
         if (is_object($form)) {
-            $fieldset = $form->addFieldset('panda_twofactor_nusmber', ['legend' => __('Two-Factor Authentication')]);
+            $fieldset = $form->addFieldset('panda_twofactor_number', ['legend' => __('Two-Factor Authentication')]);
             $fieldset->addField(
                 'panda_twofactor_number',
                 'text',
