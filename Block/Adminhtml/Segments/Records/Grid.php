@@ -281,7 +281,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
              ->addItem(
                  'massManualDelete',
                  [
-                     'label'   => __('Mark as Auto Added'),
+                     'label'   => __('Mark as Auto-Added'),
                      'url'     => $this->getUrl('*/*/massManualDelete', ['_current' => true]),
                      'confirm' => __('Are you sure?'),
                  ]

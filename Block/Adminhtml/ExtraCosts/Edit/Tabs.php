@@ -82,7 +82,7 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             ]
         );
 
-        if (strlen($current->getData('campaign')) > 0) {
+        if ($current->getData('campaign')) {
             $this->addTab(
                 'results_section',
                 [

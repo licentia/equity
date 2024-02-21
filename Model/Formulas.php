@@ -148,10 +148,18 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
 
         $this->storeManager = $storeManager;
         $this->timezone = $timezone;
-        $this->connection = $this->getResource()->getConnection();
         $this->scopeConfig = $scopeConfig;
         $this->segmentsFactory = $segmentsFactory;
         $this->pandaHelper = $pandaHelper;
+    }
+
+    /**
+     * @return false|\Magento\Framework\DB\Adapter\AdapterInterface
+     */
+    public function getConnection()
+    {
+
+        return $this->pandaHelper->getConnection();
     }
 
     /**
@@ -202,12 +210,12 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
     public function getTotalCustomers()
     {
 
-        return $this->connection->fetchOne(
-            $this->connection->select()
-                             ->from(
-                                 $this->getTable('customer_entity'),
-                                 ['count' => 'COUNT(*)']
-                             )
+        return $this->getConnection()->fetchOne(
+            $this->getConnection()->select()
+                 ->from(
+                     $this->getTable('customer_entity'),
+                     ['count' => 'COUNT(*)']
+                 )
         );
     }
 
@@ -219,7 +227,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
     public function getTotalOrders(\Magento\Framework\DB\Select $select)
     {
 
-        return $this->connection->fetchOne(
+        return $this->getConnection()->fetchOne(
             $select->from($this->getTable('sales_order'), ['count' => 'COUNT(*)'])
         );
     }
@@ -232,7 +240,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
     public function getNumberOrdersAvg(\Magento\Framework\DB\Select $select)
     {
 
-        $total = $this->connection->fetchCol(
+        $total = $this->getConnection()->fetchCol(
             $select->from(
                 $this->getTable('sales_order'),
                 ['AVG' => 'COUNT(sales_order.base_grand_total)']
@@ -255,7 +263,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
     public function getTotalOrdersAvg(\Magento\Framework\DB\Select $select)
     {
 
-        return $this->connection->fetchOne(
+        return $this->getConnection()->fetchOne(
             $select->from(
                 $this->getTable('sales_order'),
                 ['AVG' => 'AVG(base_grand_total * base_to_global_rate)']
@@ -271,7 +279,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
     public function getTotalAmountOrders(\Magento\Framework\DB\Select $select)
     {
 
-        return $this->connection->fetchOne(
+        return $this->getConnection()->fetchOne(
             $select->from(
                 $this->getTable('sales_order'),
                 ['sum' => 'SUM(base_grand_total * base_to_global_rate)']
@@ -287,7 +295,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
     public function getTotalAmountRefunded(\Magento\Framework\DB\Select $select)
     {
 
-        return $this->connection->fetchOne(
+        return $this->getConnection()->fetchOne(
             $select->from(
                 $this->getTable('sales_order'),
                 ['sum' => 'SUM(base_total_refunded * base_to_global_rate)']
@@ -303,7 +311,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
     public function getTotalCompletedOrders(\Magento\Framework\DB\Select $select)
     {
 
-        return $this->connection->fetchOne(
+        return $this->getConnection()->fetchOne(
             $select->from(
                 $this->getTable('sales_order'),
                 ['return' => new \Zend_Db_Expr('COUNT(*)')]
@@ -319,7 +327,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
     public function getTotalAmountShipping(\Magento\Framework\DB\Select $select)
     {
 
-        return $this->connection->fetchOne(
+        return $this->getConnection()->fetchOne(
             $select->from(
                 $this->getTable('sales_order'),
                 ['return' => new \Zend_Db_Expr('SUM(base_shipping_amount * base_to_global_rate)')]
@@ -335,7 +343,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
     public function getTotalAmountTaxes(\Magento\Framework\DB\Select $select)
     {
 
-        return $this->connection->fetchOne(
+        return $this->getConnection()->fetchOne(
             $select->from(
                 $this->getTable('sales_order'),
                 ['return' => new \Zend_Db_Expr('SUM(base_tax_amount * base_to_global_rate)')]
@@ -359,21 +367,21 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
         $pandaSalesTable = $this->getTable('panda_sales_extra_costs');
 
         if ($currentPeriod) {
-            return $this->connection->fetchOne(
+            return $this->getConnection()->fetchOne(
                 $select->from(
                     $this->getTable('sales_order'),
                     [
                         'return' => new \Zend_Db_Expr(
                             sprintf(
                                 'SUM((%s - %s - %s - %s - %s - %s - %s) * %s)',
-                                $this->connection->getIfNullSql('base_total_paid', 0),
-                                $this->connection->getIfNullSql('base_total_refunded', 0),
-                                $this->connection->getIfNullSql('base_tax_invoiced', 0),
-                                $this->connection->getIfNullSql('base_shipping_invoiced', 0),
-                                $this->connection->getIfNullSql('base_total_invoiced_cost', 0),
-                                $this->connection->getIfNullSql('panda_shipping_cost', 0),
+                                $this->getConnection()->getIfNullSql('base_total_paid', 0),
+                                $this->getConnection()->getIfNullSql('base_total_refunded', 0),
+                                $this->getConnection()->getIfNullSql('base_tax_invoiced', 0),
+                                $this->getConnection()->getIfNullSql('base_shipping_invoiced', 0),
+                                $this->getConnection()->getIfNullSql('base_total_invoiced_cost', 0),
+                                $this->getConnection()->getIfNullSql('panda_shipping_cost', 0),
                                 "(select SUM(investment) from `$pandaSalesTable`)",
-                                $this->connection->getIfNullSql('base_to_global_rate', 0)
+                                $this->getConnection()->getIfNullSql('base_to_global_rate', 0)
                             )
                         ),
                     ]
@@ -405,7 +413,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
                           $this->pandaHelper->gmtDate()
                       );
 
-        $totalOrdersSegment = $this->connection->fetchOne($selectSegment);
+        $totalOrdersSegment = $this->getConnection()->fetchOne($selectSegment);
 
         $selectTotal = clone $select;
         $selectTotal->from(
@@ -418,34 +426,34 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
         )
                     ->where('panda_acquisition_campaign IS NOT NULL');
 
-        $totalOrdersGlobal = $this->connection->fetchOne($selectTotal);
+        $totalOrdersGlobal = $this->getConnection()->fetchOne($selectTotal);
 
-        $selectSales = $this->connection->select();
+        $selectSales = $this->getConnection()->select();
         $selectSales->from($this->getTable('sales_order'))
                     ->where(
                         "from_date <= DATE(? - INTERVAL 1 $interval)",
                         $this->pandaHelper->gmtDate()
                     );
 
-        $totalCost = $this->connection->fetchOne($selectSales);
+        $totalCost = $this->getConnection()->fetchOne($selectSales);
 
         $imputableCost = $totalCost * $totalOrdersSegment / $totalOrdersGlobal;
 
-        return $this->connection->fetchOne(
+        return $this->getConnection()->fetchOne(
             $select->from(
                 $this->getTable('sales_order'),
                 [
                     'return' => new \Zend_Db_Expr(
                         sprintf(
                             'SUM((%s - %s - %s - %s - %s - %s - %s) * %s)',
-                            $this->connection->getIfNullSql('base_total_paid', 0),
-                            $this->connection->getIfNullSql('base_total_refunded', 0),
-                            $this->connection->getIfNullSql('base_tax_invoiced', 0),
-                            $this->connection->getIfNullSql('base_shipping_invoiced', 0),
-                            $this->connection->getIfNullSql('base_total_invoiced_cost', 0),
-                            $this->connection->getIfNullSql('panda_shipping_cost', 0),
+                            $this->getConnection()->getIfNullSql('base_total_paid', 0),
+                            $this->getConnection()->getIfNullSql('base_total_refunded', 0),
+                            $this->getConnection()->getIfNullSql('base_tax_invoiced', 0),
+                            $this->getConnection()->getIfNullSql('base_shipping_invoiced', 0),
+                            $this->getConnection()->getIfNullSql('base_total_invoiced_cost', 0),
+                            $this->getConnection()->getIfNullSql('panda_shipping_cost', 0),
                             $imputableCost,
-                            $this->connection->getIfNullSql('base_to_global_rate', 0)
+                            $this->getConnection()->getIfNullSql('base_to_global_rate', 0)
                         )
                     ),
                 ]
@@ -461,7 +469,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
     public function getTotalAmountDiscount(\Magento\Framework\DB\Select $select)
     {
 
-        return $this->connection->fetchOne(
+        return $this->getConnection()->fetchOne(
             $select->from(
                 $this->getTable('sales_order'),
                 ['return' => new \Zend_Db_Expr('SUM(base_discount_amount * base_to_global_rate)')]
@@ -485,7 +493,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
         $pandaSalesTable = $this->getTable('panda_sales_extra_costs');
 
         if ($currentPeriod) {
-            return $this->connection->fetchOne(
+            return $this->getConnection()->fetchOne(
                 $select->from(
                     $this->getTable('sales_order'),
                     [
@@ -522,7 +530,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
                           $this->pandaHelper->gmtDateTime()
                       );
 
-        $totalOrdersSegment = $this->connection->fetchOne($selectSegment);
+        $totalOrdersSegment = $this->getConnection()->fetchOne($selectSegment);
 
         $selectTotal = clone $select;
         $selectTotal->from(
@@ -535,16 +543,16 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
         )
                     ->where('panda_acquisition_campaign IS NOT NULL');
 
-        $totalOrdersGlobal = $this->connection->fetchOne($selectTotal);
+        $totalOrdersGlobal = $this->getConnection()->fetchOne($selectTotal);
 
-        $selectSales = $this->connection->select();
+        $selectSales = $this->getConnection()->select();
         $selectSales->from($this->getTable('sales_order'))
                     ->where(
                         "from_date <=DATE( ? - INTERVAL 1 $interval)",
                         $this->pandaHelper->gmtDate()
                     );
 
-        $totalCost = $this->connection->fetchOne($selectSales);
+        $totalCost = $this->getConnection()->fetchOne($selectSales);
 
         return $totalCost * $totalOrdersSegment / $totalOrdersGlobal;
     }
@@ -583,7 +591,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
             $this->pandaHelper->gmtDateTime()
         );
 
-        $startCustomers = $this->connection->fetchCol($selectOld);
+        $startCustomers = $this->getConnection()->fetchCol($selectOld);
         $startCustomers = array_filter($startCustomers);
 
         $select->from($this->getTable('sales_order'), ['customer_email']);
@@ -596,7 +604,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
 
         $select->where('customer_email NOT IN (?)', $startCustomers);
 
-        $resultN = $this->connection->fetchCol($select);
+        $resultN = $this->getConnection()->fetchCol($select);
         $finalCustomers = array_filter($resultN);
 
         if (count($finalCustomers) == 0) {
@@ -718,7 +726,7 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
                     }
 
                     /** @var \Magento\Framework\DB\Select $select */
-                    $select = $this->connection->select();
+                    $select = $this->getConnection()->select();
 
                     if (stripos($formula, 'orders_number') === false) {
                         $select->where('sales_order.state IN (?)', ['complete', 'closed']);
@@ -903,15 +911,15 @@ class Formulas extends \Magento\Framework\Model\AbstractModel implements Formula
 
                     if (!$customerEmail) {
                         foreach ($segments as $segment) {
-                            $select = $this->connection->select()
-                                                       ->from($customerSegmentsRecordsTable, 'email')
-                                                       ->where('segment_id=?', $segment->getId());
+                            $select = $this->getConnection()->select()
+                                           ->from($customerSegmentsRecordsTable, 'email')
+                                           ->where('segment_id=?', $segment->getId());
 
-                            $select2 = $this->connection->select()
-                                                        ->from($customerKipsTable, self::ALLOWED_FIELDS)
-                                                        ->where('email_meta IN (?)', $select);
+                            $select2 = $this->getConnection()->select()
+                                            ->from($customerKipsTable, self::ALLOWED_FIELDS)
+                                            ->where('email_meta IN (?)', $select);
 
-                            $result = $this->connection->fetchRow($select2);
+                            $result = $this->getConnection()->fetchRow($select2);
 
                             if (count(array_filter($result)) == 0) {
                                 continue;

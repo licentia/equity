@@ -62,16 +62,6 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
     protected $segmentsManual;
 
     /**
-     * @var ResourceConnection
-     */
-    private $resourceConnection;
-
-    /**
-     * @var AdapterInterface
-     */
-    private $connection;
-
-    /**
      * @var \Magento\CatalogImportExport\Model\Import\Product\StoreResolver
      */
     protected $_storeResolver;
@@ -82,19 +72,21 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
      * Segments constructor.
      *
      * @param \Licentia\Panda\Helper\Data                                     $pandaHelper
-     * @param ResourceConnection                                              $resourceConnection
      * @param \Magento\CatalogImportExport\Model\Import\Product\StoreResolver $storeResolver
      */
     public function __construct(
         \Licentia\Panda\Helper\Data $pandaHelper,
-        ResourceConnection $resourceConnection,
         \Magento\CatalogImportExport\Model\Import\Product\StoreResolver $storeResolver
     ) {
 
-        $this->resourceConnection = $resourceConnection;
         $this->pandaHelper = $pandaHelper;
-        $this->connection = $this->resourceConnection->getConnection();
         $this->_storeResolver = $storeResolver;
+    }
+
+    public function getConnection()
+    {
+
+        return $this->pandaHelper->getConnection();
     }
 
     /**
@@ -168,12 +160,12 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
 
         if (!$this->skus) {
 
-            $this->skus = $this->connection->fetchPairs(
-                $this->connection->select()
-                                 ->from(
-                                     $this->resourceConnection->getTableName('catalog_product_entity'),
-                                     ['entity_id', 'sku']
-                                 )
+            $this->skus = $this->getConnection()->fetchPairs(
+                $this->getConnection()->select()
+                     ->from(
+                         $this->resourceConnection->getTableName('catalog_product_entity'),
+                         ['entity_id', 'sku']
+                     )
             );
 
         }
@@ -189,12 +181,12 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
 
         if (!$this->segments) {
 
-            $this->segments = $this->connection->fetchPairs(
-                $this->connection->select()
-                                 ->from(
-                                     $this->resourceConnection->getTableName('panda_segments'),
-                                     ['segment_id', 'code']
-                                 )
+            $this->segments = $this->getConnection()->fetchPairs(
+                $this->getConnection()->select()
+                     ->from(
+                         $this->getConnection()->getTableName('panda_segments'),
+                         ['segment_id', 'code']
+                     )
             );
         }
 
@@ -209,13 +201,13 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
 
         if (!$this->segmentsManual) {
 
-            $this->segmentsManual = $this->connection->fetchPairs(
-                $this->connection->select()
-                                 ->from(
-                                     $this->resourceConnection->getTableName('panda_segments'),
-                                     ['segment_id', 'code']
-                                 )
-                                 ->where('use_as_catalog=?', 1)
+            $this->segmentsManual = $this->getConnection()->fetchPairs(
+                $this->getConnection()->select()
+                     ->from(
+                         $this->getConnection()->getTableName('panda_segments'),
+                         ['segment_id', 'code']
+                     )
+                     ->where('use_as_catalog=?', 1)
             );
         }
 
@@ -230,13 +222,13 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
 
         if (!$this->websites) {
 
-            $this->websites = $this->connection->fetchPairs(
-                $this->connection->select()
-                                 ->from(
-                                     $this->resourceConnection->getTableName('store_website'),
-                                     ['website_id', 'code']
-                                 )
-                                 ->where('code!=?', 'admin')
+            $this->websites = $this->getConnection()->fetchPairs(
+                $this->getConnection()->select()
+                     ->from(
+                         $this->getConnection()->getTableName('store_website'),
+                         ['website_id', 'code']
+                     )
+                     ->where('code!=?', 'admin')
             );
         }
 
@@ -251,12 +243,12 @@ class Segments extends AbstractImportValidator implements RowValidatorInterface
 
         if (!$this->customers) {
 
-            $this->customers = $this->connection->fetchAll(
-                $this->connection->select()
-                                 ->from(
-                                     $this->resourceConnection->getTableName('customer_entity'),
-                                     ['entity_id', 'email', 'website_id']
-                                 )
+            $this->customers = $this->getConnection()->fetchAll(
+                $this->getConnection()->select()
+                     ->from(
+                         $this->getConnection()->getTableName('customer_entity'),
+                         ['entity_id', 'email', 'website_id']
+                     )
             );
         }
 

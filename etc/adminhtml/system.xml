@@ -134,7 +134,7 @@
                     </depends>
                 </field>
                 <field id="allow_remember" sortOrder="80" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
-                    <label>Allow Remember Device</label>
+                    <label>Allow to Remember Device</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                     <comment>Give customers the option to skip authentication for the active browser</comment>
                     <depends>
@@ -227,7 +227,7 @@
                     </depends>
                 </field>
                 <field id="allow_remember" sortOrder="80" showInDefault="1" type="select" showInStore="1" showInWebsite="1" translate="label comment">
-                    <label>Allow Remember Device</label>
+                    <label>Allow to Remember Device</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                     <comment>Give customers the option to skip authentication for the active browser</comment>
                     <depends>
@@ -280,7 +280,7 @@
             <group id="catalogs" showInWebsite="1" showInStore="0" showInDefault="1" sortOrder="10">
                 <label>Product Catalogs</label>
                 <field id="enabled" sortOrder="10" showInDefault="1" type="select" showInStore="0" showInWebsite="1" translate="label comment">
-                    <label>Segments Catalogs</label>
+                    <label>Segments Catalog</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                 </field>
             </group>

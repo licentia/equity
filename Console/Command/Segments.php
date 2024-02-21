@@ -64,7 +64,7 @@ class Segments extends Command
     ) {
 
         parent::__construct();
-        $this->indexer = $indexer->create();
+        $this->indexer = $indexer;
         $this->pandaHelper = $pandaHelper;
         $this->segmentsFactory = $pandaFactory;
     }
@@ -94,11 +94,11 @@ class Segments extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        if (!$this->indexer->canReindex('segments')) {
+        if (!$this->indexer->create()->canReindex('segments')) {
             throw new \RuntimeException("Indexer status does not allow reindexing");
         }
 
-        $this->indexer->updateIndexStatus(Indexer::STATUS_WORKING, 'segments');
+        $this->indexer->create()->updateIndexStatus(Indexer::STATUS_WORKING, 'segments');
 
         $start = date_create($this->pandaHelper->gmtDate());
         $output->writeln("Segments | ");
@@ -162,7 +162,7 @@ class Segments extends Command
         $end = date_create($this->pandaHelper->gmtDate());
         $diff = date_diff($end, $start);
 
-        $this->indexer->updateIndexStatus(Indexer::STATUS_VALID, 'segments');
+        $this->indexer->create()->updateIndexStatus(Indexer::STATUS_VALID, 'segments');
 
         $output->writeln("Segments | FINISHED: " . $this->pandaHelper->gmtDate());
         if ($customerId) {

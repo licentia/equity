@@ -164,7 +164,7 @@ class Customer extends AbstractCondition
                 continue;
             }
 
-            if (strlen($attribute->getFrontendLabel()) == 0) {
+            if ($attribute->getFrontendLabel() && strlen($attribute->getFrontendLabel()) == 0) {
                 continue;
             }
 

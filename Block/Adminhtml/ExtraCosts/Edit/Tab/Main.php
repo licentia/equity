@@ -211,7 +211,7 @@ class Main extends \Magento\Backend\Block\Widget\Form\Generic
                     "name"  => "campaign",
                     "note"  => __(
                         'Campaign name used in Ads. The value of the variable: utm_campaign.
-                    <br>If you leave this field empty, the investment amount will be split trough all orders.
+                    <br>If you leave this field empty, the investment amount will be split through all orders.
                     <br>Use "*" (without quotes) to apply only to orders originated in campaigns.
                     <br>Separate multiple campaigns names with a comma ,
                     <br>Eg. *facebook =>For orders with campaigns where the campaign name starts with facebook
